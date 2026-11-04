@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { ExternalLink, FolderGit2, CheckCircle2 } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
 import { SEED_PROJECTS } from '@/lib/constants';
 import { supabase } from '@/lib/supabase';
 import type { Project } from '@/lib/types';
 import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
+import AnimatedContent from '@/components/AnimatedContent';
 
 export default function ProjectsSection() {
   const [projects, setProjects] = useState<Project[]>(SEED_PROJECTS);
@@ -32,39 +32,45 @@ export default function ProjectsSection() {
     <section id="projects" className="relative py-24 px-4 sm:px-8 lg:px-12 bg-[#efe8dc]/40">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
-                Section // 03
-              </span>
-              <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
+        <AnimatedContent distance={40} direction="vertical" duration={0.8} ease="power3.out">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
+                  Section // 03
+                </span>
+                <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
+              </div>
+              <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+                Featured Projects
+              </h2>
+              <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
+                Production backends, cryptographic licensing engines, and full-stack systems.
+              </p>
             </div>
-            <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
-              Featured Projects
-            </h2>
-            <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
-              Production backends, cryptographic licensing engines, and full-stack systems.
-            </p>
+
+            <StampBadge
+              text="ARCHIVE"
+              subtext="VERIFIED REPOS"
+              color="#5b8266"
+              className="self-start sm:self-auto"
+            />
           </div>
+        </AnimatedContent>
 
-          <StampBadge
-            text="ARCHIVE"
-            subtext="VERIFIED REPOS"
-            color="#5b8266"
-            className="self-start sm:self-auto"
-          />
-        </div>
-
-        {/* Project Archival Dossiers Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        {/* Project Archival Dossiers Grid with Staggered GSAP */}
+        <AnimatedContent
+          distance={60}
+          direction="vertical"
+          stagger={0.14}
+          staggerFrom="start"
+          duration={0.85}
+          ease="power3.out"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+        >
           {projects.map((proj, idx) => (
-            <motion.div
+            <div
               key={proj.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.12 }}
               className={`relative bg-[#fffdf9] p-7 sm:p-8 rounded-sm shadow-[3px_6px_24px_rgba(45,30,15,0.12)] border border-[#e2d8c3] transition-all duration-300 hover:scale-[1.015] hover:shadow-[5px_12px_32px_rgba(45,30,15,0.18)] ${
                 idx % 2 === 0 ? 'rotate-[-0.8deg]' : 'rotate-[0.8deg]'
               }`}
@@ -148,9 +154,9 @@ export default function ProjectsSection() {
                   </span>
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </AnimatedContent>
       </div>
     </section>
   );

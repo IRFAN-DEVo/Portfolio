@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
 import { Server, Layout, Database, Wrench } from 'lucide-react';
 import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
+import AnimatedContent from '@/components/AnimatedContent';
 
 interface SkillGroup {
   category: string;
@@ -91,41 +91,47 @@ export default function SkillsSection() {
     <section id="skills" className="relative py-24 px-4 sm:px-8 lg:px-12">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
-                Section // 02
-              </span>
-              <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
+        <AnimatedContent distance={40} direction="vertical" duration={0.8} ease="power3.out">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
+                  Section // 02
+                </span>
+                <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
+              </div>
+              <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+                Skills &amp; Technologies
+              </h2>
+              <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
+                Categorized index of verified backend, frontend, database, and tooling capabilities.
+              </p>
             </div>
-            <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
-              Skills &amp; Technologies
-            </h2>
-            <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
-              Categorized index of verified backend, frontend, database, and tooling capabilities.
-            </p>
+
+            <StampBadge
+              text="TECH INDEX"
+              subtext="NO FAKE METRICS"
+              color="#df6b5c"
+              className="self-start sm:self-auto"
+            />
           </div>
+        </AnimatedContent>
 
-          <StampBadge
-            text="TECH INDEX"
-            subtext="NO FAKE METRICS"
-            color="#df6b5c"
-            className="self-start sm:self-auto"
-          />
-        </div>
-
-        {/* 4 Scrapbook Category Note Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+        {/* 4 Scrapbook Category Note Cards with Staggered GSAP Entry */}
+        <AnimatedContent
+          distance={60}
+          direction="vertical"
+          stagger={0.12}
+          staggerFrom="start"
+          duration={0.8}
+          ease="power3.out"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+        >
           {skillCategories.map((group, idx) => {
             const Icon = group.icon;
             return (
-              <motion.div
+              <div
                 key={group.category}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className={`relative p-7 sm:p-8 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] transition-transform duration-300 hover:rotate-0 hover:scale-[1.01] ${group.rotation} ${getCardStyle(
                   group.variant
                 )}`}
@@ -168,10 +174,10 @@ export default function SkillsSection() {
                     </div>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             );
           })}
-        </div>
+        </AnimatedContent>
       </div>
     </section>
   );
