@@ -1428,3 +1428,4 @@ export default function Lanyard({
 
   return <div ref={containerRef} className={`lanyard ${className}`.trim()} style={style} />;
 }
+

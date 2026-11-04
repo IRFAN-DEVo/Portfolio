@@ -21,6 +21,14 @@ export default function HeroSection() {
     { id: 5, text: 'Ship next big innovation', done: false },
   ]);
 
+  // Spring physics mimicking physical paper/cardboard thrown onto a desk
+  const throwPhysics = {
+    type: 'spring' as const,
+    stiffness: 240,
+    damping: 22,
+    mass: 1.1,
+  };
+
   const toggleTask = (id: number) => {
     setTasks(prev =>
       prev.map(t => (t.id === id ? { ...t, done: !t.done } : t))
@@ -61,12 +69,13 @@ export default function HeroSection() {
         {/* Main Collage Layout */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
           {/* ============================================================ */}
-          {/* 1. LEFT CARD: TORN KRAFT PAPER CARD (Collect moments / Craft systems) */}
+          {/* 1. LEFT CARD: TORN KRAFT PAPER CARD (Craft systems, not just code) */}
+          {/* Thrown onto the desk from top-left with spring momentum */}
           {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, y: 30, rotate: -2 }}
-            animate={{ opacity: 1, y: 0, rotate: -1.2 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            initial={{ opacity: 0, x: -380, y: -200, rotate: -50, scale: 1.4 }}
+            animate={{ opacity: 1, x: 0, y: 0, rotate: -1.8, scale: 1 }}
+            transition={throwPhysics}
             className="lg:col-span-5 relative bg-[#cbb393] text-[#1e1b18] p-7 sm:p-9 rounded-sm shadow-[3px_6px_20px_rgba(50,35,15,0.18)]"
             style={{
               clipPath: 'polygon(0% 1%, 98% 0%, 100% 97%, 1% 100%)',
@@ -191,11 +200,12 @@ export default function HeroSection() {
 
           {/* ============================================================ */}
           {/* 3. RIGHT CARD: NOTEBOOK PAPER CHECKLIST (TODAY / SKILLS) */}
+          {/* Thrown onto the desk from top-right with staggered delay */}
           {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, x: 25, rotate: 1 }}
-            animate={{ opacity: 1, x: 0, rotate: 1.5 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}
+            initial={{ opacity: 0, x: 380, y: -200, rotate: 50, scale: 1.4 }}
+            animate={{ opacity: 1, x: 0, y: 0, rotate: 2, scale: 1 }}
+            transition={{ ...throwPhysics, delay: 0.15 }}
             className="lg:col-span-3 relative lined-notebook p-6 sm:p-7 rounded-sm shadow-[2px_5px_18px_rgba(40,30,15,0.14)] border border-[#e2d6c4]"
           >
             {/* Top Washi Tape */}
@@ -258,9 +268,9 @@ export default function HeroSection() {
         {/* BOTTOM CENTER: TAPED QUOTE STICKY NOTE (from reference) */}
         {/* ============================================================ */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          initial={{ opacity: 0, y: 120, rotate: 10, scale: 1.25 }}
+          animate={{ opacity: 1, y: 0, rotate: -1, scale: 1 }}
+          transition={{ ...throwPhysics, delay: 0.3 }}
           className="mt-8 sm:mt-10 max-w-md mx-auto relative bg-[#e7dfcf] border border-[#d2c5b0] p-4 sm:p-5 rounded-xs shadow-[2px_4px_12px_rgba(40,25,10,0.1)] rotate-[-1deg]"
         >
           {/* Top Tape */}
