@@ -142,7 +142,21 @@ export const InkSplatter: React.FC<{ className?: string }> = ({ className = 'w-1
   </svg>
 );
 
-// Retro Smiley Sticker (matching reference top pink sticker)
+// Hand-drawn Cool Sunglasses Smiley Sticker
+export const CoolSmileySticker: React.FC<{ className?: string }> = ({
+  className = 'w-14 h-14',
+}) => (
+  <div className={`relative inline-block select-none ${className}`}>
+    <img
+      src="/images/cool_smiley.png"
+      alt="Cool Sunglasses Smiley"
+      className="w-full h-full object-contain mix-blend-multiply filter drop-shadow-[1px_2px_5px_rgba(40,25,15,0.18)]"
+      draggable={false}
+    />
+  </div>
+);
+
+// Retro Smiley Sticker (legacy)
 export const SmileySticker: React.FC<{ className?: string }> = ({ className = 'w-12 h-12' }) => (
   <div
     className={`rounded-full bg-[#f6b7c2] border border-[#e89aa8] flex items-center justify-center shadow-md select-none ${className}`}

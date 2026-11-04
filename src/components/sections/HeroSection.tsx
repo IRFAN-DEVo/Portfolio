@@ -8,7 +8,7 @@ import {
   DoodleArrow,
   DoodleStar,
   InkSplatter,
-  SmileySticker,
+  CoolSmileySticker,
 } from '@/components/ScrapbookDoodles';
 
 export default function HeroSection() {
@@ -151,9 +151,9 @@ export default function HeroSection() {
               rotation="-rotate-1"
             />
 
-            {/* Pink Smiley Sticker Overlap */}
-            <div className="absolute -top-5 -left-2 z-50 pointer-events-none">
-              <SmileySticker className="w-13 h-13" />
+            {/* Cool Sunglasses Smiley Sticker Overlap */}
+            <div className="absolute -top-6 -left-3 sm:-left-4 z-50 pointer-events-none rotate-[-6deg]">
+              <CoolSmileySticker className="w-14 h-14 sm:w-16 sm:h-16" />
             </div>
 
             {/* 3D Lanyard Canvas Container */}
