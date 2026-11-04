@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import ScrapbookCanvas from '@/components/ScrapbookCanvas';
+import HandDrawnLoader from '@/components/HandDrawnLoader';
 import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import SkillsSection from '@/components/sections/SkillsSection';
@@ -11,6 +12,9 @@ import Footer from '@/components/Footer';
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#f6f1e7] text-[#1e1b18] font-serif-vintage antialiased selection:bg-[#df6b5c]/25 selection:text-[#1e1b18] relative">
+      {/* Hand-Drawn Minimalist Loading Screen */}
+      <HandDrawnLoader />
+
       {/* Interactive Paper Dust & Ambient Ink Canvas */}
       <ScrapbookCanvas />
 
