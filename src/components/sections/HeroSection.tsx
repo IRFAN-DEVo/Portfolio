@@ -19,20 +19,18 @@ export default function HeroSection() {
       {/* Background Soft Glow & Vignette */}
       <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] pointer-events-none" />
 
-      {/* Center Focal Particle Portrait Canvas */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
-          className="relative w-full max-w-[360px] sm:max-w-[480px] md:max-w-[540px] aspect-square flex items-center justify-center"
-        >
-          <ParticlePortraitCanvas
-            imageSrc="/images/particle_reference.jpg"
-            className="w-full h-full pointer-events-auto"
-          />
-        </motion.div>
-      </div>
+      {/* Full Viewport 3D Particle Portrait Canvas */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: 'easeOut' }}
+        className="absolute inset-0 w-full h-full pointer-events-auto z-10 overflow-hidden"
+      >
+        <ParticlePortraitCanvas
+          imageSrc="/images/particle_reference.jpg"
+          className="w-full h-full"
+        />
+      </motion.div>
 
       {/* Bottom Composition: PORTFOLIO + Role + Contact CTAs */}
       <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 pb-8 sm:pb-12 flex flex-col justify-end pointer-events-none">

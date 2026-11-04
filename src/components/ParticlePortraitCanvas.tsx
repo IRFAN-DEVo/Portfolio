@@ -13,6 +13,7 @@ interface Particle {
   baseAlpha: number;
   twinkleSpeed: number;
   twinklePhase: number;
+  depth: number;
   color: string;
 }
 
@@ -66,15 +67,16 @@ export default function ParticlePortraitCanvas({
     resize();
     window.addEventListener('resize', resize);
 
-    // Initialize randomized background stars
-    const starCount = width < 768 ? 90 : 180;
+    // Initialize cosmic background stars
+    const isMobile = width < 768;
+    const starCount = isMobile ? 140 : 320;
     const stars: Star[] = Array.from({ length: starCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 1.5 + 0.3,
-      alpha: Math.random() * 0.6 + 0.15,
-      baseAlpha: Math.random() * 0.6 + 0.15,
-      speed: Math.random() * 0.2 + 0.05,
+      size: Math.random() * 1.8 + 0.4,
+      alpha: Math.random() * 0.7 + 0.2,
+      baseAlpha: Math.random() * 0.7 + 0.2,
+      speed: Math.random() * 0.25 + 0.05,
       twinkleSpeed: Math.random() * 0.04 + 0.015,
       twinklePhase: Math.random() * Math.PI * 2,
     }));
@@ -87,10 +89,12 @@ export default function ParticlePortraitCanvas({
 
     img.onload = () => {
       const offscreen = document.createElement('canvas');
-      const isMobile = width < 768;
 
-      // Calculate responsive portrait bounding box
-      const targetSize = isMobile ? Math.min(300, width * 0.85) : Math.min(420, width * 0.5, height * 0.55);
+      // Much larger 3D responsive portrait dimensions for monumental presence
+      const targetSize = isMobile
+        ? Math.min(width * 0.96, 520)
+        : Math.min(width * 0.74, height * 0.92, 880);
+
       const aspect = img.height / img.width;
       const targetW = targetSize;
       const targetH = targetSize * aspect;
@@ -105,15 +109,18 @@ export default function ParticlePortraitCanvas({
       const data = imgData.data;
 
       const particles: Particle[] = [];
-      const step = isMobile ? 4 : 3;
+      // High density for crystal-clear stippled details
+      const step = isMobile ? 2.8 : 2.4;
 
-      // Position portrait centered in canvas
+      // Position portrait centered horizontally, elevated so head sits prominently in upper hero spotlight
       const startX = width / 2 - targetW / 2;
-      const startY = height / 2 - targetH / 2 - (isMobile ? 15 : 25);
+      const startY = isMobile
+        ? Math.max(50, height * 0.38 - targetH / 2)
+        : Math.max(30, height * 0.40 - targetH / 2);
 
       for (let y = 0; y < targetH; y += step) {
         for (let x = 0; x < targetW; x += step) {
-          const idx = (y * targetW + x) * 4;
+          const idx = Math.floor(y * targetW + x) * 4;
           const r = data[idx];
           const g = data[idx + 1];
           const b = data[idx + 2];
@@ -122,18 +129,24 @@ export default function ParticlePortraitCanvas({
           // Compute luminance value
           const brightness = r * 0.299 + g * 0.587 + b * 0.114;
 
-          // Only create particle for visible features
-          if (a > 40 && brightness > 30) {
+          // Only create particle for visible portrait features
+          if (a > 30 && brightness > 22) {
             const posX = startX + x;
             const posY = startY + y;
 
             // Dot size and brightness mapped to pixel luminance
             const normalizedBrightness = brightness / 255;
-            const baseSize = 0.8 + normalizedBrightness * 1.1;
-            const baseAlpha = 0.35 + normalizedBrightness * 0.65;
+            const baseSize = isMobile
+              ? 0.9 + normalizedBrightness * 1.3
+              : 1.1 + normalizedBrightness * 1.6;
+            const baseAlpha = 0.55 + normalizedBrightness * 0.45;
 
-            // Pure stippled monochrome dot colors
-            const shade = Math.min(255, Math.floor(brightness + 30));
+            // Depth calculation for 3D holographic tilt
+            // Highlights protrude more toward the camera
+            const depth = normalizedBrightness;
+
+            // Brilliant silvery-white monochrome dot colors
+            const shade = Math.min(255, Math.floor(brightness * 0.85 + 55));
             const color = `rgb(${shade}, ${shade}, ${shade})`;
 
             particles.push({
@@ -149,6 +162,7 @@ export default function ParticlePortraitCanvas({
               baseAlpha,
               twinkleSpeed: Math.random() * 0.05 + 0.02,
               twinklePhase: Math.random() * Math.PI * 2,
+              depth,
               color,
             });
           }
@@ -162,7 +176,7 @@ export default function ParticlePortraitCanvas({
       img.src = '/images/profile.jpg';
     };
 
-    // Mouse movement interaction handler
+    // Global mouse tracking across viewport
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = {
@@ -179,10 +193,8 @@ export default function ParticlePortraitCanvas({
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseleave', handleMouseLeave);
 
-    // Continuous 60fps render loop
-    let time = 0;
+    // Continuous 60fps render loop with 3D Holographic Parallax + Repulsion
     const render = () => {
-      time += 0.025;
       ctx.clearRect(0, 0, width, height);
 
       // 1. Draw Starfield Particles
@@ -202,19 +214,28 @@ export default function ParticlePortraitCanvas({
         ctx.fill();
       }
 
-      // 2. Draw Stippled Portrait Particles with Physics & Repulsion
-      const particles = particlesRef.current;
+      // 2. 3D Parallax Normals from mouse position
       const mouse = mouseRef.current;
+      const normMouseX = mouse.active ? (mouse.x - width / 2) / (width / 2) : 0;
+      const normMouseY = mouse.active ? (mouse.y - height / 2) / (height / 2) : 0;
 
-      const repelRadius = 85;
-      const repelForce = 3.5;
-      const springFactor = 0.05;
+      // 3. Draw Stippled Portrait Particles with 3D Depth & Physics
+      const particles = particlesRef.current;
+      const repelRadius = isMobile ? 70 : 100;
+      const repelForce = 3.8;
+      const springFactor = 0.055;
       const friction = 0.88;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Soft cursor repulsion
+        // 3D holographic tilt offset based on depth
+        const parallaxOffsetX = normMouseX * p.depth * 14;
+        const parallaxOffsetY = normMouseY * p.depth * 14;
+        const targetX = p.originX + parallaxOffsetX;
+        const targetY = p.originY + parallaxOffsetY;
+
+        // Cursor repulsion
         if (mouse.active) {
           const dx = p.x - mouse.x;
           const dy = p.y - mouse.y;
@@ -227,9 +248,9 @@ export default function ParticlePortraitCanvas({
           }
         }
 
-        // Spring return to original position
-        const homeDx = p.originX - p.x;
-        const homeDy = p.originY - p.y;
+        // Return to 3D target position via spring physics
+        const homeDx = targetX - p.x;
+        const homeDy = targetY - p.y;
         p.vx += homeDx * springFactor;
         p.vy += homeDy * springFactor;
 
@@ -241,7 +262,7 @@ export default function ParticlePortraitCanvas({
         p.x += p.vx;
         p.y += p.vy;
 
-        // Organic micro-twinkle
+        // Subtle organic twinkle
         p.twinklePhase += p.twinkleSpeed;
         const twinkle = Math.sin(p.twinklePhase) * 0.18;
         const currentAlpha = Math.max(0.2, Math.min(1, p.baseAlpha + twinkle));
