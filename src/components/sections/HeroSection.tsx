@@ -1,9 +1,6 @@
 import { motion } from 'framer-motion';
-import { ArrowDown, Mail, ArrowUpRight } from 'lucide-react';
+import { ArrowDownRight } from 'lucide-react';
 import ParticlePortraitCanvas from '@/components/ParticlePortraitCanvas';
-import TypingRole from '@/components/TypingRole';
-import { GithubIcon, LinkedinIcon } from '@/components/Icons';
-import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
 
 export default function HeroSection() {
   const scrollTo = (href: string) => {
@@ -11,159 +8,85 @@ export default function HeroSection() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const githubLink = SOCIAL_LINKS.find((s) => s.id === 'github')?.url || 'https://github.com/IRFAN-DEVo';
-  const linkedinLink = SOCIAL_LINKS.find((s) => s.id === 'linkedin')?.url || 'https://linkedin.com/in/mohammed-irfan-a4b3153b3';
-
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-4 overflow-hidden bg-[#050505]"
+      className="relative min-h-screen w-full flex items-end justify-center overflow-hidden bg-cover bg-center select-none"
+      style={{
+        background: 'radial-gradient(circle at 50% 45%, #252525 0%, #050505 75%, #000000 100%)',
+      }}
     >
-      {/* Background radial gradient glow for subtle depth */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff5c3d]/[0.035] rounded-full blur-[140px] pointer-events-none" />
+      {/* Background Soft Glow & Vignette */}
+      <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center text-center w-full">
-        {/* Availability Status Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#111111]/90 border border-white/10 text-xs font-mono-code text-[#A0A0A0] mb-6 backdrop-blur-md shadow-lg"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff5c3d] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ff5c3d]" />
-          </span>
-          <span>Available for Roles &amp; Projects</span>
-        </motion.div>
-
-        {/* Focal Visual: Animated Particle / Dot-Matrix Portrait Canvas */}
+      {/* Center Focal Particle Portrait Canvas */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="relative w-full max-w-[340px] sm:max-w-[420px] aspect-square my-2 flex items-center justify-center"
+          transition={{ duration: 1, ease: 'easeOut' }}
+          className="relative w-full max-w-[360px] sm:max-w-[480px] md:max-w-[540px] aspect-square flex items-center justify-center"
         >
-          {/* Subtle circular boundary ring */}
-          <div className="absolute inset-0 rounded-full border border-white/[0.06] pointer-events-none" />
-          
           <ParticlePortraitCanvas
             imageSrc="/images/particle_reference.jpg"
-            className="w-full h-full rounded-full overflow-hidden"
+            className="w-full h-full pointer-events-auto"
           />
         </motion.div>
+      </div>
 
-        {/* Main Headline: "Hi, I'm IRFAN" */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-4"
+      {/* Bottom Composition: PORTFOLIO + Role + Contact CTAs */}
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 pb-8 sm:pb-12 flex flex-col justify-end pointer-events-none">
+        {/* Giant Metallic Chrome Heading */}
+        <motion.h1
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display text-[16vw] md:text-[11rem] lg:text-[14.5rem] font-black tracking-tighter drop-shadow-2xl leading-none uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-800 pointer-events-auto"
+          style={{
+            filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9))',
+          }}
         >
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-display font-extrabold tracking-tight text-white mb-3">
-            Hi, I'm <span className="gradient-headline">IRFAN</span>
-          </h1>
+          PORTFOLIO
+        </motion.h1>
 
-          {/* Animated Typing Subtitle Cycling Roles */}
-          <div className="text-base sm:text-xl md:text-2xl font-mono-code text-[#ff5c3d] font-medium h-9 flex items-center justify-center">
-            <TypingRole
-              roles={[
-                'Python / Django Developer',
-                'Backend Systems Engineer',
-                'REST API & PostgreSQL Specialist',
-                'React & Full-Stack Builder',
-              ]}
-              typingSpeed={75}
-              deletingSpeed={40}
-              pauseTime={2000}
-            />
-          </div>
-        </motion.div>
-
-        {/* Concise Bio */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-sm sm:text-base text-[#999999] max-w-xl mx-auto mt-4 mb-8 leading-relaxed font-light"
-        >
-          Building secure, production-minded REST APIs, licensing backends, and payment-integrated web apps with Django REST Framework, PostgreSQL, and React. Backed by rigorous hands-on QA testing.
-        </motion.p>
-
-        {/* Two CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto mb-10"
-        >
-          <button
-            onClick={() => scrollTo('#projects')}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#ff5c3d] text-[#111111] font-mono-code font-bold text-xs uppercase tracking-wider hover:bg-[#ff7256] transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(255,92,61,0.25)] hover:shadow-[0_0_35px_rgba(255,92,61,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+        {/* Lower Row: Role on left, Arrow & Contact Pill on right */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-1 sm:mt-2 pointer-events-auto">
+          {/* Role: Bold White + Light Italic */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-lg sm:text-2xl md:text-3xl text-white drop-shadow-md flex items-center gap-2"
           >
-            <span>View Projects</span>
-            <ArrowUpRight size={16} />
-          </button>
+            <span className="font-bold tracking-tight">Python / Django</span>
+            <span className="font-light italic text-gray-400 font-serif">Developer</span>
+          </motion.div>
 
-          <button
-            onClick={() => scrollTo('#contact')}
-            className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#111111] border border-white/15 hover:border-white text-white font-mono-code font-semibold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 hover:bg-white/[0.04] hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-md"
+          {/* Action Buttons matching screenshot */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex items-center gap-3.5"
           >
-            <Mail size={15} />
-            <span>Contact Me</span>
-          </button>
-        </motion.div>
+            {/* Circular Arrow Button (Scroll to About) */}
+            <button
+              onClick={() => scrollTo('#about')}
+              aria-label="Scroll down to explore"
+              className="w-12 h-12 rounded-full border border-white/20 hover:border-white bg-[#0e0e0e]/70 backdrop-blur-md flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95 shadow-lg group"
+            >
+              <ArrowDownRight size={18} className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
+            </button>
 
-        {/* Social Profile Badges */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex items-center justify-center gap-4"
-        >
-          <a
-            href={githubLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub Profile"
-            className="p-3 rounded-full bg-[#111111] border border-white/10 text-[#888888] hover:text-white hover:border-[#ff5c3d]/50 hover:bg-white/[0.04] transition-all hover:scale-105"
-            title="GitHub"
-          >
-            <GithubIcon size={18} />
-          </a>
-          <a
-            href={linkedinLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn Profile"
-            className="p-3 rounded-full bg-[#111111] border border-white/10 text-[#888888] hover:text-white hover:border-[#ff5c3d]/50 hover:bg-white/[0.04] transition-all hover:scale-105"
-            title="LinkedIn"
-          >
-            <LinkedinIcon size={18} />
-          </a>
-          <a
-            href={`mailto:${SITE_CONFIG.email}`}
-            aria-label="Send Email"
-            className="p-3 rounded-full bg-[#111111] border border-white/10 text-[#888888] hover:text-white hover:border-[#ff5c3d]/50 hover:bg-white/[0.04] transition-all hover:scale-105"
-            title="Email"
-          >
-            <Mail size={18} />
-          </a>
-        </motion.div>
-
-        {/* Scroll Down Indicator */}
-        <motion.button
-          onClick={() => scrollTo('#about')}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="mt-14 text-[#666666] hover:text-white transition-colors flex flex-col items-center gap-1.5 focus:outline-none group"
-        >
-          <span className="text-[10px] font-mono-code uppercase tracking-widest text-[#888888] group-hover:text-white transition-colors">
-            Scroll to Explore
-          </span>
-          <ArrowDown size={14} className="animate-bounce text-[#ff5c3d]" />
-        </motion.button>
+            {/* Contact Pill Button */}
+            <button
+              onClick={() => scrollTo('#contact')}
+              className="px-7 py-3 rounded-full border border-white/20 hover:border-white bg-[#0e0e0e]/70 backdrop-blur-md text-xs sm:text-sm font-medium tracking-wider uppercase text-white transition-all hover:scale-105 active:scale-95 shadow-lg"
+            >
+              Contact
+            </button>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

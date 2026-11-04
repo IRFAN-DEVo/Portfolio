@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { NAV_LINKS, SITE_CONFIG } from '@/lib/constants';
 
 interface NavbarProps {
   isVisible?: boolean;
@@ -15,16 +14,16 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+    const sectionIds = ['home', 'about', 'service', 'project', 'experience', 'contact'];
     const handleScrollSpy = () => {
-      const scrollPosition = window.scrollY + 220;
+      const scrollPosition = window.scrollY + 200;
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
@@ -43,6 +42,15 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScrollSpy);
   }, []);
 
+  const navLinks = [
+    { label: 'HOME', href: '#home', id: 'home' },
+    { label: 'ABOUT', href: '#about', id: 'about' },
+    { label: 'SERVICE', href: '#service', id: 'service' },
+    { label: 'PROJECT', href: '#project', id: 'project' },
+    { label: 'EXPERIENCE', href: '#experience', id: 'experience' },
+    { label: 'CONTACT', href: '#contact', id: 'contact' },
+  ];
+
   const scrollTo = (href: string) => {
     setIsOpen(false);
     const target = document.querySelector(href);
@@ -56,74 +64,70 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
   return (
     <>
       <motion.nav
-        initial={{ y: -70, opacity: 0 }}
+        initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#050505]/85 backdrop-blur-xl border-b border-white/[0.08] py-3.5 shadow-2xl'
-            : 'bg-transparent py-5'
+            ? 'bg-[#000000]/80 backdrop-blur-xl border-b border-white/[0.08] py-4 shadow-2xl'
+            : 'bg-transparent py-6'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 flex items-center justify-between">
-          {/* Logo / Name */}
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between">
+          {/* Brand Name on left */}
           <button
             onClick={() => scrollTo('#home')}
-            className="group text-left focus:outline-none flex items-center gap-2.5"
+            className="text-left focus:outline-none flex items-center gap-2 group"
           >
-            <span className="font-mono-code font-bold text-base sm:text-lg tracking-wider text-white group-hover:text-[#ff5c3d] transition-colors">
-              {SITE_CONFIG.name}
-            </span>
-            <span className="text-[10px] font-mono-code uppercase px-2 py-0.5 rounded bg-white/[0.05] border border-white/10 text-[#888888]">
-              Dev
+            <span className="font-display font-black text-lg sm:text-xl tracking-[0.18em] uppercase text-white group-hover:text-gray-300 transition-colors">
+              MOHAMMED IRFAN
             </span>
           </button>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map((link) => {
-              const id = link.href.replace('#', '');
-              const isActive = activeSection === id;
+          {/* Desktop Links on right */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-10">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
               return (
                 <button
-                  key={link.href}
+                  key={link.id}
                   onClick={() => scrollTo(link.href)}
-                  className={`relative font-mono-code text-xs uppercase tracking-widest transition-colors py-1 focus:outline-none ${
-                    isActive ? 'text-[#ff5c3d] font-semibold' : 'text-[#888888] hover:text-white'
-                  }`}
+                  className="relative text-xs font-semibold tracking-[0.18em] uppercase transition-colors py-1 focus:outline-none group text-gray-300 hover:text-white"
                 >
-                  <span>{link.label}</span>
+                  <span className={isActive ? 'text-white' : 'text-gray-300 group-hover:text-white'}>
+                    {link.label}
+                  </span>
                   {isActive && (
                     <motion.div
-                      layoutId="navUnderline"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#ff5c3d] rounded-full"
-                      transition={{ type: 'spring', stiffness: 450, damping: 35 }}
+                      layoutId="activeNavUnderline"
+                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
                     />
                   )}
                 </button>
               );
             })}
 
-            {/* Admin Access Pill */}
+            {/* Admin Console Pill */}
             <Link
               to="/admin"
-              className="text-[11px] font-mono-code px-3 py-1 rounded-full border border-white/15 text-[#888888] hover:text-white hover:border-[#ff5c3d] transition-colors"
+              className="text-[11px] font-mono-code uppercase tracking-wider px-3 py-1 rounded-full border border-white/20 text-gray-400 hover:text-white hover:border-white transition-all backdrop-blur-md"
             >
               Admin
             </Link>
           </div>
 
-          {/* Mobile Hamburger */}
+          {/* Mobile Hamburger Menu */}
           <div className="flex items-center gap-3 md:hidden">
             <Link
               to="/admin"
-              className="text-[11px] font-mono-code text-[#888888] hover:text-white px-2 py-1"
+              className="text-[11px] font-mono-code text-gray-400 hover:text-white px-2 py-1"
             >
               Admin
             </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-white hover:text-[#ff5c3d] transition-colors focus:outline-none"
+              className="p-2 text-white hover:text-gray-300 transition-colors focus:outline-none"
               aria-label="Toggle Navigation Menu"
             >
               {isOpen ? <X size={22} /> : <Menu size={22} />}
@@ -139,21 +143,20 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-x-0 top-16 z-30 bg-[#080808]/95 backdrop-blur-2xl border-b border-white/[0.08] p-6 md:hidden shadow-2xl"
           >
-            <div className="flex flex-col gap-3 font-mono-code">
-              {NAV_LINKS.map((link) => {
-                const id = link.href.replace('#', '');
-                const isActive = activeSection === id;
+            <div className="flex flex-col gap-4">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.id;
                 return (
                   <button
-                    key={link.href}
+                    key={link.id}
                     onClick={() => scrollTo(link.href)}
-                    className={`text-left text-sm font-medium py-2.5 px-3 rounded-xl transition-colors ${
+                    className={`text-left text-sm font-semibold tracking-widest uppercase py-2.5 px-3 rounded-xl transition-colors ${
                       isActive
-                        ? 'text-[#ff5c3d] bg-white/[0.04] font-semibold'
-                        : 'text-[#AAAAAA] hover:text-white hover:bg-white/[0.02]'
+                        ? 'text-white bg-white/[0.06]'
+                        : 'text-gray-400 hover:text-white hover:bg-white/[0.02]'
                     }`}
                   >
                     {link.label}

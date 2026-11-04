@@ -57,3 +57,4 @@ export interface WebsiteSettings {
   resume_url?: string;
   profile_image_url?: string;
 }
+

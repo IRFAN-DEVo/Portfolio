@@ -6,15 +6,15 @@ export default function SkillsSection() {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'Backend':
-        return <Server size={18} className="text-[#ff5c3d]" />;
+        return <Server size={18} className="text-white" />;
       case 'Frontend':
-        return <Layout size={18} className="text-[#ff5c3d]" />;
+        return <Layout size={18} className="text-white" />;
       case 'Database':
-        return <Database size={18} className="text-[#ff5c3d]" />;
+        return <Database size={18} className="text-white" />;
       case 'Tools':
-        return <Wrench size={18} className="text-[#ff5c3d]" />;
+        return <Wrench size={18} className="text-white" />;
       default:
-        return <Cpu size={18} className="text-[#ff5c3d]" />;
+        return <Cpu size={18} className="text-white" />;
     }
   };
 
@@ -29,33 +29,32 @@ export default function SkillsSection() {
   };
 
   const itemVariants = {
-    hidden: { y: 15, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.4 },
+      transition: { duration: 0.5 },
     },
   };
 
   return (
-    <section id="skills" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/[0.08] relative bg-[#050505]">
-      <div className="max-w-6xl mx-auto">
+    <section id="service" className="py-28 px-6 sm:px-10 lg:px-14 border-t border-white/[0.08] relative bg-[#050505] text-white">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: '-50px' }}
-          className="mb-14"
+          className="mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-mono-code font-semibold uppercase tracking-widest text-[#ff5c3d] mb-3">
-            <Cpu size={14} />
-            <span>02 // TECHNICAL SKILLS</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            Core Technologies &amp; Tools
+          <span className="text-[11px] uppercase tracking-[0.28em] text-gray-500 mb-4 block font-mono-code">
+            02 // The Stack &amp; Capabilities
+          </span>
+          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-700">
+            WHAT I CAN DO
           </h2>
-          <div className="w-12 h-[2px] bg-[#ff5c3d] mt-3" />
+          <div className="w-16 h-[2px] bg-white mt-4" />
         </motion.div>
 
         {/* Categories Grid */}
@@ -64,42 +63,42 @@ export default function SkillsSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           {Object.entries(SKILLS_CATEGORIZED).map(([category, skills]) => (
             <motion.div
               key={category}
               variants={itemVariants}
-              className="p-7 rounded-2xl portfolio-card group hover:-translate-y-1 transition-all"
+              className="p-8 sm:p-10 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] hover:border-white/30 transition-all group"
             >
-              <div className="flex items-center justify-between pb-4 mb-5 border-b border-white/[0.08]">
+              <div className="flex items-center justify-between pb-5 mb-6 border-b border-white/[0.08]">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#141414] border border-white/10 group-hover:border-[#ff5c3d]/50 transition-colors">
+                  <div className="p-3 rounded-xl bg-[#141414] border border-white/10 group-hover:border-white/40 transition-colors">
                     {getCategoryIcon(category)}
                   </div>
                   <div>
-                    <h3 className="font-display text-lg font-bold text-white group-hover:text-white transition-colors">
+                    <h3 className="font-display text-xl font-bold text-white tracking-tight">
                       {category}
                     </h3>
-                    <span className="text-[10px] font-mono-code text-[#777777] uppercase tracking-wider">
-                      Specialized Stack
+                    <span className="text-[10px] font-mono-code text-gray-500 uppercase tracking-widest">
+                      Engineering Domain
                     </span>
                   </div>
                 </div>
 
-                <span className="text-[11px] font-mono-code text-[#888888] px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
-                  {skills.length} skills
+                <span className="text-[11px] font-mono-code text-gray-400 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
+                  {skills.length} core skills
                 </span>
               </div>
 
               {/* Skill Badges */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {skills.map((skill) => (
                   <span
                     key={skill}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0e0e0e] text-[#D0D0D0] border border-white/[0.08] hover:border-[#ff5c3d]/50 hover:text-white hover:bg-white/[0.04] hover:-translate-y-0.5 transition-all text-xs font-mono-code cursor-default"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#121212] text-gray-200 border border-white/[0.08] hover:border-white/40 hover:text-white transition-all text-xs font-mono-code cursor-default shadow-sm"
                   >
-                    <CheckCircle size={12} className="text-[#ff5c3d]" />
+                    <CheckCircle size={13} className="text-gray-400" />
                     <span>{skill}</span>
                   </span>
                 ))}

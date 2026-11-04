@@ -159,3 +159,4 @@ export const SEED_PROJECTS: Project[] = [
     display_order: 4,
   },
 ];
+

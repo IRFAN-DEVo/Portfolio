@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Loader2, MessageSquare, Copy, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, Copy, Check } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/Icons';
 import toast from 'react-hot-toast';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
@@ -77,30 +77,27 @@ export default function ContactSection() {
   const linkedinLink = SOCIAL_LINKS.find((s) => s.id === 'linkedin')?.url || 'https://linkedin.com/in/mohammed-irfan-a4b3153b3';
 
   return (
-    <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/[0.08] relative bg-[#050505]">
-      <div className="max-w-6xl mx-auto">
+    <section id="contact" className="py-28 px-6 sm:px-10 lg:px-14 border-t border-white/[0.08] relative bg-[#050505] text-white">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: '-50px' }}
-          className="text-center max-w-2xl mx-auto mb-16"
+          className="mb-16"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-mono-code font-semibold uppercase tracking-widest text-[#ff5c3d] mb-3">
-            <MessageSquare size={14} />
-            <span>05 // GET IN TOUCH</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
-            Let's Build Together
+          <span className="text-[11px] uppercase tracking-[0.28em] text-gray-500 mb-4 block font-mono-code">
+            05 // Get in touch
+          </span>
+          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-700">
+            LET'S TALK
           </h2>
-          <p className="text-sm sm:text-base text-[#999999] font-light leading-relaxed">
-            Have a project, role opening, or question about my backend architectures? My inbox is always open.
-          </p>
+          <div className="w-16 h-[2px] bg-white mt-4" />
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Left Column: Direct Contact Info & Copy Buttons */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Direct Contact Cards on Left */}
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -109,19 +106,19 @@ export default function ContactSection() {
             className="lg:col-span-5 space-y-4"
           >
             {/* Email Card with Copy Button */}
-            <div className="p-6 rounded-2xl portfolio-card">
+            <div className="p-7 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] hover:border-white/30 transition-all">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#141414] border border-white/10 text-[#ff5c3d]">
+                <div className="flex items-center gap-3.5">
+                  <div className="p-3 rounded-xl bg-[#141414] border border-white/10 text-white">
                     <Mail size={18} />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono-code uppercase text-[#777777] block">
+                    <span className="text-[10px] font-mono-code uppercase text-gray-500 block tracking-wider">
                       Direct Email
                     </span>
                     <a
                       href={`mailto:${SITE_CONFIG.email}`}
-                      className="text-sm font-mono-code text-white hover:text-[#ff5c3d] transition-colors"
+                      className="text-sm font-mono-code text-white hover:underline transition-colors"
                     >
                       {SITE_CONFIG.email}
                     </a>
@@ -130,29 +127,29 @@ export default function ContactSection() {
 
                 <button
                   onClick={handleCopyEmail}
-                  className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/10 text-[#A0A0A0] hover:text-white transition-colors"
+                  className="p-2.5 rounded-xl bg-white/[0.05] hover:bg-white/15 text-gray-400 hover:text-white transition-colors"
                   title="Copy email to clipboard"
                   aria-label="Copy email"
                 >
-                  {copiedEmail ? <Check size={16} className="text-[#ff5c3d]" /> : <Copy size={16} />}
+                  {copiedEmail ? <Check size={16} className="text-white" /> : <Copy size={16} />}
                 </button>
               </div>
             </div>
 
             {/* Phone Card with Copy Button */}
-            <div className="p-6 rounded-2xl portfolio-card">
+            <div className="p-7 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] hover:border-white/30 transition-all">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-[#141414] border border-white/10 text-[#ff5c3d]">
+                <div className="flex items-center gap-3.5">
+                  <div className="p-3 rounded-xl bg-[#141414] border border-white/10 text-white">
                     <Phone size={18} />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono-code uppercase text-[#777777] block">
+                    <span className="text-[10px] font-mono-code uppercase text-gray-500 block tracking-wider">
                       Direct Phone
                     </span>
                     <a
                       href={`tel:${phone}`}
-                      className="text-sm font-mono-code text-white hover:text-[#ff5c3d] transition-colors"
+                      className="text-sm font-mono-code text-white hover:underline transition-colors"
                     >
                       {phone}
                     </a>
@@ -161,23 +158,23 @@ export default function ContactSection() {
 
                 <button
                   onClick={handleCopyPhone}
-                  className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/10 text-[#A0A0A0] hover:text-white transition-colors"
+                  className="p-2.5 rounded-xl bg-white/[0.05] hover:bg-white/15 text-gray-400 hover:text-white transition-colors"
                   title="Copy phone to clipboard"
                   aria-label="Copy phone number"
                 >
-                  {copiedPhone ? <Check size={16} className="text-[#ff5c3d]" /> : <Copy size={16} />}
+                  {copiedPhone ? <Check size={16} className="text-white" /> : <Copy size={16} />}
                 </button>
               </div>
             </div>
 
             {/* Location Card */}
-            <div className="p-6 rounded-2xl portfolio-card">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-[#141414] border border-white/10 text-[#ff5c3d]">
+            <div className="p-7 rounded-2xl bg-[#0c0c0c] border border-white/[0.08]">
+              <div className="flex items-center gap-3.5">
+                <div className="p-3 rounded-xl bg-[#141414] border border-white/10 text-white">
                   <MapPin size={18} />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono-code uppercase text-[#777777] block">
+                  <span className="text-[10px] font-mono-code uppercase text-gray-500 block tracking-wider">
                     Location
                   </span>
                   <span className="text-sm font-mono-code text-white">
@@ -188,8 +185,8 @@ export default function ContactSection() {
             </div>
 
             {/* Social Links */}
-            <div className="p-6 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] flex items-center justify-between">
-              <span className="text-xs font-mono-code text-[#777777] uppercase tracking-wider">
+            <div className="p-7 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] flex items-center justify-between">
+              <span className="text-xs font-mono-code text-gray-400 uppercase tracking-wider">
                 Follow On
               </span>
               <div className="flex items-center gap-3">
@@ -197,7 +194,7 @@ export default function ContactSection() {
                   href={githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-full bg-[#161616] border border-white/10 text-[#A0A0A0] hover:text-white hover:border-[#ff5c3d] transition-all"
+                  className="p-3 rounded-full bg-[#161616] border border-white/10 text-gray-400 hover:text-white hover:border-white transition-all"
                   aria-label="GitHub Profile"
                 >
                   <GithubIcon size={16} />
@@ -206,7 +203,7 @@ export default function ContactSection() {
                   href={linkedinLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2.5 rounded-full bg-[#161616] border border-white/10 text-[#A0A0A0] hover:text-white hover:border-[#ff5c3d] transition-all"
+                  className="p-3 rounded-full bg-[#161616] border border-white/10 text-gray-400 hover:text-white hover:border-white transition-all"
                   aria-label="LinkedIn Profile"
                 >
                   <LinkedinIcon size={16} />
@@ -215,7 +212,7 @@ export default function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Right Column: Working Contact Form */}
+          {/* Interactive Form on Right */}
           <motion.div
             initial={{ y: 30, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
@@ -223,10 +220,10 @@ export default function ContactSection() {
             viewport={{ once: true, margin: '-50px' }}
             className="lg:col-span-7"
           >
-            <form onSubmit={handleSubmit} className="p-7 sm:p-9 rounded-2xl portfolio-card space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="p-8 sm:p-10 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] space-y-5 shadow-xl">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
+                  <label htmlFor="name" className="block text-xs font-mono-code text-gray-400 mb-2 uppercase tracking-wider">
                     Your Name *
                   </label>
                   <input
@@ -236,12 +233,12 @@ export default function ContactSection() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Alex Hunter"
-                    className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-white/10 text-white placeholder-[#555555] text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors"
+                    className="w-full px-4 py-3.5 rounded-xl bg-[#141414] border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
+                  <label htmlFor="email" className="block text-xs font-mono-code text-gray-400 mb-2 uppercase tracking-wider">
                     Your Email *
                   </label>
                   <input
@@ -251,13 +248,13 @@ export default function ContactSection() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. alex@company.com"
-                    className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-white/10 text-white placeholder-[#555555] text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors"
+                    className="w-full px-4 py-3.5 rounded-xl bg-[#141414] border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-white transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
+                <label htmlFor="subject" className="block text-xs font-mono-code text-gray-400 mb-2 uppercase tracking-wider">
                   Subject
                 </label>
                 <input
@@ -265,13 +262,13 @@ export default function ContactSection() {
                   type="text"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  placeholder="e.g. Backend Developer Role / Project Proposal"
-                  className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-white/10 text-white placeholder-[#555555] text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors"
+                  placeholder="e.g. Backend Developer Role / Architectural Inquiry"
+                  className="w-full px-4 py-3.5 rounded-xl bg-[#141414] border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-white transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
+                <label htmlFor="message" className="block text-xs font-mono-code text-gray-400 mb-2 uppercase tracking-wider">
                   Message *
                 </label>
                 <textarea
@@ -280,15 +277,15 @@ export default function ContactSection() {
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell me about your project, timeline, or opportunity..."
-                  className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-white/10 text-white placeholder-[#555555] text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors resize-none"
+                  placeholder="Tell me about your project, team, or opportunity..."
+                  className="w-full px-4 py-3.5 rounded-xl bg-[#141414] border border-white/10 text-white placeholder-gray-600 text-sm focus:outline-none focus:border-white transition-colors resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full py-3.5 rounded-xl bg-[#ff5c3d] text-[#111111] font-mono-code font-bold text-xs uppercase tracking-wider hover:bg-[#ff7256] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,92,61,0.25)] hover:shadow-[0_0_30px_rgba(255,92,61,0.4)] disabled:opacity-50 cursor-pointer"
+                className="w-full py-4 rounded-xl bg-white text-black font-mono-code font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition-all flex items-center justify-center gap-2 shadow-[0_0_25px_rgba(255,255,255,0.2)] disabled:opacity-50 cursor-pointer"
               >
                 {sending ? (
                   <>

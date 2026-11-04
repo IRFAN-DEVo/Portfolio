@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ExternalLink, 
   X, 
-  Layers, 
   Star, 
   Terminal, 
   ShieldAlert, 
@@ -77,44 +76,43 @@ export default function ProjectsSection() {
 
   const getProjectIcon = (title: string) => {
     const t = title.toLowerCase();
-    if (t.includes('mart') || t.includes('commerce')) return <ShoppingBag size={24} className="text-[#ff5c3d]" />;
-    if (t.includes('license') || t.includes('guard')) return <ShieldAlert size={24} className="text-[#ff5c3d]" />;
-    if (t.includes('ai') || t.includes('assistant')) return <Bot size={24} className="text-[#ff5c3d]" />;
-    if (t.includes('link') || t.includes('pad')) return <Smartphone size={24} className="text-[#ff5c3d]" />;
-    return <Terminal size={24} className="text-[#ff5c3d]" />;
+    if (t.includes('mart') || t.includes('commerce')) return <ShoppingBag size={24} className="text-white" />;
+    if (t.includes('license') || t.includes('guard')) return <ShieldAlert size={24} className="text-white" />;
+    if (t.includes('ai') || t.includes('assistant')) return <Bot size={24} className="text-white" />;
+    if (t.includes('link') || t.includes('pad')) return <Smartphone size={24} className="text-white" />;
+    return <Terminal size={24} className="text-white" />;
   };
 
   return (
-    <section id="projects" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-white/[0.08] relative bg-[#050505]">
-      <div className="max-w-6xl mx-auto">
+    <section id="project" className="py-28 px-6 sm:px-10 lg:px-14 border-t border-white/[0.08] relative bg-[#050505] text-white">
+      <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true, margin: '-50px' }}
-          className="mb-10"
+          className="mb-12"
         >
-          <div className="inline-flex items-center gap-2 text-xs font-mono-code font-semibold uppercase tracking-widest text-[#ff5c3d] mb-3">
-            <Layers size={14} />
-            <span>03 // FEATURED PROJECTS</span>
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
-            Production &amp; Scalable Systems
+          <span className="text-[11px] uppercase tracking-[0.28em] text-gray-500 mb-4 block font-mono-code">
+            03 // Selected work
+          </span>
+          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-700">
+            PRODUCTION ARCHITECTURES
           </h2>
-          <div className="w-12 h-[2px] bg-[#ff5c3d] mt-3" />
+          <div className="w-16 h-[2px] bg-white mt-4" />
         </motion.div>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-10">
+        {/* Filter Pills */}
+        <div className="flex flex-wrap items-center gap-3 mb-12">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-1.5 rounded-full text-xs font-mono-code uppercase tracking-wider transition-all ${
+              className={`px-5 py-2 rounded-full text-xs font-mono-code uppercase tracking-wider transition-all ${
                 selectedCategory === category
-                  ? 'bg-[#ff5c3d] text-[#111111] font-bold shadow-[0_0_15px_rgba(255,92,61,0.3)]'
-                  : 'bg-[#111111] text-[#888888] hover:text-white border border-white/10 hover:border-white/20'
+                  ? 'bg-white text-black font-bold shadow-[0_0_20px_rgba(255,255,255,0.3)]'
+                  : 'bg-[#111111] text-gray-400 hover:text-white border border-white/10 hover:border-white/30'
               }`}
             >
               {category}
@@ -124,13 +122,13 @@ export default function ProjectsSection() {
 
         {/* Projects Grid: 2 columns desktop, 1 on mobile */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="h-80 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] animate-pulse" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id || index}
@@ -138,45 +136,45 @@ export default function ProjectsSection() {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 viewport={{ once: true, margin: '-50px' }}
-                className="group rounded-2xl portfolio-card overflow-hidden hover:-translate-y-1.5 hover:shadow-[0_0_30px_rgba(255,92,61,0.15)] flex flex-col justify-between transition-all"
+                className="group rounded-2xl bg-[#0c0c0c] border border-white/[0.08] overflow-hidden hover:border-white/30 hover:-translate-y-1.5 flex flex-col justify-between transition-all shadow-xl"
               >
                 <div>
-                  {/* Top Header Banner with Icon & Tag */}
-                  <div className="p-6 border-b border-white/[0.08] bg-gradient-to-r from-white/[0.02] to-transparent flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2.5 rounded-xl bg-[#141414] border border-white/10 group-hover:border-[#ff5c3d]/50 transition-colors">
+                  {/* Top Card Header */}
+                  <div className="p-7 border-b border-white/[0.08] bg-gradient-to-r from-white/[0.02] to-transparent flex items-center justify-between">
+                    <div className="flex items-center gap-3.5">
+                      <div className="p-2.5 rounded-xl bg-[#141414] border border-white/10 group-hover:border-white/40 transition-colors">
                         {getProjectIcon(project.title)}
                       </div>
                       <div>
-                        <h3 className="font-display text-lg sm:text-xl font-bold text-white group-hover:text-white transition-colors">
+                        <h3 className="font-display text-xl font-bold text-white tracking-tight">
                           {project.title}
                         </h3>
-                        <span className="text-[10px] font-mono-code text-[#ff5c3d] tracking-wide uppercase">
-                          {project.featured ? 'Featured Architecture' : 'Backend System'}
+                        <span className="text-[10px] font-mono-code text-gray-400 uppercase tracking-widest">
+                          {project.featured ? 'Core Architecture' : 'Backend System'}
                         </span>
                       </div>
                     </div>
 
                     {project.featured && (
-                      <span className="flex items-center gap-1 text-[10px] font-mono-code px-2 py-0.5 rounded-full bg-[#ff5c3d]/10 text-[#ff5c3d] border border-[#ff5c3d]/30">
-                        <Star size={10} fill="#ff5c3d" />
-                        <span>Core</span>
+                      <span className="flex items-center gap-1 text-[10px] font-mono-code px-2.5 py-1 rounded-full bg-white/10 text-white border border-white/20">
+                        <Star size={11} fill="#FFFFFF" />
+                        <span>Featured</span>
                       </span>
                     )}
                   </div>
 
                   {/* Body description */}
-                  <div className="p-6">
-                    <p className="text-xs sm:text-sm text-[#999999] leading-relaxed mb-5 font-light">
+                  <div className="p-7">
+                    <p className="text-sm text-gray-300 leading-relaxed mb-6 font-light">
                       {project.short_description}
                     </p>
 
                     {/* Tech Stack Pills */}
-                    <div className="flex flex-wrap gap-1.5 mb-6">
+                    <div className="flex flex-wrap gap-2">
                       {project.tech_stack.map((tech) => (
                         <span
                           key={tech}
-                          className="px-2.5 py-1 rounded-md bg-[#111111] border border-white/[0.08] text-[#B0B0B0] text-[11px] font-mono-code"
+                          className="px-3 py-1 rounded-lg bg-[#141414] border border-white/[0.08] text-gray-300 text-xs font-mono-code"
                         >
                           {tech}
                         </span>
@@ -186,18 +184,18 @@ export default function ProjectsSection() {
                 </div>
 
                 {/* Footer Action Links */}
-                <div className="px-6 py-4 bg-[#080808] border-t border-white/[0.08] flex items-center justify-between">
-                  <div className="flex items-center gap-3">
+                <div className="px-7 py-4 bg-[#080808] border-t border-white/[0.08] flex items-center justify-between">
+                  <div className="flex items-center gap-4">
                     {project.github_url && (
                       <a
                         href={project.github_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#888888] hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono-code text-gray-400 hover:text-white transition-colors"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <GithubIcon size={14} />
-                        <span>Code</span>
+                        <span>Source Code</span>
                       </a>
                     )}
                     {project.live_url && (
@@ -205,7 +203,7 @@ export default function ProjectsSection() {
                         href={project.live_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-mono-code text-[#ff5c3d] hover:text-[#ff7256] transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono-code text-white hover:underline transition-colors"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <ExternalLink size={14} />
@@ -216,7 +214,7 @@ export default function ProjectsSection() {
 
                   <button
                     onClick={() => setSelectedProject(project)}
-                    className="text-xs font-mono-code text-[#EDEDED] hover:text-[#ff5c3d] flex items-center gap-1 transition-colors"
+                    className="text-xs font-mono-code text-white hover:text-gray-300 flex items-center gap-1 transition-colors"
                   >
                     <span>Inspect Specs</span>
                     <ArrowUpRight size={14} />
@@ -235,31 +233,31 @@ export default function ProjectsSection() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="relative w-full max-w-2xl bg-[#0e0e0e] border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto"
+                className="relative w-full max-w-2xl bg-[#0e0e0e] border border-white/20 rounded-2xl p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto text-white"
               >
                 <button
                   onClick={() => setSelectedProject(null)}
-                  className="absolute top-5 right-5 p-2 rounded-full bg-white/[0.06] text-[#A0A0A0] hover:text-white transition-colors"
+                  className="absolute top-5 right-5 p-2 rounded-full bg-white/[0.06] text-gray-400 hover:text-white transition-colors"
                   aria-label="Close modal"
                 >
                   <X size={18} />
                 </button>
 
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-3.5 mb-6">
                   <div className="p-3 rounded-xl bg-[#141414] border border-white/10">
                     {getProjectIcon(selectedProject.title)}
                   </div>
                   <div>
-                    <h3 className="font-display text-2xl font-bold text-white">
+                    <h3 className="font-display text-2xl font-bold text-white tracking-tight">
                       {selectedProject.title}
                     </h3>
-                    <span className="text-xs font-mono-code text-[#ff5c3d] uppercase tracking-wider">
-                      Technical Architecture Spec
+                    <span className="text-xs font-mono-code text-gray-400 uppercase tracking-widest">
+                      Deep Technical Architecture Specification
                     </span>
                   </div>
                 </div>
 
-                <div className="space-y-5 text-sm text-[#B0B0B0] font-light leading-relaxed my-6">
+                <div className="space-y-6 text-sm text-gray-300 font-light leading-relaxed my-6">
                   <div>
                     <h4 className="text-xs font-mono-code font-bold uppercase tracking-wider text-white mb-2">
                       Overview
@@ -270,9 +268,9 @@ export default function ProjectsSection() {
                   {selectedProject.long_description && (
                     <div>
                       <h4 className="text-xs font-mono-code font-bold uppercase tracking-wider text-white mb-2">
-                        Engineering Details &amp; Architecture
+                        Engineering Highlights &amp; Guarantees
                       </h4>
-                      <div className="p-4 rounded-xl bg-[#080808] border border-white/10 font-mono-code text-xs text-[#CCCCCC] whitespace-pre-line leading-relaxed">
+                      <div className="p-4 rounded-xl bg-[#080808] border border-white/10 font-mono-code text-xs text-gray-300 whitespace-pre-line leading-relaxed">
                         {selectedProject.long_description}
                       </div>
                     </div>
@@ -280,7 +278,7 @@ export default function ProjectsSection() {
 
                   <div>
                     <h4 className="text-xs font-mono-code font-bold uppercase tracking-wider text-white mb-2">
-                      Technology Stack
+                      Full Technology Stack
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.tech_stack.map((t) => (
@@ -295,16 +293,16 @@ export default function ProjectsSection() {
                   </div>
                 </div>
 
-                <div className="pt-5 border-t border-white/10 flex items-center justify-end gap-3">
+                <div className="pt-6 border-t border-white/10 flex items-center justify-end gap-3">
                   {selectedProject.github_url && (
                     <a
                       href={selectedProject.github_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-5 py-2.5 rounded-full bg-[#181818] border border-white/15 text-white hover:border-white text-xs font-mono-code transition-all flex items-center gap-2"
+                      className="px-5 py-2.5 rounded-full bg-[#181818] border border-white/20 text-white hover:border-white text-xs font-mono-code transition-all flex items-center gap-2"
                     >
                       <GithubIcon size={14} />
-                      <span>View GitHub Repository</span>
+                      <span>View GitHub Code</span>
                     </a>
                   )}
                   {selectedProject.live_url && (
@@ -312,7 +310,7 @@ export default function ProjectsSection() {
                       href={selectedProject.live_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-5 py-2.5 rounded-full bg-[#ff5c3d] text-[#111111] font-mono-code font-bold text-xs hover:bg-[#ff7256] transition-all flex items-center gap-2"
+                      className="px-5 py-2.5 rounded-full bg-white text-black font-mono-code font-bold text-xs hover:bg-gray-200 transition-all flex items-center gap-2"
                     >
                       <ExternalLink size={14} />
                       <span>Launch Live Demo</span>
