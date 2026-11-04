@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
-import StickerPeel from '@/components/StickerPeel';
-import { PORTRAIT_IMAGE } from '@/assets/portraitData';
 import {
   BotanicalFlower,
   WashiTape,
@@ -151,18 +149,22 @@ export default function HeroSection() {
 
             {/* The Polaroid Card Frame with deep drop shadow over adjacent cards */}
             <div className="polaroid-card w-full max-w-[360px] p-4 pb-8 rounded-[3px] shadow-[0_24px_55px_-12px_rgba(30,20,10,0.35),0_6px_16px_rgba(30,20,10,0.12)] transition-transform duration-300 hover:rotate-0 hover:scale-[1.03]">
-              {/* Photo Area with Interactive Tactile Sticker Peel */}
+              {/* Photo Area: Clean, high-resolution portrait */}
               <div className="relative aspect-[4/4.8] w-full overflow-hidden bg-[#e8dfcf] rounded-[2px] shadow-inner border border-[#d8cfbf] flex items-center justify-center">
-                <StickerPeel
-                  imageSrc={PORTRAIT_IMAGE}
-                  peelBackHoverPct={36}
-                  peelBackActivePct={58}
-                  followPointer={true}
-                  curlRadius={15}
-                  backColor="#ede4d4"
-                  draggable={true}
-                  shadowIntensity={0.7}
-                  lightingIntensity={0.55}
+                <img
+                  src="/images/irfan_portrait.jpg"
+                  alt="Mohammed Irfan K — Python / Django Backend Developer"
+                  className="w-full h-full object-cover object-top filter contrast-[1.03] brightness-[1.01] select-none"
+                  loading="eager"
+                />
+
+                {/* Subtle vintage photo sheen overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-25"
+                  style={{
+                    background:
+                      'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
+                  }}
                 />
               </div>
 
