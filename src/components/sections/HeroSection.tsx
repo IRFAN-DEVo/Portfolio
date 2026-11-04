@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
+import Lanyard from '@/components/Lanyard';
 import {
   BotanicalFlower,
   WashiTape,
@@ -127,59 +128,64 @@ export default function HeroSection() {
           </motion.div>
 
           {/* ============================================================ */}
-          {/* 2. CENTER: POLAROID PHOTO STICKER (Overlapping everything) */}
+          {/* 2. CENTER: 3D INTERACTIVE LANYARD BADGE (OVER EVERYTHING) */}
           {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
-            animate={{ opacity: 1, scale: 1, rotate: 1.5 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
-            className="lg:col-span-4 flex flex-col items-center justify-center relative my-6 lg:my-0 z-30 lg:-mx-8"
+            className="lg:col-span-4 flex flex-col items-center justify-center relative my-4 lg:my-0 z-30 lg:-mx-8"
           >
-            {/* Top Washi Tape holding the Polaroid */}
+            {/* Top Washi Tape pinned above the lanyard anchor */}
             <WashiTape
-              className="w-40 h-8 -top-4 z-40"
+              className="w-40 h-8 -top-3 z-40"
               variant="cream"
-              rotation="-rotate-2"
+              rotation="-rotate-1"
             />
 
-            {/* Pink Smiley Sticker Overlap (from reference) */}
-            <div className="absolute -top-6 -left-4 z-50">
-              <SmileySticker className="w-14 h-14" />
+            {/* Pink Smiley Sticker Overlap */}
+            <div className="absolute -top-5 -left-2 z-50 pointer-events-none">
+              <SmileySticker className="w-13 h-13" />
             </div>
 
-            {/* The Polaroid Card Frame with deep drop shadow over adjacent cards */}
-            <div className="polaroid-card w-full max-w-[360px] p-4 pb-8 rounded-[3px] shadow-[0_24px_55px_-12px_rgba(30,20,10,0.35),0_6px_16px_rgba(30,20,10,0.12)] transition-transform duration-300 hover:rotate-0 hover:scale-[1.03]">
-              {/* Photo Area: Clean, high-resolution portrait */}
-              <div className="relative aspect-[4/4.8] w-full overflow-hidden bg-[#e8dfcf] rounded-[2px] shadow-inner border border-[#d8cfbf] flex items-center justify-center">
-                <img
-                  src="/images/irfan_portrait.jpg"
-                  alt="Mohammed Irfan K — Python / Django Backend Developer"
-                  className="w-full h-full object-cover object-top filter contrast-[1.03] brightness-[1.01] select-none"
-                  loading="eager"
-                />
+            {/* 3D Lanyard Canvas Container */}
+            <div className="w-full h-[520px] sm:h-[570px] max-w-[380px] relative flex flex-col items-center justify-center">
+              <Lanyard
+                frontImage="/images/irfan_portrait.jpg"
+                backImage="/images/card_back.svg"
+                cardColor="#f6f1e7"
+                strapColor="#1e1b18"
+                metal="silver"
+                finish="glossy"
+                size={0.62}
+                strapLength={0.46}
+                strapWidth={0.7}
+                gravity={1.2}
+                damping={0.55}
+                elasticity={0.45}
+                breeze={0.35}
+                interactive={true}
+                intro={true}
+              />
 
-                {/* Subtle vintage photo sheen overlay */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-25"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
-                  }}
-                />
+              {/* Interaction Hint Pill */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#1e1b18]/80 text-[#f6f1e7] text-[10px] font-mono-code tracking-wider uppercase backdrop-blur-sm pointer-events-none opacity-70 flex items-center gap-1.5 shadow-md">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#df6b5c] animate-pulse" />
+                <span>Drag &amp; Click to Flip</span>
               </div>
+            </div>
 
-              {/* Handwritten Polaroid Caption */}
-              <div className="mt-4 px-1 flex items-center justify-between">
-                <div>
-                  <p className="font-handwritten text-xl font-bold text-[#1e1b18] leading-tight">
-                    Mohammed Irfan K
-                  </p>
-                  <p className="font-typewriter text-[11px] text-[#5a5045] tracking-wide mt-0.5">
-                    Python / Django Developer
-                  </p>
-                </div>
-                <DoodleStar className="w-5 h-5 text-[#df6b5c]" />
+            {/* Handwritten Dossier Caption */}
+            <div className="mt-1 px-3 py-1.5 flex items-center justify-between w-full max-w-[340px] bg-[#fffdfa]/90 border border-[#e8dfcf] rounded-sm shadow-sm">
+              <div>
+                <p className="font-handwritten text-lg font-bold text-[#1e1b18] leading-tight">
+                  Mohammed Irfan K
+                </p>
+                <p className="font-typewriter text-[10px] text-[#5a5045] tracking-wide">
+                  Python / Django Developer &bull; Verified ID
+                </p>
               </div>
+              <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
             </div>
           </motion.div>
 
