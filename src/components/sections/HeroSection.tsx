@@ -7,7 +7,6 @@ import {
   WashiTape,
   DoodleArrow,
   DoodleStar,
-  DoodleHeart,
   InkSplatter,
   SmileySticker,
 } from '@/components/ScrapbookDoodles';
@@ -251,9 +250,8 @@ export default function HeroSection() {
               ))}
             </div>
 
-            {/* Doodle Heart & Arrow at bottom (from reference) */}
-            <div className="mt-6 pt-3 flex items-center justify-between text-[#1e1b18]">
-              <DoodleHeart className="w-6 h-6 text-[#df6b5c] fill-[#df6b5c]/10" />
+            {/* Doodle Arrow at bottom */}
+            <div className="mt-6 pt-3 flex items-center justify-end text-[#1e1b18]">
               <DoodleArrow className="w-10 h-10 rotate-[-15deg] text-[#1e1b18]/70" />
             </div>
 
