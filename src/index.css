@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-dark: #050505;
+    --bg-card: #0c0c0c;
+    --bg-card-hover: #141414;
+    --accent: #ff5c3d;
+    --accent-glow: rgba(255, 92, 61, 0.25);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-highlight: rgba(255, 255, 255, 0.16);
+    --text-primary: #EDEDED;
+    --text-secondary: #999999;
+    --text-muted: #555555;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #222222 #050505;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: #050505;
+    color: #EDEDED;
+  }
+
+  body {
+    background-color: #050505;
+    color: #EDEDED;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+}
+
+/* Monospace & Display Typography */
+.font-mono-code {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+}
+
+.font-display {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+/* Chrome / Metallic Gradient Headlines */
+.gradient-headline {
+  background: linear-gradient(180deg, #FFFFFF 20%, #E0E0E0 50%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass & Dark Theme Cards */
+.portfolio-card {
+  background: rgba(12, 12, 12, 0.75);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-card:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 30px -5px rgba(255, 92, 61, 0.12);
+}
+
+/* Glow Utilities */
+.glow-accent {
+  box-shadow: 0 0 25px rgba(255, 92, 61, 0.35);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #383838;
+}
