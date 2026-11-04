@@ -1,35 +1,56 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Menu, X, Lock, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { DoodleStar } from './ScrapbookDoodles';
 
-interface NavbarProps {
-  isVisible?: boolean;
-}
+const navItems = [
+  { label: 'Home', href: '#home' },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Experience', href: '#experience' },
+  { label: 'Contact', href: '#contact' },
+];
 
-export default function Navbar({ isVisible = true }: NavbarProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isClickingRef = useRef(false);
+  const clickTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+      setIsScrolled(window.scrollY > 30);
 
-  useEffect(() => {
-    const sectionIds = ['home', 'about', 'service', 'project', 'experience', 'contact'];
-    const handleScrollSpy = () => {
-      const scrollPosition = window.scrollY + 200;
+      // Prevent scroll event during smooth scroll click from flipping active tab
+      if (isClickingRef.current) return;
+
+      // 1. If at the top of the page, strictly highlight 'home'
+      if (window.scrollY < 120) {
+        setActiveSection('home');
+        return;
+      }
+
+      // 2. If at the bottom of the page, strictly highlight 'contact'
+      const isAtBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 60;
+      if (isAtBottom) {
+        setActiveSection('contact');
+        return;
+      }
+
+      // 3. Focal Line detection:
+      // The section currently crossing the viewing line (160px from top, below navbar) is active.
+      const focalY = 160;
+      const sectionIds = ['home', 'about', 'skills', 'projects', 'experience', 'contact'];
+
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= focalY && rect.bottom > focalY) {
             setActiveSection(id);
             break;
           }
@@ -37,136 +58,172 @@ export default function Navbar({ isVisible = true }: NavbarProps) {
       }
     };
 
-    window.addEventListener('scroll', handleScrollSpy, { passive: true });
-    handleScrollSpy();
-    return () => window.removeEventListener('scroll', handleScrollSpy);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    };
   }, []);
 
-  const navLinks = [
-    { label: 'HOME', href: '#home', id: 'home' },
-    { label: 'ABOUT', href: '#about', id: 'about' },
-    { label: 'SERVICE', href: '#service', id: 'service' },
-    { label: 'PROJECT', href: '#project', id: 'project' },
-    { label: 'EXPERIENCE', href: '#experience', id: 'experience' },
-    { label: 'CONTACT', href: '#contact', id: 'contact' },
-  ];
-
   const scrollTo = (href: string) => {
-    setIsOpen(false);
-    const target = document.querySelector(href);
+    setMobileMenuOpen(false);
+    const targetId = href.substring(1);
+
+    // Immediately highlight the clicked tab
+    setActiveSection(targetId);
+
+    // Lock scrollspy while smooth scrolling to target
+    isClickingRef.current = true;
+    if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
+    clickTimeoutRef.current = window.setTimeout(() => {
+      isClickingRef.current = false;
+    }, 850);
+
+    if (targetId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const target = document.getElementById(targetId);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth' });
+      // Offset for sticky navbar so section header is comfortably visible
+      const navbarHeight = 75;
+      const targetTop =
+        target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
     }
   };
 
-  if (!isVisible) return null;
-
   return (
-    <>
-      <motion.nav
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#000000]/80 backdrop-blur-xl border-b border-white/[0.08] py-4 shadow-2xl'
-            : 'bg-transparent py-6'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between">
-          {/* Brand Name on left */}
-          <button
-            onClick={() => scrollTo('#home')}
-            className="text-left focus:outline-none flex items-center gap-2 group"
-          >
-            <span className="font-display font-black text-lg sm:text-xl tracking-[0.18em] uppercase text-white group-hover:text-gray-300 transition-colors">
-              MOHAMMED IRFAN
-            </span>
-          </button>
-
-          {/* Desktop Links on right */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-10">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => scrollTo(link.href)}
-                  className="relative text-xs font-semibold tracking-[0.18em] uppercase transition-colors py-1 focus:outline-none group text-gray-300 hover:text-white"
-                >
-                  <span className={isActive ? 'text-white' : 'text-gray-300 group-hover:text-white'}>
-                    {link.label}
-                  </span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavUnderline"
-                      className="absolute -bottom-1 left-0 right-0 h-[2px] bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                      transition={{ type: 'spring', stiffness: 500, damping: 35 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-
-            {/* Admin Console Pill */}
-            <Link
-              to="/admin"
-              className="text-[11px] font-mono-code uppercase tracking-wider px-3 py-1 rounded-full border border-white/20 text-gray-400 hover:text-white hover:border-white transition-all backdrop-blur-md"
-            >
-              Admin
-            </Link>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-[#f6f1e7]/90 backdrop-blur-md shadow-sm border-b border-[#2d251e]/15 py-3.5'
+          : 'bg-transparent py-5 sm:py-7'
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between">
+        {/* Brand / Name - Handwritten Logo */}
+        <a
+          href="#home"
+          onClick={e => {
+            e.preventDefault();
+            scrollTo('#home');
+          }}
+          className="group flex items-center gap-2 text-decoration-none"
+        >
+          <div className="font-handwritten text-2xl sm:text-3xl font-bold tracking-tight text-[#1e1b18] group-hover:text-[#df6b5c] transition-colors flex items-center gap-1.5">
+            <span>Mohammed Irfan</span>
+            <DoodleStar className="w-4 h-4 text-[#df6b5c] group-hover:rotate-45 transition-transform" />
           </div>
+        </a>
 
-          {/* Mobile Hamburger Menu */}
-          <div className="flex items-center gap-3 md:hidden">
-            <Link
-              to="/admin"
-              className="text-[11px] font-mono-code text-gray-400 hover:text-white px-2 py-1"
-            >
-              Admin
-            </Link>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-white hover:text-gray-300 transition-colors focus:outline-none"
-              aria-label="Toggle Navigation Menu"
-            >
-              {isOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
+        {/* Desktop Navigation Links */}
+        <nav className="hidden md:flex items-center gap-8 lg:gap-10">
+          {navItems.map(item => {
+            const isActive = activeSection === item.href.substring(1);
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={e => {
+                  e.preventDefault();
+                  scrollTo(item.href);
+                }}
+                className={`relative font-handwritten text-lg tracking-wide transition-all duration-200 py-1 ${
+                  isActive
+                    ? 'text-[#1e1b18] font-bold'
+                    : 'text-[#5a5045] hover:text-[#1e1b18]'
+                }`}
+              >
+                {item.label}
+                {isActive && (
+                  <span
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#221e1a] rounded-full"
+                    style={{
+                      clipPath: 'polygon(0% 0%, 100% 20%, 95% 100%, 5% 80%)',
+                    }}
+                  />
+                )}
+              </a>
+            );
+          })}
+
+          {/* Resume Download / Bag indicator */}
+          <a
+            href="/resume.pdf"
+            download="Mohammed_Irfan_Resume.pdf"
+            className="flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] hover:text-[#df6b5c] px-3 py-1.5 border border-[#221e1a]/30 rounded-full hover:border-[#221e1a] transition-all bg-[#fffdf9]/60 shadow-xs"
+            title="Download CV"
+          >
+            <Download size={13} />
+            <span>CV</span>
+          </a>
+
+          {/* Admin Lock Button */}
+          <Link
+            to="/admin/login"
+            className="w-8 h-8 rounded-full border border-[#221e1a]/20 hover:border-[#221e1a] flex items-center justify-center text-[#5a5045] hover:text-[#1e1b18] transition-colors"
+            title="Admin Console"
+            aria-label="Admin Console"
+          >
+            <Lock size={13} />
+          </Link>
+        </nav>
+
+        {/* Mobile Hamburger Toggle */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden p-2 text-[#1e1b18] hover:text-[#df6b5c] transition-colors"
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+        </button>
+      </div>
+
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-[#f6f1e7] border-b-2 border-[#221e1a]/20 px-8 py-7 shadow-lg transition-all">
+          <div className="flex flex-col gap-4">
+            {navItems.map(item => (
+              <a
+                key={item.label}
+                href={item.href}
+                onClick={e => {
+                  e.preventDefault();
+                  scrollTo(item.href);
+                }}
+                className={`font-handwritten text-2xl py-1.5 border-b border-[#221e1a]/10 ${
+                  activeSection === item.href.substring(1)
+                    ? 'text-[#1e1b18] font-bold pl-2 border-l-4 border-l-[#df6b5c]'
+                    : 'text-[#5a5045]'
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+            <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#221e1a]/15">
+              <a
+                href="/resume.pdf"
+                download="Mohammed_Irfan_Resume.pdf"
+                className="flex items-center gap-2 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] px-4 py-2 border border-[#221e1a]/40 rounded-full bg-[#fffdf9]"
+              >
+                <Download size={14} />
+                <span>Download CV</span>
+              </a>
+              <Link
+                to="/admin/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-1.5 font-typewriter text-xs text-[#5a5045] px-3 py-2 border border-[#221e1a]/20 rounded-full"
+              >
+                <Lock size={13} />
+                <span>Admin</span>
+              </Link>
+            </div>
           </div>
         </div>
-      </motion.nav>
-
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-x-0 top-16 z-30 bg-[#080808]/95 backdrop-blur-2xl border-b border-white/[0.08] p-6 md:hidden shadow-2xl"
-          >
-            <div className="flex flex-col gap-4">
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.id;
-                return (
-                  <button
-                    key={link.id}
-                    onClick={() => scrollTo(link.href)}
-                    className={`text-left text-sm font-semibold tracking-widest uppercase py-2.5 px-3 rounded-xl transition-colors ${
-                      isActive
-                        ? 'text-white bg-white/[0.06]'
-                        : 'text-gray-400 hover:text-white hover:bg-white/[0.02]'
-                    }`}
-                  >
-                    {link.label}
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      )}
+    </header>
   );
 }

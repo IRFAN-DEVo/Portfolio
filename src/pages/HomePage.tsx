@@ -1,6 +1,5 @@
-import { useState } from 'react';
-import IntroSequenceOverlay from '@/components/IntroSequenceOverlay';
 import Navbar from '@/components/Navbar';
+import ScrapbookCanvas from '@/components/ScrapbookCanvas';
 import HeroSection from '@/components/sections/HeroSection';
 import AboutSection from '@/components/sections/AboutSection';
 import SkillsSection from '@/components/sections/SkillsSection';
@@ -10,30 +9,15 @@ import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
 
 export default function HomePage() {
-  const [introDone, setIntroDone] = useState<boolean>(() => {
-    if (typeof window !== 'undefined' && sessionStorage.getItem('irfan_intro_viewed') === 'true') {
-      return true;
-    }
-    return false;
-  });
-
   return (
-    <div className="min-h-screen bg-[#050505] text-[#EDEDED] font-sans antialiased selection:bg-[#ff5c3d]/20 selection:text-[#ff5c3d]">
-      {/* 
-        Intro Animation Sequence (Stages 1 - 5):
-        Black Screen -> Glowing Dot -> Exclamation (!) -> IRFAN -> PORTFOLIO -> Horizontal Split
-      */}
-      {!introDone && (
-        <IntroSequenceOverlay
-          wordmark="IRFAN"
-          onComplete={() => setIntroDone(true)}
-        />
-      )}
+    <div className="min-h-screen bg-[#f6f1e7] text-[#1e1b18] font-serif-vintage antialiased selection:bg-[#df6b5c]/25 selection:text-[#1e1b18] relative">
+      {/* Interactive Paper Dust & Ambient Ink Canvas */}
+      <ScrapbookCanvas />
 
-      {/* Sticky Monospace Navigation with ScrollSpy & Mobile Drawer */}
-      <Navbar isVisible={true} />
+      {/* Sticky Handcrafted Navigation */}
+      <Navbar />
 
-      {/* Hero Section with Focal Stippled Particle Portrait Canvas */}
+      {/* Hero Section */}
       <HeroSection />
 
       {/* Core Single-Page Sections */}
@@ -45,9 +29,8 @@ export default function HomePage() {
         <ContactSection />
       </main>
 
-      {/* Minimal Monospace Footer */}
+      {/* Handcrafted Vintage Footer */}
       <Footer />
     </div>
   );
 }
-

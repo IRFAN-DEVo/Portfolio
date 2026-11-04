@@ -1,90 +1,275 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDownRight } from 'lucide-react';
-import ParticlePortraitCanvas from '@/components/ParticlePortraitCanvas';
+import { ArrowRight, Check } from 'lucide-react';
+import StickerPeel from '@/components/StickerPeel';
+import { PORTRAIT_IMAGE } from '@/assets/portraitData';
+import {
+  BotanicalFlower,
+  WashiTape,
+  DoodleArrow,
+  DoodleStar,
+  DoodleHeart,
+  InkSplatter,
+  SmileySticker,
+} from '@/components/ScrapbookDoodles';
 
 export default function HeroSection() {
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Clean Django Architecture', done: true },
+    { id: 2, text: 'High-Throughput REST APIs', done: true },
+    { id: 3, text: 'Concurrency & PostgreSQL', done: true },
+    { id: 4, text: 'React Full-Stack Systems', done: true },
+    { id: 5, text: 'Ship next big innovation', done: false },
+  ]);
+
+  const toggleTask = (id: number) => {
+    setTasks(prev =>
+      prev.map(t => (t.id === id ? { ...t, done: !t.done } : t))
+    );
+  };
+
   const scrollTo = (href: string) => {
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    const target = document.querySelector(href);
+    if (target) {
+      const navbarHeight = 75;
+      const targetTop =
+        target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+      window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+    }
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full flex items-end justify-center overflow-hidden bg-cover bg-center select-none"
-      style={{
-        background: 'radial-gradient(circle at 50% 45%, #252525 0%, #050505 75%, #000000 100%)',
-      }}
+      className="relative min-h-screen w-full pt-28 sm:pt-36 pb-20 px-4 sm:px-8 lg:px-12 flex items-center justify-center overflow-hidden"
     >
-      {/* Background Soft Glow & Vignette */}
-      <div className="absolute inset-0 bg-black/25 backdrop-blur-[1px] pointer-events-none" />
+      {/* Outer Decorative Sketch Border Container (matching reference photo border) */}
+      <div className="relative w-full max-w-7xl mx-auto border-2 border-[#2b251f]/20 rounded-2xl p-4 sm:p-8 lg:p-12 bg-[#f4efe5]/60 shadow-[0_4px_30px_rgba(50,35,20,0.06)]">
+        {/* Subtle Inner Border Frame */}
+        <div className="absolute inset-2 sm:inset-3 border border-[#2b251f]/10 rounded-xl pointer-events-none" />
 
-      {/* Full Viewport 3D Particle Portrait Canvas */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
-        className="absolute inset-0 w-full h-full pointer-events-auto z-10 overflow-hidden"
-      >
-        <ParticlePortraitCanvas
-          imageSrc="/images/particle_reference.jpg"
-          className="w-full h-full"
-        />
-      </motion.div>
+        {/* Botanical Flower Illustration on Left Margin (exact match to reference) */}
+        <div className="hidden xl:block absolute left-4 top-20 text-[#2b251f]/75 pointer-events-none select-none">
+          <BotanicalFlower className="w-20 h-52" />
+        </div>
 
-      {/* Bottom Composition: PORTFOLIO + Role + Contact CTAs */}
-      <div className="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 pb-8 sm:pb-12 flex flex-col justify-end pointer-events-none">
-        {/* Giant Metallic Chrome Heading */}
-        <motion.h1
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-[16vw] md:text-[11rem] lg:text-[14.5rem] font-black tracking-tighter drop-shadow-2xl leading-none uppercase text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-800 pointer-events-auto"
-          style={{
-            filter: 'drop-shadow(0 20px 40px rgba(0, 0, 0, 0.9))',
-          }}
-        >
-          PORTFOLIO
-        </motion.h1>
+        {/* Four Corner Hand-Drawn Crosshairs */}
+        <div className="absolute top-4 left-4 text-[#2b251f]/30 font-typewriter text-xs select-none">+</div>
+        <div className="absolute top-4 right-4 text-[#2b251f]/30 font-typewriter text-xs select-none">+</div>
+        <div className="absolute bottom-4 left-4 text-[#2b251f]/30 font-typewriter text-xs select-none">+</div>
+        <div className="absolute bottom-4 right-4 text-[#2b251f]/30 font-typewriter text-xs select-none">+</div>
 
-        {/* Lower Row: Role on left, Arrow & Contact Pill on right */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mt-1 sm:mt-2 pointer-events-auto">
-          {/* Role: Bold White + Light Italic */}
+        {/* Main Collage Layout */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+          {/* ============================================================ */}
+          {/* 1. LEFT CARD: TORN KRAFT PAPER CARD (Collect moments / Craft systems) */}
+          {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-lg sm:text-2xl md:text-3xl text-white drop-shadow-md flex items-center gap-2"
+            initial={{ opacity: 0, y: 30, rotate: -2 }}
+            animate={{ opacity: 1, y: 0, rotate: -1.2 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="lg:col-span-5 relative bg-[#cbb393] text-[#1e1b18] p-7 sm:p-9 rounded-sm shadow-[3px_6px_20px_rgba(50,35,15,0.18)]"
+            style={{
+              clipPath: 'polygon(0% 1%, 98% 0%, 100% 97%, 1% 100%)',
+            }}
           >
-            <span className="font-bold tracking-tight">Python / Django</span>
-            <span className="font-light italic text-gray-400 font-serif">Developer</span>
+            {/* Top Washi Tape */}
+            <WashiTape
+              className="w-32 h-7 -top-3.5 left-12"
+              variant="cream"
+              rotation="rotate-1"
+            />
+
+            {/* Handwritten Main Heading */}
+            <h1 className="font-handwritten text-4xl sm:text-5xl lg:text-[3.25rem] font-bold leading-[1.12] tracking-tight text-[#1e1b18] mb-4">
+              Craft systems, <br />
+              <span className="relative inline-block">
+                not just code.
+                {/* Hand-drawn squiggly underline */}
+                <svg
+                  className="absolute -bottom-2 left-0 w-full h-3 text-[#1e1b18]"
+                  viewBox="0 0 200 8"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M1 5 Q 50 1, 100 5 T 200 4"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+            </h1>
+
+            {/* Subtitle / Bio Paragraph */}
+            <p className="font-serif-vintage text-base sm:text-lg text-[#322c25] leading-relaxed mt-6 mb-7">
+              Mohammed Irfan K is a Python / Django backend engineer building
+              concurrency-safe architectures, high-throughput REST APIs, and
+              resilient full-stack applications with React.
+            </p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
+              <button
+                onClick={() => scrollTo('#projects')}
+                className="group px-6 py-3 bg-[#1e1b18] text-[#f6f1e7] rounded-sm font-typewriter text-xs sm:text-sm uppercase tracking-wider font-bold flex items-center gap-2 hover:bg-[#df6b5c] transition-colors shadow-md active:scale-95"
+              >
+                <span>Explore Work</span>
+                <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+              </button>
+
+              <button
+                onClick={() => scrollTo('#contact')}
+                className="font-typewriter text-xs sm:text-sm uppercase tracking-wider text-[#1e1b18] font-bold underline underline-offset-4 decoration-2 decoration-[#1e1b18]/50 hover:decoration-[#df6b5c] hover:text-[#df6b5c] transition-colors"
+              >
+                Get In Touch
+              </button>
+            </div>
           </motion.div>
 
-          {/* Action Buttons matching screenshot */}
+          {/* ============================================================ */}
+          {/* 2. CENTER: POLAROID PHOTO STICKER (Overlapping everything) */}
+          {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex items-center gap-3.5"
+            initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
+            animate={{ opacity: 1, scale: 1, rotate: 1.5 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: 'easeOut' }}
+            className="lg:col-span-4 flex flex-col items-center justify-center relative my-6 lg:my-0 z-30 lg:-mx-8"
           >
-            {/* Circular Arrow Button (Scroll to About) */}
-            <button
-              onClick={() => scrollTo('#about')}
-              aria-label="Scroll down to explore"
-              className="w-12 h-12 rounded-full border border-white/20 hover:border-white bg-[#0e0e0e]/70 backdrop-blur-md flex items-center justify-center text-white transition-all hover:scale-105 active:scale-95 shadow-lg group"
-            >
-              <ArrowDownRight size={18} className="group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform" />
-            </button>
+            {/* Top Washi Tape holding the Polaroid */}
+            <WashiTape
+              className="w-40 h-8 -top-4 z-40"
+              variant="cream"
+              rotation="-rotate-2"
+            />
 
-            {/* Contact Pill Button */}
-            <button
-              onClick={() => scrollTo('#contact')}
-              className="px-7 py-3 rounded-full border border-white/20 hover:border-white bg-[#0e0e0e]/70 backdrop-blur-md text-xs sm:text-sm font-medium tracking-wider uppercase text-white transition-all hover:scale-105 active:scale-95 shadow-lg"
-            >
-              Contact
-            </button>
+            {/* Pink Smiley Sticker Overlap (from reference) */}
+            <div className="absolute -top-6 -left-4 z-50">
+              <SmileySticker className="w-14 h-14" />
+            </div>
+
+            {/* The Polaroid Card Frame with deep drop shadow over adjacent cards */}
+            <div className="polaroid-card w-full max-w-[360px] p-4 pb-8 rounded-[3px] shadow-[0_24px_55px_-12px_rgba(30,20,10,0.35),0_6px_16px_rgba(30,20,10,0.12)] transition-transform duration-300 hover:rotate-0 hover:scale-[1.03]">
+              {/* Photo Area with Interactive Tactile Sticker Peel */}
+              <div className="relative aspect-[4/4.8] w-full overflow-hidden bg-[#e8dfcf] rounded-[2px] shadow-inner border border-[#d8cfbf] flex items-center justify-center">
+                <StickerPeel
+                  imageSrc={PORTRAIT_IMAGE}
+                  peelBackHoverPct={36}
+                  peelBackActivePct={58}
+                  followPointer={true}
+                  curlRadius={15}
+                  backColor="#ede4d4"
+                  draggable={true}
+                  shadowIntensity={0.7}
+                  lightingIntensity={0.55}
+                />
+              </div>
+
+              {/* Handwritten Polaroid Caption */}
+              <div className="mt-4 px-1 flex items-center justify-between">
+                <div>
+                  <p className="font-handwritten text-xl font-bold text-[#1e1b18] leading-tight">
+                    Mohammed Irfan K
+                  </p>
+                  <p className="font-typewriter text-[11px] text-[#5a5045] tracking-wide mt-0.5">
+                    Python / Django Developer
+                  </p>
+                </div>
+                <DoodleStar className="w-5 h-5 text-[#df6b5c]" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ============================================================ */}
+          {/* 3. RIGHT CARD: NOTEBOOK PAPER CHECKLIST (TODAY / SKILLS) */}
+          {/* ============================================================ */}
+          <motion.div
+            initial={{ opacity: 0, x: 25, rotate: 1 }}
+            animate={{ opacity: 1, x: 0, rotate: 1.5 }}
+            transition={{ duration: 0.8, delay: 0.25, ease: 'easeOut' }}
+            className="lg:col-span-3 relative lined-notebook p-6 sm:p-7 rounded-sm shadow-[2px_5px_18px_rgba(40,30,15,0.14)] border border-[#e2d6c4]"
+          >
+            {/* Top Washi Tape */}
+            <WashiTape
+              className="w-24 h-6 -top-3 right-6"
+              variant="sage"
+              rotation="rotate-2"
+            />
+
+            {/* Checklist Header */}
+            <div className="flex items-center justify-between border-b-2 border-[#1e1b18]/20 pb-2 mb-4">
+              <h2 className="font-typewriter text-base font-bold uppercase tracking-widest text-[#1e1b18]">
+                TODAY:
+              </h2>
+              <span className="font-handwritten text-xs text-[#5a5045]">Active Focus</span>
+            </div>
+
+            {/* Interactive Checklist Items */}
+            <div className="space-y-3 font-handwritten text-lg sm:text-xl text-[#1e1b18]">
+              {tasks.map(task => (
+                <div
+                  key={task.id}
+                  onClick={() => toggleTask(task.id)}
+                  className="flex items-center gap-2.5 cursor-pointer group select-none"
+                >
+                  <div
+                    className={`w-5 h-5 rounded-[2px] border-2 border-[#1e1b18] flex items-center justify-center transition-all ${
+                      task.done ? 'bg-[#1e1b18] text-[#f6f1e7]' : 'bg-[#fffdf9]'
+                    }`}
+                  >
+                    {task.done && <Check size={14} strokeWidth={3} />}
+                  </div>
+                  <span
+                    className={`transition-all ${
+                      task.done
+                        ? 'line-through text-[#5a5045]'
+                        : 'text-[#1e1b18] group-hover:text-[#df6b5c]'
+                    }`}
+                  >
+                    {task.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Doodle Heart & Arrow at bottom (from reference) */}
+            <div className="mt-6 pt-3 flex items-center justify-between text-[#1e1b18]">
+              <DoodleHeart className="w-6 h-6 text-[#df6b5c] fill-[#df6b5c]/10" />
+              <DoodleArrow className="w-10 h-10 rotate-[-15deg] text-[#1e1b18]/70" />
+            </div>
+
+            {/* Ink Splatter at bottom corner */}
+            <div className="absolute -bottom-4 -right-3 text-[#1e1b18] pointer-events-none">
+              <InkSplatter className="w-11 h-11" />
+            </div>
           </motion.div>
         </div>
+
+        {/* ============================================================ */}
+        {/* BOTTOM CENTER: TAPED QUOTE STICKY NOTE (from reference) */}
+        {/* ============================================================ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-8 sm:mt-10 max-w-md mx-auto relative bg-[#e7dfcf] border border-[#d2c5b0] p-4 sm:p-5 rounded-xs shadow-[2px_4px_12px_rgba(40,25,10,0.1)] rotate-[-1deg]"
+        >
+          {/* Top Tape */}
+          <WashiTape
+            className="w-28 h-6 -top-3 left-1/2 -translate-x-1/2"
+            variant="pink"
+            rotation="-rotate-1"
+          />
+
+          <p className="font-handwritten text-lg sm:text-xl text-[#221e1a] text-center leading-snug">
+            &ldquo;The little details? The clean architecture? <br />
+            They aren&apos;t little.&rdquo;
+          </p>
+          <p className="font-typewriter text-[11px] text-[#5a5045] text-right mt-1.5 uppercase tracking-wider">
+            &mdash; Mohammed Irfan K.
+          </p>
+        </motion.div>
       </div>
     </section>
   );

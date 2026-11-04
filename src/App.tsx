@@ -15,24 +15,24 @@ export default function App() {
         position="top-right"
         toastOptions={{
           style: {
-            background: '#0E0E0E',
-            color: '#FFFFFF',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            borderRadius: '16px',
-            fontSize: '12px',
-            fontFamily: "'JetBrains Mono', monospace",
-            backdropFilter: 'blur(16px)',
+            background: '#fffdf9',
+            color: '#1e1b18',
+            border: '1px solid #e2d8c3',
+            borderRadius: '4px',
+            fontSize: '13px',
+            fontFamily: "'Special Elite', 'Courier Prime', monospace",
+            boxShadow: '0 4px 16px rgba(45, 30, 15, 0.12)',
           },
           success: {
             iconTheme: {
-              primary: '#ff5c3d',
-              secondary: '#000000',
+              primary: '#5b8266',
+              secondary: '#fffdf9',
             },
           },
           error: {
             iconTheme: {
-              primary: '#ff5c3d',
-              secondary: '#000000',
+              primary: '#df6b5c',
+              secondary: '#fffdf9',
             },
           },
         }}

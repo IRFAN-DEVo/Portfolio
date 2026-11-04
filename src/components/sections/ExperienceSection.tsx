@@ -1,95 +1,144 @@
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, CheckCircle } from 'lucide-react';
-import { EXPERIENCE_DATA } from '@/lib/constants';
+import { Briefcase, GraduationCap, CheckCircle } from 'lucide-react';
+import { EXPERIENCE_DATA, EDUCATION_DATA } from '@/lib/constants';
+import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="py-28 px-6 sm:px-10 lg:px-14 border-t border-white/[0.08] relative bg-[#050505] text-white">
-      <div className="max-w-6xl mx-auto">
+    <section id="experience" className="relative py-24 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-5xl mx-auto">
         {/* Section Header */}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: '-50px' }}
-          className="mb-16"
-        >
-          <span className="text-[11px] uppercase tracking-[0.28em] text-gray-500 mb-4 block font-mono-code">
-            04 // Professional trajectory
-          </span>
-          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-700">
-            CAREER EXPERIENCE
-          </h2>
-          <div className="w-16 h-[2px] bg-white mt-4" />
-        </motion.div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
+                Section // 04
+              </span>
+              <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
+            </div>
+            <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+              Experience &amp; Education
+            </h2>
+            <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
+              Chronological log of industrial internship experience and academic development.
+            </p>
+          </div>
 
-        {/* Timeline Container */}
-        <div className="relative">
-          {/* Animated vertical timeline line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-white/80 via-white/20 to-transparent -translate-x-1/2" />
+          <StampBadge
+            text="TIMELINE"
+            subtext="VERIFIED HISTORY"
+            color="#d4a373"
+            className="self-start sm:self-auto"
+          />
+        </div>
 
-          {EXPERIENCE_DATA.map((exp, index) => {
-            const isEven = index % 2 === 0;
+        {/* Timeline Content */}
+        <div className="space-y-12">
+          {/* ============================================================ */}
+          {/* 1. PROFESSIONAL EXPERIENCE (FEBNO TECHNOLOGIES) */}
+          {/* ============================================================ */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-xs bg-[#cbb393] text-[#1e1b18] shadow-xs">
+                <Briefcase size={18} />
+              </div>
+              <h3 className="font-handwritten text-2xl sm:text-3xl font-bold text-[#1e1b18]">
+                Professional Internship
+              </h3>
+            </div>
 
-            return (
-              <div
-                key={index}
-                className="relative flex flex-col md:flex-row items-center justify-between mb-12 last:mb-0 w-full"
+            {EXPERIENCE_DATA.map((exp, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+                className="relative bg-[#fffdf9] p-7 sm:p-9 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] border border-[#e2d8c3] rotate-[-0.5deg]"
               >
-                {/* Center Node Indicator */}
-                <div className="absolute left-4 md:left-1/2 top-8 -translate-x-1/2 z-10 w-4 h-4 rounded-full bg-white ring-4 ring-[#050505] shadow-[0_0_15px_rgba(255,255,255,0.9)]" />
+                <WashiTape
+                  className="w-28 h-6 -top-3 left-8"
+                  variant="cream"
+                  rotation="rotate-2"
+                />
 
-                {/* Card placement */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#1e1b18]/15 pb-4 mb-5">
+                  <div>
+                    <h4 className="font-handwritten text-3xl font-bold text-[#1e1b18]">
+                      {exp.role}
+                    </h4>
+                    <p className="font-typewriter text-sm font-bold text-[#df6b5c] mt-0.5">
+                      {exp.company} &bull; {exp.location}
+                    </p>
+                  </div>
+
+                  <span className="font-typewriter text-xs font-bold px-3 py-1 bg-[#f6f1e7] rounded-full border border-[#1e1b18]/20 text-[#1e1b18] self-start sm:self-auto">
+                    {exp.period}
+                  </span>
+                </div>
+
+                {/* Responsibilities with hand-drawn checkmarks */}
+                <ul className="space-y-3 font-serif-vintage text-sm sm:text-base text-[#3d362e] leading-relaxed">
+                  {exp.responsibilities.map((bullet, bIdx) => (
+                    <li key={bIdx} className="flex items-start gap-2.5">
+                      <CheckCircle
+                        size={16}
+                        className="text-[#5b8266] shrink-0 mt-1"
+                      />
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* ============================================================ */}
+          {/* 2. EDUCATION & ACADEMY */}
+          {/* ============================================================ */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-xs bg-[#cbb393] text-[#1e1b18] shadow-xs">
+                <GraduationCap size={18} />
+              </div>
+              <h3 className="font-handwritten text-2xl sm:text-3xl font-bold text-[#1e1b18]">
+                Education &amp; Academic Training
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {EDUCATION_DATA.map((edu, idx) => (
                 <motion.div
-                  initial={{ opacity: 0, x: isEven ? -40 : 40 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  className={`pl-12 md:pl-0 w-full md:w-[46%] ${
-                    isEven ? 'md:mr-auto md:text-left' : 'md:ml-auto md:text-left'
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  className={`relative lined-notebook p-6 sm:p-7 rounded-sm shadow-[2px_5px_18px_rgba(40,30,15,0.1)] border border-[#ded3be] ${
+                    idx === 0 ? 'rotate-[0.8deg]' : 'rotate-[-0.8deg]'
                   }`}
                 >
-                  <div className="p-8 sm:p-10 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] hover:border-white/30 transition-all shadow-xl">
-                    {/* Period badge */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                      <span className="text-[10px] font-mono-code font-bold uppercase tracking-wider text-white bg-white/10 px-3 py-1 rounded-full border border-white/20">
-                        Internship &bull; {exp.duration}
-                      </span>
+                  <WashiTape
+                    className="w-24 h-6 -top-3 right-6"
+                    variant={idx === 0 ? 'sage' : 'pink'}
+                    rotation={idx === 0 ? '-rotate-1' : 'rotate-2'}
+                  />
 
-                      <div className="flex items-center gap-1.5 text-xs font-mono-code text-gray-400">
-                        <Calendar size={13} className="text-white" />
-                        <span>{exp.period}</span>
-                      </div>
-                    </div>
-
-                    {/* Role & Company */}
-                    <h3 className="font-display text-2xl font-bold text-white mb-1.5 tracking-tight">
-                      {exp.role}
-                    </h3>
-
-                    <div className="flex items-center gap-2 text-xs font-mono-code text-gray-400 mb-6">
-                      <span className="text-white font-medium">{exp.company}</span>
-                      <span>&bull;</span>
-                      <span className="flex items-center gap-1 text-gray-500">
-                        <MapPin size={12} />
-                        {exp.location}
-                      </span>
-                    </div>
-
-                    {/* Bullet Points */}
-                    <div className="space-y-3.5 pt-5 border-t border-white/[0.08]">
-                      {exp.responsibilities.map((resp: string, idx: number) => (
-                        <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-gray-300 leading-relaxed font-light">
-                          <CheckCircle size={15} className="text-white shrink-0 mt-0.5" />
-                          <span>{resp}</span>
-                        </div>
-                      ))}
-                    </div>
+                  <div className="pl-4 border-l border-dashed border-[#df6b5c]/40">
+                    <span className="font-typewriter text-[11px] font-bold text-[#df6b5c] uppercase tracking-wider">
+                      {edu.period}
+                    </span>
+                    <h4 className="font-handwritten text-2xl font-bold text-[#1e1b18] mt-1 leading-snug">
+                      {edu.degree}
+                    </h4>
+                    <p className="font-serif-vintage text-sm text-[#5a5045] mt-1">
+                      {edu.institution}
+                    </p>
                   </div>
                 </motion.div>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

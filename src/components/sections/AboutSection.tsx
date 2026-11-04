@@ -1,149 +1,208 @@
 import { motion } from 'framer-motion';
-import { MapPin, GraduationCap, Check, ArrowRight } from 'lucide-react';
-import { SITE_CONFIG, EDUCATION_DATA } from '@/lib/constants';
+import { Terminal, Database, Cpu, Layers, GitBranch, ShieldCheck } from 'lucide-react';
+import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
 
 export default function AboutSection() {
-  const stats = [
-    { value: '1+', label: 'Years Experience', sub: 'Backend & QA Testing' },
-    { value: '4+', label: 'Production Projects', sub: 'Concurrency-Safe Architectures' },
-    { value: '100%', label: 'API Test Coverage', sub: 'Verified Endpoints in Postman' },
-    { value: '18+', label: 'Core Technologies', sub: 'Django, React & PostgreSQL' },
+  const highlights = [
+    {
+      icon: Terminal,
+      title: 'Python & Django Core',
+      desc: 'Building robust, maintainable backend applications with Django and Django REST Framework.',
+    },
+    {
+      icon: Cpu,
+      title: 'Concurrency & Scalability',
+      desc: 'Designing race-condition-free endpoints, atomic transactions, and background queues.',
+    },
+    {
+      icon: Database,
+      title: 'PostgreSQL & Databases',
+      desc: 'Optimized schema design, indexed queries, normalization, and reliable state persistence.',
+    },
+    {
+      icon: Layers,
+      title: 'React & Frontend Cohesion',
+      desc: 'Bridging backend APIs with modern, responsive, animated React and Tailwind UIs.',
+    },
   ];
 
-  const corePrinciples = [
-    'Architecting concurrency-safe REST API backends using Django REST Framework and PostgreSQL.',
-    'Designing relational database schemas with explicit constraints, indexing, and transactional isolation.',
-    'Cryptographic token signing and offline verification using ES256 elliptic curve.',
-    'Hardening systems with JWT authentication, custom role-based permissions (RBAC), and audit logging.',
-    'Automating multi-provider payment flows (Razorpay, Stripe, Cash on Delivery) in unified checkouts.',
-    'Execution of rigorous API validation and website audits with Postman (Amazon APIs, redirect mapping).',
+  const stats = [
+    { label: 'Primary Focus', value: 'Python / Django' },
+    { label: 'Internship', value: 'Febno Technologies' },
+    { label: 'APIs Built', value: 'REST & WebSockets' },
+    { label: 'Architecture', value: 'Clean & Modular' },
   ];
 
   return (
-    <section id="about" className="py-28 px-6 sm:px-10 lg:px-14 border-t border-white/[0.08] relative bg-[#050505] text-white">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Tracker & Heading */}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true, margin: '-50px' }}
-          className="mb-16"
-        >
-          <span className="text-[11px] uppercase tracking-[0.28em] text-gray-500 mb-4 block font-mono-code">
-            01 // About me
-          </span>
-          <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-300 to-gray-700">
-            ENGINEERING WITH DISCIPLINE
-          </h2>
-          <div className="w-16 h-[2px] bg-white mt-4" />
-        </motion.div>
+    <section id="about" className="relative py-24 px-4 sm:px-8 lg:px-12">
+      <div className="max-w-6xl mx-auto">
+        {/* Section Header with Stamp & Tape */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12 sm:mb-16 border-b-2 border-[#1e1b18]/15 pb-6">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
+                Section // 01
+              </span>
+              <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
+            </div>
+            <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+              About the Developer
+            </h2>
+          </div>
 
-        {/* Two-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Main Narrative on Left */}
+          <StampBadge
+            text="IRFAN • ARCHITECT"
+            subtext="BACKEND FOCUSED"
+            color="#5b8266"
+            className="self-start sm:self-auto"
+          />
+        </div>
+
+        {/* Dual-Page Open Journal Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* ============================================================ */}
+          {/* LEFT PAGE: JOURNAL NARRATIVE ON LINED PAPER */}
+          {/* ============================================================ */}
           <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            className="lg:col-span-7 space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:col-span-7 relative lined-notebook p-8 sm:p-10 rounded-sm shadow-[2px_6px_22px_rgba(40,30,15,0.12)] border border-[#ded3be] rotate-[-0.5deg]"
           >
-            <div className="p-8 sm:p-10 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] backdrop-blur-xl">
-              <h3 className="font-display text-2xl font-bold text-white mb-5 tracking-tight">
-                Hi, I'm Mohammed Irfan K
+            {/* Top Washi Tape */}
+            <WashiTape
+              className="w-32 h-7 -top-3.5 left-10"
+              variant="cream"
+              rotation="rotate-1"
+            />
+
+            <div className="pl-6 sm:pl-8 border-l border-dashed border-[#df6b5c]/30">
+              <h3 className="font-typewriter text-base sm:text-lg font-bold uppercase tracking-wider text-[#1e1b18] mb-4">
+                Field Journal Entry: The Philosophy
               </h3>
 
-              <p className="text-base text-gray-300 leading-relaxed mb-5 font-light">
-                I'm a <strong className="text-white font-semibold">Python/Django Backend Developer</strong> based in{' '}
-                <span className="text-white">{SITE_CONFIG.location}</span> who builds secure, production-minded REST APIs, licensing backends, and payment-integrated web applications with Django REST Framework and PostgreSQL.
-              </p>
+              <div className="space-y-4 font-serif-vintage text-base sm:text-lg text-[#2d261e] leading-relaxed">
+                <p>
+                  I am <strong className="text-[#1e1b18] font-bold">Mohammed Irfan K</strong>, a backend-focused
+                  software engineer with an unyielding passion for constructing reliable, clean, and scalable web architectures.
+                </p>
 
-              <p className="text-sm sm:text-base text-gray-400 leading-relaxed mb-6 font-light">
-                I also build with <strong className="text-white font-semibold">React</strong> on the frontend to deliver responsive, seamless full-stack applications. Backed by hands-on QA testing and API validation (Amazon APIs, redirect mapping, crawl audits), I prioritize writing reliable, well-documented, and concurrency-safe code that withstands real-world traffic spikes.
-              </p>
+                <p>
+                  My engineering journey centers around <strong className="text-[#1e1b18]">Python</strong> and{' '}
+                  <strong className="text-[#1e1b18]">Django</strong>. I believe true engineering elegance lies not in
+                  superficial complexity, but in crafting database transactions that never fail silently, endpoints that
+                  handle concurrency gracefully, and API contracts that provide seamless developer experiences.
+                </p>
 
-              <div className="flex items-center gap-2 text-xs font-mono-code text-gray-400 pt-5 border-t border-white/[0.08]">
-                <MapPin size={15} className="text-white shrink-0" />
-                <span>Available for on-site &amp; remote developer roles</span>
+                <p>
+                  During my internship at <strong className="text-[#1e1b18]">Febno Technologies</strong> and across my
+                  production-grade projects, I have implemented cryptographic licensing backends, high-concurrency e-commerce systems,
+                  and low-latency WebSocket bridges.
+                </p>
+
+                <p>
+                  When bridging to the client, I utilize <strong className="text-[#1e1b18]">React</strong> and{' '}
+                  <strong className="text-[#1e1b18]">Tailwind CSS</strong> to craft tactile, responsive, and animated user experiences.
+                </p>
               </div>
-            </div>
 
-            {/* Architectural Highlights Checklist */}
-            <div className="p-8 rounded-2xl bg-[#0c0c0c] border border-white/[0.08]">
-              <h4 className="text-xs font-mono-code font-bold uppercase tracking-wider text-white mb-5 flex items-center gap-2">
-                <ArrowRight size={14} className="text-white" />
-                <span>Core Architectural Principles</span>
-              </h4>
-              <div className="grid grid-cols-1 gap-3.5">
-                {corePrinciples.map((principle, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-gray-300">
-                    <div className="w-4 h-4 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5 border border-white/20">
-                      <Check size={11} className="text-white" />
-                    </div>
-                    <span>{principle}</span>
-                  </div>
-                ))}
+              {/* Handwritten Sign-off */}
+              <div className="mt-8 pt-4 border-t border-[#1e1b18]/15 flex items-center justify-between">
+                <div>
+                  <p className="font-script text-3xl font-bold text-[#1e1b18]">
+                    Mohammed Irfan K.
+                  </p>
+                  <p className="font-typewriter text-[11px] text-[#7a7065] uppercase tracking-wider">
+                    Backend & Full-Stack Engineer
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 text-[#5b8266]">
+                  <ShieldCheck size={20} />
+                  <span className="font-typewriter text-xs font-bold uppercase">Verified Code</span>
+                </div>
               </div>
             </div>
           </motion.div>
 
-          {/* Stats & Education on Right */}
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true, margin: '-50px' }}
-            className="lg:col-span-5 space-y-6"
-          >
-            {/* 2x2 Stats Grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {stats.map((s, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-2xl bg-[#0c0c0c] border border-white/[0.08] hover:border-white/30 transition-all"
-                >
-                  <div className="font-display text-3xl sm:text-4xl font-extrabold text-white mb-1.5">
-                    {s.value}
-                  </div>
-                  <div className="text-xs font-mono-code font-bold text-gray-300 uppercase tracking-wider mb-1">
-                    {s.label}
-                  </div>
-                  <div className="text-[11px] text-gray-500 font-light leading-snug">
-                    {s.sub}
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* ============================================================ */}
+          {/* RIGHT PAGE: PINNED HIGHLIGHTS & STATS CARDS */}
+          {/* ============================================================ */}
+          <div className="lg:col-span-5 space-y-6">
+            {/* Stats Card */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative bg-[#cbb393] text-[#1e1b18] p-6 rounded-sm shadow-[2px_5px_18px_rgba(45,30,15,0.15)] rotate-[1deg]"
+            >
+              <WashiTape
+                className="w-24 h-6 -top-3 right-8"
+                variant="sage"
+                rotation="-rotate-2"
+              />
 
-            {/* Education Credentials */}
-            <div className="p-8 rounded-2xl bg-[#0c0c0c] border border-white/[0.08]">
-              <div className="flex items-center gap-2.5 text-base font-display font-bold text-white mb-6">
-                <GraduationCap size={20} className="text-white" />
-                <h3>Education &amp; Credentials</h3>
-              </div>
+              <h4 className="font-typewriter text-xs uppercase tracking-widest font-bold text-[#1e1b18] mb-4 pb-2 border-b border-[#1e1b18]/20 flex items-center gap-2">
+                <GitBranch size={14} />
+                <span>Developer Dossier</span>
+              </h4>
 
-              <div className="space-y-6">
-                {EDUCATION_DATA.map((edu, idx) => (
-                  <div
-                    key={idx}
-                    className="relative pl-5 border-l border-white/20 hover:border-white transition-colors"
-                  >
-                    <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-                    <span className="text-[10px] font-mono-code px-2 py-0.5 rounded bg-white/[0.06] text-gray-400 inline-block mb-1">
-                      {edu.period}
-                    </span>
-                    <h4 className="text-sm font-semibold text-white">
-                      {edu.degree}
-                    </h4>
-                    <p className="text-xs text-gray-400 mt-0.5">
-                      {edu.institution}
+              <div className="grid grid-cols-2 gap-4">
+                {stats.map((s, idx) => (
+                  <div key={idx} className="bg-[#f6f1e7]/70 p-3 rounded-xs border border-[#1e1b18]/10">
+                    <p className="font-typewriter text-[10px] uppercase text-[#7a7065] tracking-wider">
+                      {s.label}
+                    </p>
+                    <p className="font-handwritten text-lg font-bold text-[#1e1b18] mt-0.5">
+                      {s.value}
                     </p>
                   </div>
                 ))}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+
+            {/* Core Architectural Pillars */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.15 }}
+              className="relative bg-[#fffdf9] p-6 rounded-sm shadow-[2px_6px_20px_rgba(40,30,15,0.1)] border border-[#e2d8c3] rotate-[-0.8deg]"
+            >
+              <WashiTape
+                className="w-28 h-6 -top-3 left-10"
+                variant="pink"
+                rotation="rotate-2"
+              />
+
+              <h4 className="font-typewriter text-xs uppercase tracking-widest font-bold text-[#1e1b18] mb-4 pb-2 border-b border-[#1e1b18]/15">
+                Core Architectural Pillars
+              </h4>
+
+              <div className="space-y-3.5">
+                {highlights.map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={idx} className="flex items-start gap-3 group">
+                      <div className="p-2 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 text-[#1e1b18] group-hover:bg-[#df6b5c] group-hover:text-[#f6f1e7] transition-colors shrink-0">
+                        <Icon size={16} />
+                      </div>
+                      <div>
+                        <h5 className="font-handwritten text-lg font-bold text-[#1e1b18] leading-tight">
+                          {item.title}
+                        </h5>
+                        <p className="font-serif-vintage text-xs text-[#5a5045] mt-0.5 leading-snug">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>
