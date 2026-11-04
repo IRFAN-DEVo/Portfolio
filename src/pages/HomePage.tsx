@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import ScrapbookCanvas from '@/components/ScrapbookCanvas';
 import HandDrawnLoader from '@/components/HandDrawnLoader';
@@ -10,31 +11,38 @@ import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
 
 export default function HomePage() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#f6f1e7] text-[#1e1b18] font-serif-vintage antialiased selection:bg-[#df6b5c]/25 selection:text-[#1e1b18] relative">
       {/* Hand-Drawn Minimalist Loading Screen */}
-      <HandDrawnLoader />
+      <HandDrawnLoader onLoaded={() => setIsLoaded(true)} />
 
-      {/* Interactive Paper Dust & Ambient Ink Canvas */}
-      <ScrapbookCanvas />
+      {/* Only load and mount the home page content after 100% is loaded */}
+      {isLoaded && (
+        <>
+          {/* Interactive Paper Dust & Ambient Ink Canvas */}
+          <ScrapbookCanvas />
 
-      {/* Sticky Handcrafted Navigation */}
-      <Navbar />
+          {/* Sticky Handcrafted Navigation */}
+          <Navbar />
 
-      {/* Hero Section */}
-      <HeroSection />
+          {/* Hero Section with Entrance Animations */}
+          <HeroSection />
 
-      {/* Core Single-Page Sections */}
-      <main className="relative z-10">
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <ContactSection />
-      </main>
+          {/* Core Single-Page Sections */}
+          <main className="relative z-10">
+            <AboutSection />
+            <SkillsSection />
+            <ProjectsSection />
+            <ExperienceSection />
+            <ContactSection />
+          </main>
 
-      {/* Handcrafted Vintage Footer */}
-      <Footer />
+          {/* Handcrafted Vintage Footer */}
+          <Footer />
+        </>
+      )}
     </div>
   );
 }

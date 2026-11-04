@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface HandDrawnLoaderProps {
+  /** Callback fired immediately when progress hits 100% */
+  onLoaded?: () => void;
   /** Optional callback fired when progress hits 100% and fade-out completes */
   onComplete?: () => void;
   /** Speed / duration factor for simulated loading (default ~1800ms) */
@@ -15,8 +17,9 @@ interface HandDrawnLoaderProps {
  * and smooth Framer Motion percentage & width animation.
  */
 export default function HandDrawnLoader({
+  onLoaded,
   onComplete,
-  duration = 1800,
+  duration = 1600,
 }: HandDrawnLoaderProps) {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
@@ -24,7 +27,7 @@ export default function HandDrawnLoader({
   useEffect(() => {
     // Calculate interval step based on total duration
     const totalSteps = 100;
-    const baseInterval = Math.max(12, Math.floor(duration / totalSteps));
+    const baseInterval = Math.max(10, Math.floor(duration / totalSteps));
 
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -38,6 +41,8 @@ export default function HandDrawnLoader({
 
         if (next === 100) {
           clearInterval(interval);
+          // Notify parent that 100% has been reached so content can mount
+          onLoaded?.();
           // Brief pause at 100% before fading out
           setTimeout(() => {
             setIsVisible(false);
@@ -48,7 +53,7 @@ export default function HandDrawnLoader({
     }, baseInterval);
 
     return () => clearInterval(interval);
-  }, [duration]);
+  }, [duration, onLoaded]);
 
   return (
     <AnimatePresence onExitComplete={onComplete}>
@@ -147,3 +152,4 @@ export default function HandDrawnLoader({
     </AnimatePresence>
   );
 }
+
