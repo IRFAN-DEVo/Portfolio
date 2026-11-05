@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
 import { Menu, X, Lock, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DoodleStar } from './ScrapbookDoodles';
+import GooeyNav from './GooeyNav';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -120,61 +120,34 @@ export default function Navbar() {
           </div>
         </a>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 lg:gap-9">
-          {navItems.map(item => {
-            const isActive = activeSection === item.href.substring(1);
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={e => {
-                  e.preventDefault();
-                  scrollTo(item.href);
-                }}
-                className={`relative font-handwritten text-lg tracking-wide transition-colors duration-200 py-1 px-1.5 select-none ${
-                  isActive
-                    ? 'text-[#1e1b18] font-bold'
-                    : 'text-[#5a5045] hover:text-[#1e1b18]'
-                }`}
-              >
-                <span className="relative z-10">{item.label}</span>
-                {isActive && (
-                  <motion.svg
-                    layoutId="activeNavCircle"
-                    transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                    viewBox="0 0 100 45"
-                    preserveAspectRatio="none"
-                    className="absolute -inset-x-3 -inset-y-1.5 w-[calc(100%+24px)] h-[calc(100%+12px)] pointer-events-none text-[#1e1b18] z-0"
-                    fill="none"
-                  >
-                    {/* Secondary faint pencil trace */}
-                    <path
-                      d="M 15 23 C 13 11, 46 6, 83 9 C 95 10, 96 23, 85 34 C 71 42, 24 41, 10 30 C 5 24, 9 12, 27 7"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                      opacity="0.3"
-                      strokeLinecap="round"
-                    />
-                    {/* Primary hand-drawn ink loop circling the active item */}
-                    <path
-                      d="M 12 21 C 10 9, 44 4, 85 7 C 97 8, 98 25, 87 36 C 73 44, 22 43, 8 32 C 3 26, 7 14, 25 9 C 40 6, 68 7, 82 10"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </motion.svg>
-                )}
-              </a>
-            );
-          })}
+        {/* Desktop Navigation Links Powered by GooeyNav */}
+        <div className="hidden md:flex items-center gap-5 lg:gap-7">
+          <GooeyNav
+            items={navItems}
+            activeIndex={navItems.findIndex(item => item.href.substring(1) === activeSection)}
+            theme="scrapbook"
+            color="#1e1b18"
+            activeTextColor="#f6f1e7"
+            colors={['#1e1b18', '#df6b5c', '#5b8266']}
+            size="md"
+            frame={true}
+            particleCount={14}
+            spread={46}
+            animationTime={550}
+            timeVariance={250}
+            gooeyness={0.48}
+            wobble={0.4}
+            hoverEffect={true}
+            onChange={(_index, item) => {
+              if (item.href) scrollTo(item.href);
+            }}
+          />
 
           {/* Resume Download / Bag indicator */}
           <a
             href="/resume.pdf"
             download="Mohammed_Irfan_Resume.pdf"
-            className="flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] hover:text-[#df6b5c] px-3 py-1.5 border border-[#221e1a]/30 rounded-full hover:border-[#221e1a] transition-all bg-[#fffdf9]/60 shadow-xs"
+            className="flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] hover:text-[#df6b5c] px-3.5 py-1.5 border border-[#221e1a]/30 rounded-full hover:border-[#221e1a] transition-all bg-[#fffdf9]/70 shadow-xs"
             title="Download CV"
           >
             <Download size={13} />
@@ -184,13 +157,13 @@ export default function Navbar() {
           {/* Admin Lock Button */}
           <Link
             to="/admin/login"
-            className="w-8 h-8 rounded-full border border-[#221e1a]/20 hover:border-[#221e1a] flex items-center justify-center text-[#5a5045] hover:text-[#1e1b18] transition-colors"
+            className="w-8 h-8 rounded-full border border-[#221e1a]/25 hover:border-[#221e1a] flex items-center justify-center text-[#5a5045] hover:text-[#1e1b18] transition-colors bg-[#fffdf9]/70"
             title="Admin Console"
             aria-label="Admin Console"
           >
             <Lock size={13} />
           </Link>
-        </nav>
+        </div>
 
         {/* Mobile Hamburger Toggle */}
         <button
