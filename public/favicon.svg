@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Circular Head with Warm Scrapbook Paper Fill for universal Dark & Light Tab contrast -->
+  <circle cx="50" cy="50" r="44" fill="#fffdf9" stroke="#161412" stroke-width="4.5" filter="url(#shadow)" />
+
+  <!-- Sunglasses Top Bridge Bar extending slightly across -->
+  <line x1="16" y1="41" x2="84" y2="41" stroke="#161412" stroke-width="6.5" stroke-linecap="round" />
+
+  <!-- Left Lens -->
+  <path d="M 23 41 C 22 59, 44 59, 45 41 Z" fill="#161412" />
+  <!-- Left Lens Glare Lines -->
+  <line x1="29" y1="45" x2="33" y2="52" stroke="#fffdf9" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="36" y1="45" x2="40" y2="52" stroke="#fffdf9" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Right Lens -->
+  <path d="M 55 41 C 56 59, 78 59, 77 41 Z" fill="#161412" />
+  <!-- Right Lens Glare Lines -->
+  <line x1="61" y1="45" x2="65" y2="52" stroke="#fffdf9" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="68" y1="45" x2="72" y2="52" stroke="#fffdf9" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Curved Hand-drawn Smile -->
+  <path d="M 37 66 C 42 75, 58 75, 63 66" fill="none" stroke="#161412" stroke-width="4.5" stroke-linecap="round" />
+</svg>

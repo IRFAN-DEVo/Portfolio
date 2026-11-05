@@ -196,3 +196,4 @@ export function subscribeToEducationUpdates(callback: (education: EducationItem[
     window.removeEventListener('storage', handler);
   };
 }
+
