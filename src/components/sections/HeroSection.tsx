@@ -47,7 +47,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen w-full pt-28 sm:pt-36 pb-20 px-4 sm:px-8 lg:px-12 flex items-center justify-center overflow-hidden"
+      className="relative min-h-[92vh] w-full pt-20 sm:pt-24 pb-16 px-4 sm:px-8 lg:px-12 flex flex-col justify-start items-center overflow-hidden"
     >
       {/* Outer Decorative Sketch Border Container (matching reference photo border) */}
       <div className="relative w-full max-w-7xl mx-auto border-2 border-[#2b251f]/20 rounded-2xl p-4 sm:p-8 lg:p-12 bg-[#f4efe5]/60 shadow-[0_4px_30px_rgba(50,35,20,0.06)]">
