@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import Lanyard from '@/components/Lanyard';
 import {
-  BotanicalFlower,
+  DoodlePython,
   WashiTape,
   DoodleArrow,
   DoodleStar,
@@ -54,9 +54,9 @@ export default function HeroSection() {
         {/* Subtle Inner Border Frame */}
         <div className="absolute inset-2 sm:inset-3 border border-[#2b251f]/10 rounded-xl pointer-events-none" />
 
-        {/* Botanical Flower Illustration on Left Margin (exact match to reference) */}
-        <div className="hidden xl:block absolute left-4 top-20 text-[#2b251f]/75 pointer-events-none select-none">
-          <BotanicalFlower className="w-20 h-52" />
+        {/* Hand-Drawn Python Symbol in Background */}
+        <div className="hidden lg:block absolute left-4 sm:left-6 top-14 sm:top-18 text-[#2b251f]/75 pointer-events-none select-none rotate-[-4deg]">
+          <DoodlePython className="w-24 h-24 xl:w-28 xl:h-28" />
         </div>
 
         {/* Four Corner Hand-Drawn Crosshairs */}
