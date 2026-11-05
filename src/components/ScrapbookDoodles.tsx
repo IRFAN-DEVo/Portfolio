@@ -1,63 +1,87 @@
 import React from 'react';
 
-// Hand-drawn Python Logo Doodle (sketchbook style)
+// Hand-drawn Python Logo Doodle (Authentic sketchbook style)
 export const DoodlePython: React.FC<{ className?: string }> = ({ className = 'w-24 h-24' }) => (
   <svg
-    viewBox="0 0 130 130"
+    viewBox="0 0 128 128"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className={className}
-    stroke="currentColor"
-    strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
   >
     <defs>
-      {/* Hand-drawn pencil hatch pattern */}
-      <pattern id="pythonHatch" width="6" height="6" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" strokeWidth="0.8" opacity="0.25" />
+      {/* Fine diagonal pencil shading pattern */}
+      <pattern id="pyHatch" width="5" height="5" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="5" stroke="currentColor" strokeWidth="0.85" opacity="0.18" />
       </pattern>
     </defs>
 
-    {/* Secondary Ghost Sketch Contour (hand-drawn double line pencil stroke) */}
-    <g opacity="0.32" transform="translate(1.2, 1.2)">
+    {/* Secondary Ghost Sketch Underdrawing (Pencil Draft) */}
+    <g opacity="0.28" transform="translate(1.4, 1.4)">
       <path
-        d="M63.5 6 c-15.5 0-29.5 6.2-29.5 23.5 v17.5 h29.5 v6 h-42.5 c-11 0-20 9.5-20 25.5 c0 16 8 26 22.5 26 h14 v-19.5 c0-12 10.5-22.5 22.5-22.5 h34 c9.5 0 17-7.5 17-17 v-15.5 c0-15-13-23.5-28.5-23.5 h-11 z"
+        d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008z"
+        transform="translate(0 10.26)"
         fill="none"
+        stroke="currentColor"
         strokeWidth="1.2"
       />
-      <circle cx="50" cy="24" r="4.5" fill="none" strokeWidth="1.2" />
       <path
-        d="M66.5 124 c15.5 0 29.5-6.2 29.5-23.5 v-17.5 h-29.5 v-6 h42.5 c11 0 20-9.5 20-25.5 c0-16-8-26-22.5-26 h-14 v19.5 c0 12-10.5 22.5-22.5 22.5 h-34 c-9.5 0-17 7.5-17 17 v15.5 c0 15 13 23.5 28.5 23.5 h11 z"
+        d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268z"
+        transform="translate(0 10.26)"
         fill="none"
+        stroke="currentColor"
         strokeWidth="1.2"
       />
-      <circle cx="80" cy="106" r="4.5" fill="none" strokeWidth="1.2" />
     </g>
 
-    {/* Primary Hand-Drawn Snake 1 (Top segment) */}
-    <path
-      d="M64 5.5 c-16 0-30 6.5-30 24 v18 h30 v6 h-43 c-11.5 0-20.5 9.8-20.5 26.5 c0 16.8 8.5 27 23 27 h14.5 v-20.5 c0-12.2 10.8-23 23-23 h35 c9.8 0 17.5-7.7 17.5-17.5 v-16.5 c0-15.5-13.2-24.5-29-24.5 h-10.5 z"
-      fill="url(#pythonHatch)"
-      stroke="currentColor"
-      strokeWidth="2.2"
-    />
-    {/* Snake 1 Eye */}
-    <circle cx="50.5" cy="23.5" r="4" fill="currentColor" fillOpacity="0.85" stroke="currentColor" strokeWidth="1.5" />
+    {/* Bottom Snake Segment */}
+    <g transform="translate(0 10.26)">
+      {/* Opaque Paper Mask */}
+      <path
+        d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268z"
+        fill="#fbf9f4"
+      />
+      {/* Pencil Shading Fill */}
+      <path
+        d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268z"
+        fill="url(#pyHatch)"
+      />
+      {/* Hand-drawn Outline */}
+      <path
+        d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.549v23.515c0 6.691 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268z"
+        stroke="currentColor"
+        strokeWidth="2.4"
+      />
+      {/* Eye Dot */}
+      <circle cx="77.8" cy="92.6" r="3.4" fill="currentColor" />
+    </g>
 
-    {/* Primary Hand-Drawn Snake 2 (Bottom segment) */}
-    <path
-      d="M66 124.5 c16 0 30-6.5 30-24 v-18 h-30 v-6 h43 c11.5 0 20.5-9.8 20.5-26.5 c0-16.8-8.5-27-23-27 h-14.5 v20.5 c0 12.2-10.8 23-23 23 h-35 c-9.8 0-17.5 7.7-17.5 17.5 v16.5 c0 15.5 13.2 24.5 29 24.5 h10.5 z"
-      fill="url(#pythonHatch)"
-      stroke="currentColor"
-      strokeWidth="2.2"
-    />
-    {/* Snake 2 Eye */}
-    <circle cx="79.5" cy="106.5" r="4" fill="currentColor" fillOpacity="0.85" stroke="currentColor" strokeWidth="1.5" />
+    {/* Top Snake Segment */}
+    <g transform="translate(0 10.26)">
+      {/* Opaque Paper Mask */}
+      <path
+        d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008z"
+        fill="#fbf9f4"
+      />
+      {/* Pencil Shading Fill */}
+      <path
+        d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008z"
+        fill="url(#pyHatch)"
+      />
+      {/* Hand-drawn Outline */}
+      <path
+        d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.866-1.008z"
+        stroke="currentColor"
+        strokeWidth="2.4"
+      />
+      {/* Eye Dot */}
+      <circle cx="50" cy="14.2" r="3.4" fill="currentColor" />
+    </g>
 
-    {/* Hand-drawn accent scribbles / motion dashes */}
-    <path d="M14 18 C18 14, 24 12, 30 14" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.45" />
-    <path d="M116 112 C112 116, 106 118, 100 116" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.45" />
+    {/* Hand-drawn accent sketch lines */}
+    <path d="M12 22 C16 16, 24 14, 28 17" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.45" />
+    <path d="M116 98 C112 104, 104 106, 100 103" stroke="currentColor" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.45" />
   </svg>
 );
 

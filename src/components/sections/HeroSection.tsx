@@ -55,8 +55,8 @@ export default function HeroSection() {
         <div className="absolute inset-2 sm:inset-3 border border-[#2b251f]/10 rounded-xl pointer-events-none" />
 
         {/* Hand-Drawn Python Symbol in Background */}
-        <div className="hidden lg:block absolute left-4 sm:left-6 top-14 sm:top-18 text-[#2b251f]/75 pointer-events-none select-none rotate-[-4deg]">
-          <DoodlePython className="w-24 h-24 xl:w-28 xl:h-28" />
+        <div className="hidden lg:block absolute left-6 sm:left-10 top-5 sm:top-7 text-[#2b251f]/85 pointer-events-none select-none rotate-[-5deg] transition-transform duration-300 hover:rotate-0">
+          <DoodlePython className="w-20 h-20 sm:w-24 sm:h-24" />
         </div>
 
         {/* Four Corner Hand-Drawn Crosshairs */}
