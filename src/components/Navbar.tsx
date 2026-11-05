@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Menu, X, Lock, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DoodleStar } from './ScrapbookDoodles';
@@ -120,7 +121,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 lg:gap-10">
+        <nav className="hidden md:flex items-center gap-7 lg:gap-9">
           {navItems.map(item => {
             const isActive = activeSection === item.href.substring(1);
             return (
@@ -131,20 +132,39 @@ export default function Navbar() {
                   e.preventDefault();
                   scrollTo(item.href);
                 }}
-                className={`relative font-handwritten text-lg tracking-wide transition-all duration-200 py-1 ${
+                className={`relative font-handwritten text-lg tracking-wide transition-colors duration-200 py-1 px-1.5 select-none ${
                   isActive
                     ? 'text-[#1e1b18] font-bold'
                     : 'text-[#5a5045] hover:text-[#1e1b18]'
                 }`}
               >
-                {item.label}
+                <span className="relative z-10">{item.label}</span>
                 {isActive && (
-                  <span
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#221e1a] rounded-full"
-                    style={{
-                      clipPath: 'polygon(0% 0%, 100% 20%, 95% 100%, 5% 80%)',
-                    }}
-                  />
+                  <motion.svg
+                    layoutId="activeNavCircle"
+                    transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                    viewBox="0 0 100 45"
+                    preserveAspectRatio="none"
+                    className="absolute -inset-x-3 -inset-y-1.5 w-[calc(100%+24px)] h-[calc(100%+12px)] pointer-events-none text-[#1e1b18] z-0"
+                    fill="none"
+                  >
+                    {/* Secondary faint pencil trace */}
+                    <path
+                      d="M 15 23 C 13 11, 46 6, 83 9 C 95 10, 96 23, 85 34 C 71 42, 24 41, 10 30 C 5 24, 9 12, 27 7"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                      opacity="0.3"
+                      strokeLinecap="round"
+                    />
+                    {/* Primary hand-drawn ink loop circling the active item */}
+                    <path
+                      d="M 12 21 C 10 9, 44 4, 85 7 C 97 8, 98 25, 87 36 C 73 44, 22 43, 8 32 C 3 26, 7 14, 25 9 C 40 6, 68 7, 82 10"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </motion.svg>
                 )}
               </a>
             );
@@ -186,23 +206,40 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-[#f6f1e7] border-b-2 border-[#221e1a]/20 px-8 py-7 shadow-lg transition-all">
           <div className="flex flex-col gap-4">
-            {navItems.map(item => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={e => {
-                  e.preventDefault();
-                  scrollTo(item.href);
-                }}
-                className={`font-handwritten text-2xl py-1.5 border-b border-[#221e1a]/10 ${
-                  activeSection === item.href.substring(1)
-                    ? 'text-[#1e1b18] font-bold pl-2 border-l-4 border-l-[#df6b5c]'
-                    : 'text-[#5a5045]'
-                }`}
-              >
-                {item.label}
-              </a>
-            ))}
+            {navItems.map(item => {
+              const isActive = activeSection === item.href.substring(1);
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={e => {
+                    e.preventDefault();
+                    scrollTo(item.href);
+                  }}
+                  className={`relative font-handwritten text-2xl py-1 px-3 self-start border-b border-[#221e1a]/10 ${
+                    isActive ? 'text-[#1e1b18] font-bold' : 'text-[#5a5045]'
+                  }`}
+                >
+                  <span className="relative z-10">{item.label}</span>
+                  {isActive && (
+                    <svg
+                      viewBox="0 0 100 45"
+                      preserveAspectRatio="none"
+                      className="absolute -inset-x-3 -inset-y-1 w-[calc(100%+24px)] h-[calc(100%+8px)] pointer-events-none text-[#df6b5c] z-0"
+                      fill="none"
+                    >
+                      <path
+                        d="M 12 21 C 10 9, 44 4, 85 7 C 97 8, 98 25, 87 36 C 73 44, 22 43, 8 32 C 3 26, 7 14, 25 9 C 40 6, 68 7, 82 10"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  )}
+                </a>
+              );
+            })}
             <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#221e1a]/15">
               <a
                 href="/resume.pdf"
