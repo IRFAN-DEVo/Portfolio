@@ -1,79 +1,33 @@
+import { useState, useEffect } from 'react';
 import { Server, Layout, Database, Wrench } from 'lucide-react';
 import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
 import AnimatedContent from '@/components/AnimatedContent';
-
-interface SkillGroup {
-  category: string;
-  icon: typeof Server;
-  variant: 'kraft' | 'lined' | 'grid' | 'parchment';
-  tapeVariant: 'cream' | 'pink' | 'sage';
-  rotation: string;
-  skills: { name: string; tag: string }[];
-}
-
-const skillCategories: SkillGroup[] = [
-  {
-    category: 'Backend Architecture',
-    icon: Server,
-    variant: 'kraft',
-    tapeVariant: 'cream',
-    rotation: '-rotate-1',
-    skills: [
-      { name: 'Python', tag: 'Core Language' },
-      { name: 'Django', tag: 'Web Framework' },
-      { name: 'Django REST Framework', tag: 'API Engine' },
-      { name: 'RESTful API Design', tag: 'Contract-First' },
-      { name: 'Concurrency Safety', tag: 'Transactions' },
-      { name: 'Authentication & JWT', tag: 'Security' },
-    ],
-  },
-  {
-    category: 'Frontend Engineering',
-    icon: Layout,
-    variant: 'lined',
-    tapeVariant: 'pink',
-    rotation: 'rotate-1',
-    skills: [
-      { name: 'JavaScript (ES6+)', tag: 'Client Logic' },
-      { name: 'React', tag: 'Component UI' },
-      { name: 'Tailwind CSS', tag: 'Utility Styling' },
-      { name: 'HTML5 & CSS3', tag: 'Semantic Layout' },
-      { name: 'Framer Motion', tag: 'Micro-Interactions' },
-      { name: 'Vite', tag: 'Bundler' },
-    ],
-  },
-  {
-    category: 'Databases & Storage',
-    icon: Database,
-    variant: 'grid',
-    tapeVariant: 'sage',
-    rotation: '-rotate-1.5',
-    skills: [
-      { name: 'PostgreSQL', tag: 'Production RDBMS' },
-      { name: 'SQLite', tag: 'Local & Prototyping' },
-      { name: 'Supabase', tag: 'Postgres & Auth' },
-      { name: 'Schema Normalization', tag: 'Data Integrity' },
-      { name: 'Query Optimization', tag: 'Indexing' },
-    ],
-  },
-  {
-    category: 'Developer Tools',
-    icon: Wrench,
-    variant: 'parchment',
-    tapeVariant: 'cream',
-    rotation: 'rotate-1.5',
-    skills: [
-      { name: 'Git & GitHub', tag: 'Version Control' },
-      { name: 'Docker', tag: 'Containerization' },
-      { name: 'Postman', tag: 'API Testing' },
-      { name: 'Linux / Bash', tag: 'Environment' },
-      { name: 'Vercel', tag: 'CI/CD Deployment' },
-    ],
-  },
-];
+import { getStoredSkills, subscribeToSkillsUpdates } from '@/lib/portfolioStorage';
+import type { SkillCategoryGroup } from '@/lib/types';
 
 export default function SkillsSection() {
-  const getCardStyle = (variant: SkillGroup['variant']) => {
+  const [categories, setCategories] = useState<SkillCategoryGroup[]>(getStoredSkills);
+
+  useEffect(() => {
+    const unsub = subscribeToSkillsUpdates((skills) => setCategories(skills));
+    return () => unsub();
+  }, []);
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Server':
+        return Server;
+      case 'Layout':
+        return Layout;
+      case 'Database':
+        return Database;
+      case 'Wrench':
+      default:
+        return Wrench;
+    }
+  };
+
+  const getCardStyle = (variant: SkillCategoryGroup['variant']) => {
     switch (variant) {
       case 'kraft':
         return 'bg-[#cbb393] text-[#1e1b18] border border-[#b89e7a]';
@@ -127,12 +81,12 @@ export default function SkillsSection() {
           ease="power3.out"
           className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
         >
-          {skillCategories.map((group, idx) => {
-            const Icon = group.icon;
+          {categories.map((group, idx) => {
+            const Icon = getIcon(group.iconName);
             return (
               <div
-                key={group.category}
-                className={`relative p-7 sm:p-8 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] transition-transform duration-300 hover:rotate-0 hover:scale-[1.01] ${group.rotation} ${getCardStyle(
+                key={group.id || group.category}
+                className={`relative p-7 sm:p-8 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] transition-transform duration-300 hover:rotate-0 hover:scale-[1.01] ${group.rotation || ''} ${getCardStyle(
                   group.variant
                 )}`}
               >
@@ -160,7 +114,7 @@ export default function SkillsSection() {
 
                 {/* Skill Badges / Stamped Tags */}
                 <div className="flex flex-wrap gap-2.5">
-                  {group.skills.map(skill => (
+                  {group.skills.map((skill) => (
                     <div
                       key={skill.name}
                       className="group flex flex-col px-3.5 py-2 rounded-xs bg-[#f6f1e7]/85 border border-[#1e1b18]/20 hover:border-[#1e1b18] transition-all hover:-translate-y-0.5 hover:shadow-sm"

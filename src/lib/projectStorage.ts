@@ -99,3 +99,4 @@ export function subscribeToProjectUpdates(callback: (projects: Project[]) => voi
     window.removeEventListener('storage', handler);
   };
 }
+

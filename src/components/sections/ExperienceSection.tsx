@@ -1,9 +1,28 @@
+import { useState, useEffect } from 'react';
 import { Briefcase, GraduationCap, CheckCircle } from 'lucide-react';
-import { EXPERIENCE_DATA, EDUCATION_DATA } from '@/lib/constants';
 import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
 import AnimatedContent from '@/components/AnimatedContent';
+import { 
+  getStoredExperience, 
+  subscribeToExperienceUpdates, 
+  getStoredEducation, 
+  subscribeToEducationUpdates 
+} from '@/lib/portfolioStorage';
+import type { ExperienceItem, EducationItem } from '@/lib/types';
 
 export default function ExperienceSection() {
+  const [experiences, setExperiences] = useState<ExperienceItem[]>(getStoredExperience);
+  const [educations, setEducations] = useState<EducationItem[]>(getStoredEducation);
+
+  useEffect(() => {
+    const unsubExp = subscribeToExperienceUpdates((exp) => setExperiences(exp));
+    const unsubEdu = subscribeToEducationUpdates((edu) => setEducations(edu));
+    return () => {
+      unsubExp();
+      unsubEdu();
+    };
+  }, []);
+
   return (
     <section id="experience" className="relative py-24 px-4 sm:px-8 lg:px-12">
       <div className="max-w-5xl mx-auto">
@@ -37,7 +56,7 @@ export default function ExperienceSection() {
         {/* Timeline Content */}
         <div className="space-y-12">
           {/* ============================================================ */}
-          {/* 1. PROFESSIONAL EXPERIENCE (FEBNO TECHNOLOGIES) */}
+          {/* 1. PROFESSIONAL EXPERIENCE */}
           {/* ============================================================ */}
           <div>
             <AnimatedContent distance={30} direction="vertical" duration={0.6} ease="power3.out">
@@ -46,14 +65,14 @@ export default function ExperienceSection() {
                   <Briefcase size={18} />
                 </div>
                 <h3 className="font-handwritten text-2xl sm:text-3xl font-bold text-[#1e1b18]">
-                  Professional Internship
+                  Professional Internship &amp; Experience
                 </h3>
               </div>
             </AnimatedContent>
 
-            {EXPERIENCE_DATA.map((exp, idx) => (
-              <AnimatedContent key={idx} distance={50} direction="vertical" duration={0.85} ease="power3.out">
-                <div className="relative bg-[#fffdf9] p-7 sm:p-9 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] border border-[#e2d8c3] rotate-[-0.5deg]">
+            {experiences.map((exp, idx) => (
+              <AnimatedContent key={exp.id || idx} distance={50} direction="vertical" duration={0.85} ease="power3.out">
+                <div className="relative bg-[#fffdf9] p-7 sm:p-9 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] border border-[#e2d8c3] rotate-[-0.5deg] mb-6">
                   <WashiTape
                     className="w-28 h-6 -top-3 left-8"
                     variant="cream"
@@ -115,9 +134,9 @@ export default function ExperienceSection() {
               ease="power3.out"
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
-              {EDUCATION_DATA.map((edu, idx) => (
+              {educations.map((edu, idx) => (
                 <div
-                  key={idx}
+                  key={edu.id || idx}
                   className={`relative lined-notebook p-6 sm:p-7 rounded-sm shadow-[2px_5px_18px_rgba(40,30,15,0.1)] border border-[#ded3be] ${
                     idx === 0 ? 'rotate-[0.8deg]' : 'rotate-[-0.8deg]'
                   }`}

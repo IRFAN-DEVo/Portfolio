@@ -3,6 +3,7 @@ import { Menu, X, Lock, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DoodleStar } from './ScrapbookDoodles';
 import GooeyNav from './GooeyNav';
+import { getStoredProfile, subscribeToProfileUpdates } from '@/lib/portfolioStorage';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -14,11 +15,17 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const [profile, setProfile] = useState(getStoredProfile);
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isClickingRef = useRef(false);
   const clickTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const unsub = subscribeToProfileUpdates((p) => setProfile(p));
+    return () => unsub();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,8 +152,10 @@ export default function Navbar() {
 
           {/* Resume Download / Bag indicator */}
           <a
-            href="/resume.pdf"
-            download="Mohammed_Irfan_Resume.pdf"
+            href={profile.resume_url || '/resume.pdf'}
+            target={profile.resume_url?.startsWith('http') ? '_blank' : undefined}
+            rel={profile.resume_url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+            download={profile.resume_url?.startsWith('http') ? undefined : 'Mohammed_Irfan_Resume.pdf'}
             className="flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] hover:text-[#df6b5c] px-3.5 py-1.5 border border-[#221e1a]/30 rounded-full hover:border-[#221e1a] transition-all bg-[#fffdf9]/70 shadow-xs"
             title="Download CV"
           >
@@ -215,8 +224,10 @@ export default function Navbar() {
             })}
             <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#221e1a]/15">
               <a
-                href="/resume.pdf"
-                download="Mohammed_Irfan_Resume.pdf"
+                href={profile.resume_url || '/resume.pdf'}
+                target={profile.resume_url?.startsWith('http') ? '_blank' : undefined}
+                rel={profile.resume_url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                download={profile.resume_url?.startsWith('http') ? undefined : 'Mohammed_Irfan_Resume.pdf'}
                 className="flex items-center gap-2 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] px-4 py-2 border border-[#221e1a]/40 rounded-full bg-[#fffdf9]"
               >
                 <Download size={14} />

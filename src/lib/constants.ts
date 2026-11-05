@@ -1,4 +1,12 @@
-import type { Project, SkillItem, SocialLink, WebsiteSettings } from './types';
+import type { 
+  Project, 
+  SkillItem, 
+  SocialLink, 
+  WebsiteSettings,
+  SkillCategoryGroup,
+  ExperienceItem,
+  EducationItem 
+} from './types';
 
 export const SITE_CONFIG: WebsiteSettings = {
   name: 'IRFAN',
@@ -67,8 +75,74 @@ export const SKILLS_LIST: SkillItem[] = [
   { id: '15', name: 'Postman', category: 'Tools', display_order: 15 },
 ];
 
-export const EXPERIENCE_DATA = [
+export const DEFAULT_SKILL_CATEGORIES: SkillCategoryGroup[] = [
   {
+    id: 'backend',
+    category: 'Backend Architecture',
+    iconName: 'Server',
+    variant: 'kraft',
+    tapeVariant: 'cream',
+    rotation: '-rotate-1',
+    skills: [
+      { name: 'Python', tag: 'Core Language' },
+      { name: 'Django', tag: 'Web Framework' },
+      { name: 'Django REST Framework', tag: 'API Engine' },
+      { name: 'RESTful API Design', tag: 'Contract-First' },
+      { name: 'Concurrency Safety', tag: 'Transactions' },
+      { name: 'Authentication & JWT', tag: 'Security' },
+    ],
+  },
+  {
+    id: 'frontend',
+    category: 'Frontend Engineering',
+    iconName: 'Layout',
+    variant: 'lined',
+    tapeVariant: 'pink',
+    rotation: 'rotate-1',
+    skills: [
+      { name: 'JavaScript (ES6+)', tag: 'Client Logic' },
+      { name: 'React', tag: 'Component UI' },
+      { name: 'Tailwind CSS', tag: 'Utility Styling' },
+      { name: 'HTML5 & CSS3', tag: 'Semantic Layout' },
+      { name: 'Framer Motion', tag: 'Micro-Interactions' },
+      { name: 'Vite', tag: 'Bundler' },
+    ],
+  },
+  {
+    id: 'database',
+    category: 'Databases & Storage',
+    iconName: 'Database',
+    variant: 'grid',
+    tapeVariant: 'sage',
+    rotation: '-rotate-1.5',
+    skills: [
+      { name: 'PostgreSQL', tag: 'Production RDBMS' },
+      { name: 'SQLite', tag: 'Local & Prototyping' },
+      { name: 'Supabase', tag: 'Postgres & Auth' },
+      { name: 'Schema Normalization', tag: 'Data Integrity' },
+      { name: 'Query Optimization', tag: 'Indexing' },
+    ],
+  },
+  {
+    id: 'tools',
+    category: 'Developer Tools',
+    iconName: 'Wrench',
+    variant: 'parchment',
+    tapeVariant: 'cream',
+    rotation: 'rotate-1.5',
+    skills: [
+      { name: 'Git & GitHub', tag: 'Version Control' },
+      { name: 'Docker', tag: 'Containerization' },
+      { name: 'Postman', tag: 'API Testing' },
+      { name: 'Linux / Bash', tag: 'Environment' },
+      { name: 'Vercel', tag: 'CI/CD Deployment' },
+    ],
+  },
+];
+
+export const DEFAULT_EXPERIENCE_DATA: ExperienceItem[] = [
+  {
+    id: 'exp-1',
     role: 'Python Developer Intern',
     company: 'Febno Technologies',
     period: 'Sep 2026 – Oct 2026',
@@ -84,18 +158,24 @@ export const EXPERIENCE_DATA = [
   },
 ];
 
-export const EDUCATION_DATA = [
+export const EXPERIENCE_DATA: ExperienceItem[] = DEFAULT_EXPERIENCE_DATA;
+
+export const DEFAULT_EDUCATION_DATA: EducationItem[] = [
   {
+    id: 'edu-1',
     degree: 'Python Django Full Stack Development',
     institution: 'TechnoDot Academy of R&D&I',
     period: 'Jan 2026 – Aug 2026',
   },
   {
+    id: 'edu-2',
     degree: 'BA English Literature',
     institution: 'University of Calicut',
     period: '2022 – 2025',
   },
 ];
+
+export const EDUCATION_DATA: EducationItem[] = DEFAULT_EDUCATION_DATA;
 
 export const SEED_PROJECTS: Project[] = [
   {

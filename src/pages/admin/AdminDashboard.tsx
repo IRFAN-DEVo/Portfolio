@@ -7,7 +7,10 @@ import {
   ArrowRight, 
   CheckCircle2,
   Inbox,
-  Loader2
+  Loader2,
+  FileText,
+  Cpu,
+  Briefcase
 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { getStoredProjects } from '@/lib/projectStorage';
@@ -141,6 +144,63 @@ export default function AdminDashboard() {
             Through contact channel
           </span>
         </div>
+      </div>
+
+      {/* Quick Access Control Modules */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Link
+          to="/admin/profile"
+          className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/[0.08] hover:border-[#ff5c3d]/50 hover:bg-[#141414] transition-all group"
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2.5 rounded-xl bg-white/[0.05] text-[#ff5c3d] group-hover:bg-[#ff5c3d]/10 transition-colors">
+              <FileText size={20} />
+            </div>
+            <ArrowRight size={16} className="text-[#666666] group-hover:text-white group-hover:translate-x-1 transition-all" />
+          </div>
+          <h3 className="font-mono-code text-sm font-bold text-white mb-1">
+            Profile &amp; CV Settings
+          </h3>
+          <p className="font-mono-code text-[11px] text-[#777777]">
+            Update CV link/file, contact email, phone number, location, and bio.
+          </p>
+        </Link>
+
+        <Link
+          to="/admin/skills"
+          className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/[0.08] hover:border-[#ff5c3d]/50 hover:bg-[#141414] transition-all group"
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2.5 rounded-xl bg-white/[0.05] text-[#ff5c3d] group-hover:bg-[#ff5c3d]/10 transition-colors">
+              <Cpu size={20} />
+            </div>
+            <ArrowRight size={16} className="text-[#666666] group-hover:text-white group-hover:translate-x-1 transition-all" />
+          </div>
+          <h3 className="font-mono-code text-sm font-bold text-white mb-1">
+            Technical Skills Matrix
+          </h3>
+          <p className="font-mono-code text-[11px] text-[#777777]">
+            Add, edit, or delete skills across Backend, Frontend, DB, and Tools.
+          </p>
+        </Link>
+
+        <Link
+          to="/admin/experience"
+          className="p-5 rounded-2xl bg-[#0f0f0f] border border-white/[0.08] hover:border-[#ff5c3d]/50 hover:bg-[#141414] transition-all group"
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2.5 rounded-xl bg-white/[0.05] text-[#ff5c3d] group-hover:bg-[#ff5c3d]/10 transition-colors">
+              <Briefcase size={20} />
+            </div>
+            <ArrowRight size={16} className="text-[#666666] group-hover:text-white group-hover:translate-x-1 transition-all" />
+          </div>
+          <h3 className="font-mono-code text-sm font-bold text-white mb-1">
+            Experience &amp; History
+          </h3>
+          <p className="font-mono-code text-[11px] text-[#777777]">
+            Manage internships, company roles, achievements, and degrees.
+          </p>
+        </Link>
       </div>
 
       {/* Quick Sections: Projects & Messages */}

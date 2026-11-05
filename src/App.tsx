@@ -7,6 +7,9 @@ import AdminDashboard from '@/pages/admin/AdminDashboard';
 import AdminProjects from '@/pages/admin/AdminProjects';
 import AdminProjectForm from '@/pages/admin/AdminProjectForm';
 import AdminMessages from '@/pages/admin/AdminMessages';
+import AdminProfile from '@/pages/admin/AdminProfile';
+import AdminSkills from '@/pages/admin/AdminSkills';
+import AdminExperience from '@/pages/admin/AdminExperience';
 
 export default function App() {
   return (
@@ -48,6 +51,9 @@ export default function App() {
         {/* Protected Admin Console */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
+          <Route path="profile" element={<AdminProfile />} />
+          <Route path="skills" element={<AdminSkills />} />
+          <Route path="experience" element={<AdminExperience />} />
           <Route path="projects" element={<AdminProjects />} />
           <Route path="projects/new" element={<AdminProjectForm />} />
           <Route path="projects/:id/edit" element={<AdminProjectForm />} />

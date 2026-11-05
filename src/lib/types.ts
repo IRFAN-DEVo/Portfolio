@@ -39,6 +39,39 @@ export interface SkillItem {
   display_order?: number;
 }
 
+export interface SkillEntry {
+  id?: string;
+  name: string;
+  tag: string;
+}
+
+export interface SkillCategoryGroup {
+  id: string;
+  category: string;
+  iconName: 'Server' | 'Layout' | 'Database' | 'Wrench';
+  variant: 'kraft' | 'lined' | 'grid' | 'parchment';
+  tapeVariant: 'cream' | 'pink' | 'sage';
+  rotation: string;
+  skills: SkillEntry[];
+}
+
+export interface ExperienceItem {
+  id: string;
+  role: string;
+  company: string;
+  period: string;
+  duration?: string;
+  location: string;
+  responsibilities: string[];
+}
+
+export interface EducationItem {
+  id: string;
+  degree: string;
+  institution: string;
+  period: string;
+}
+
 export interface SocialLink {
   id: string;
   platform: string;

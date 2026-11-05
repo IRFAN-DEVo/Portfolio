@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/Icons';
-import { SITE_CONFIG, SOCIAL_LINKS } from '@/lib/constants';
+import { SOCIAL_LINKS } from '@/lib/constants';
+import { getStoredProfile, subscribeToProfileUpdates } from '@/lib/portfolioStorage';
 import { supabase } from '@/lib/supabase';
 import { WashiTape, DoodleStar, StampBadge, DoodleArrow } from '@/components/ScrapbookDoodles';
 import AnimatedContent from '@/components/AnimatedContent';
 
 export default function ContactSection() {
+  const [profile, setProfile] = useState(getStoredProfile);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,6 +17,11 @@ export default function ContactSection() {
   });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const unsub = subscribeToProfileUpdates((p) => setProfile(p));
+    return () => unsub();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,26 +120,29 @@ export default function ContactSection() {
                 {/* Direct channels */}
                 <div className="space-y-4 pt-2">
                   <a
-                    href={`mailto:${SITE_CONFIG.email}`}
+                    href={`mailto:${profile.email}`}
                     className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 hover:border-[#1e1b18] transition-colors group"
                   >
                     <Mail size={16} className="text-[#df6b5c] shrink-0" />
                     <span className="font-typewriter text-xs text-[#1e1b18] group-hover:underline break-all">
-                      {SITE_CONFIG.email}
+                      {profile.email}
+                    </span>
+                  </a>
+
+                  <a
+                    href={`tel:${profile.phone}`}
+                    className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 hover:border-[#1e1b18] transition-colors group"
+                  >
+                    <Phone size={16} className="text-[#5b8266] shrink-0" />
+                    <span className="font-typewriter text-xs text-[#1e1b18] group-hover:underline">
+                      +91 {profile.phone}
                     </span>
                   </a>
 
                   <div className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15">
-                    <Phone size={16} className="text-[#5b8266] shrink-0" />
-                    <span className="font-typewriter text-xs text-[#1e1b18]">
-                      +91 {SITE_CONFIG.phone}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15">
                     <MapPin size={16} className="text-[#d4a373] shrink-0" />
                     <span className="font-typewriter text-xs text-[#1e1b18]">
-                      {SITE_CONFIG.location}
+                      {profile.location}
                     </span>
                   </div>
                 </div>

@@ -1,9 +1,18 @@
+import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { SOCIAL_LINKS } from '@/lib/constants';
+import { getStoredProfile, subscribeToProfileUpdates } from '@/lib/portfolioStorage';
 import { DoodleStar, BotanicalFlower } from './ScrapbookDoodles';
 
 export default function Footer() {
+  const [profile, setProfile] = useState(getStoredProfile);
+
+  useEffect(() => {
+    const unsub = subscribeToProfileUpdates((p) => setProfile(p));
+    return () => unsub();
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -19,11 +28,11 @@ export default function Footer() {
         {/* Left: Branding & Tagline */}
         <div className="text-center sm:text-left">
           <div className="flex items-center justify-center sm:justify-start gap-1.5 font-handwritten text-2xl font-bold text-[#1e1b18]">
-            <span>Mohammed Irfan K</span>
+            <span>{profile.name}</span>
             <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
           </div>
           <p className="font-typewriter text-xs text-[#7a7065] mt-1 tracking-wide">
-            Python / Django Backend &bull; Calicut, Kerala, India
+            {profile.title} &bull; {profile.location}
           </p>
         </div>
 

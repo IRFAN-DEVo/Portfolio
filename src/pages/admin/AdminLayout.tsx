@@ -7,7 +7,10 @@ import {
   LogOut, 
   ExternalLink,
   Shield,
-  Loader2
+  Loader2,
+  FileText,
+  Cpu,
+  Briefcase
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -32,6 +35,9 @@ export default function AdminLayout() {
 
   const navItems = [
     { label: 'Overview', path: '/admin', icon: LayoutDashboard },
+    { label: 'Profile & CV', path: '/admin/profile', icon: FileText },
+    { label: 'Skills', path: '/admin/skills', icon: Cpu },
+    { label: 'Experience', path: '/admin/experience', icon: Briefcase },
     { label: 'Projects', path: '/admin/projects', icon: FolderKanban },
     { label: 'Messages', path: '/admin/messages', icon: MessageSquare },
   ];
