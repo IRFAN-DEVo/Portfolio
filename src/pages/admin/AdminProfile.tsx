@@ -201,7 +201,7 @@ export default function AdminProfile() {
                   required
                   value={profile.email}
                   onChange={(e) => handleChange('email', e.target.value)}
-                  placeholder="irfanneerolpalam12@gmail.com"
+                  placeholder="irfanmuthu56@gmail.com"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#111111] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors"
                 />
               </div>

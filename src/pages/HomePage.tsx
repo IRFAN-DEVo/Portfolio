@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import ScrapbookCanvas from '@/components/ScrapbookCanvas';
 import HandDrawnLoader from '@/components/HandDrawnLoader';
@@ -9,9 +9,14 @@ import ProjectsSection from '@/components/sections/ProjectsSection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
+import { syncPortfolioFromSupabase } from '@/lib/portfolioStorage';
 
 export default function HomePage() {
   const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    syncPortfolioFromSupabase();
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#f6f1e7] text-[#1e1b18] font-serif-vintage antialiased selection:bg-[#df6b5c]/25 selection:text-[#1e1b18] relative">

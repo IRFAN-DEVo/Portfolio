@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS public.settings (
     title TEXT NOT NULL DEFAULT 'Python / Django Developer',
     focus TEXT NOT NULL DEFAULT 'Backend Development & Full-Stack Development',
     bio TEXT NOT NULL DEFAULT 'Python/Django Backend Developer specializing in concurrency-safe architectures, high-throughput REST APIs, cryptographic licensing backends, and full-stack web applications with React.',
-    email TEXT NOT NULL DEFAULT 'irfanneerolpalam12@gmail.com',
+    email TEXT NOT NULL DEFAULT 'irfanmuthu56@gmail.com',
     phone TEXT NOT NULL DEFAULT '8086175728',
     location TEXT NOT NULL DEFAULT 'Calicut, Kerala, India',
     resume_url TEXT DEFAULT '/resume.pdf',
@@ -191,7 +191,7 @@ VALUES (
     'Python / Django Developer',
     'Backend Development & Full-Stack Development',
     'Python/Django Backend Developer specializing in concurrency-safe architectures, high-throughput REST APIs, cryptographic licensing backends, and full-stack web applications with React. Rigorous in database transaction modeling, JWT security, and automated API validation.',
-    'irfanneerolpalam12@gmail.com',
+    'irfanmuthu56@gmail.com',
     '8086175728',
     'Calicut, Kerala, India',
     '/resume.pdf'

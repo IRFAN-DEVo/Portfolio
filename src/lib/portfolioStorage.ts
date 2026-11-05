@@ -4,6 +4,7 @@ import {
   DEFAULT_EXPERIENCE_DATA, 
   DEFAULT_EDUCATION_DATA 
 } from './constants';
+import { supabase, isSupabaseConfigured } from './supabase';
 import type { 
   WebsiteSettings, 
   SkillCategoryGroup, 
@@ -32,6 +33,10 @@ export function getStoredProfile(): WebsiteSettings {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object') {
+        // Automatically migrate away from any stale hardcoded email
+        if (parsed.email === 'irfanneerolpalam12@gmail.com') {
+          parsed.email = SITE_CONFIG.email;
+        }
         return { ...SITE_CONFIG, ...parsed };
       }
     }
@@ -195,5 +200,64 @@ export function subscribeToEducationUpdates(callback: (education: EducationItem[
     window.removeEventListener(EDUCATION_UPDATE_EVENT, handler);
     window.removeEventListener('storage', handler);
   };
+}
+
+// ============================================================================
+// AUTOMATIC CLOUD SYNCHRONIZATION WITH SUPABASE
+// ============================================================================
+
+export async function syncPortfolioFromSupabase(): Promise<void> {
+  if (!isSupabaseConfigured) return;
+
+  try {
+    // 1. Synchronize Profile / Settings (email, phone, location, CV resume, etc.)
+    const { data: profileData, error: profileErr } = await supabase
+      .from('settings')
+      .select('*')
+      .limit(1)
+      .single();
+
+    if (!profileErr && profileData) {
+      const merged = { ...SITE_CONFIG, ...profileData };
+      saveStoredProfile(merged);
+    }
+
+    // 2. Synchronize Grouped Skills
+    const { data: skillsData, error: skillsErr } = await supabase
+      .from('skills_grouped')
+      .select('*')
+      .limit(1)
+      .single();
+
+    if (
+      !skillsErr &&
+      skillsData &&
+      Array.isArray(skillsData.categories) &&
+      skillsData.categories.length > 0
+    ) {
+      saveStoredSkills(skillsData.categories);
+    }
+
+    // 3. Synchronize Experience & Education
+    const [expRes, eduRes] = await Promise.all([
+      supabase.from('experience').select('*').order('created_at', { ascending: false }),
+      supabase.from('education').select('*').order('created_at', { ascending: false }),
+    ]);
+
+    if (!expRes.error && expRes.data && expRes.data.length > 0) {
+      saveStoredExperience(expRes.data);
+    }
+
+    if (!eduRes.error && eduRes.data && eduRes.data.length > 0) {
+      saveStoredEducation(eduRes.data);
+    }
+  } catch (err) {
+    console.warn('Background sync warning:', err);
+  }
+}
+
+// Automatically initiate sync in browser runtime
+if (typeof window !== 'undefined') {
+  syncPortfolioFromSupabase();
 }
 

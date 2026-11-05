@@ -9,10 +9,10 @@ import type {
 } from './types';
 
 export const SITE_CONFIG: WebsiteSettings = {
-  name: 'IRFAN',
+  name: 'Mohammed Irfan K',
   title: 'Python / Django Developer',
   focus: 'Backend Development & Full-Stack Development',
-  email: 'irfanneerolpalam12@gmail.com',
+  email: 'irfanmuthu56@gmail.com',
   phone: '8086175728',
   location: 'Calicut, Kerala, India',
   bio: 'Python/Django Backend Developer specializing in concurrency-safe architectures, high-throughput REST APIs, cryptographic licensing backends, and full-stack web applications with React. Rigorous in database transaction modeling, JWT security, and automated API validation.',
@@ -36,8 +36,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     id: 'email',
     platform: 'Email',
-    url: 'mailto:irfanneerolpalam12@gmail.com',
-    label: 'irfanneerolpalam12@gmail.com',
+    url: 'mailto:irfanmuthu56@gmail.com',
+    label: 'irfanmuthu56@gmail.com',
   },
 ];
 
