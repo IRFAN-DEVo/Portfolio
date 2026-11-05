@@ -10,21 +10,27 @@ import {
   Loader2
 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
-import { SEED_PROJECTS } from '@/lib/constants';
+import { getStoredProjects } from '@/lib/projectStorage';
 import type { Message, Project } from '@/lib/types';
 
 export default function AdminDashboard() {
-  const [totalProjects, setTotalProjects] = useState<number>(SEED_PROJECTS.length);
-  const [publishedProjects, setPublishedProjects] = useState<number>(SEED_PROJECTS.length);
+  const [totalProjects, setTotalProjects] = useState<number>(() => getStoredProjects().length);
+  const [publishedProjects, setPublishedProjects] = useState<number>(
+    () => getStoredProjects().filter((p) => p.published !== false).length
+  );
   const [unreadMessages, setUnreadMessages] = useState<number>(0);
   const [totalMessages, setTotalMessages] = useState<number>(0);
   const [recentMessages, setRecentMessages] = useState<Message[]>([]);
-  const [projects, setProjects] = useState<Project[]>(SEED_PROJECTS);
+  const [projects, setProjects] = useState<Project[]>(getStoredProjects);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStats() {
       if (!isSupabaseConfigured) {
+        const stored = getStoredProjects();
+        setProjects(stored);
+        setTotalProjects(stored.length);
+        setPublishedProjects(stored.filter((p) => p.published !== false).length);
         setLoading(false);
         return;
       }

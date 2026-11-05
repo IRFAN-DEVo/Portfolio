@@ -7,6 +7,7 @@ export interface Project {
   image_url: string | null;
   github_url: string | null;
   live_url: string | null;
+  is_live_enabled?: boolean;
   featured: boolean;
   published: boolean;
   display_order: number;

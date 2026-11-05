@@ -1,17 +1,27 @@
 import { useState, useEffect } from 'react';
 import { ExternalLink, FolderGit2, CheckCircle2 } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
-import { SEED_PROJECTS } from '@/lib/constants';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
+import { getStoredProjects, saveStoredProjects, subscribeToProjectUpdates } from '@/lib/projectStorage';
 import type { Project } from '@/lib/types';
 import { WashiTape, DoodleStar, StampBadge } from '@/components/ScrapbookDoodles';
 import AnimatedContent from '@/components/AnimatedContent';
 
 export default function ProjectsSection() {
-  const [projects, setProjects] = useState<Project[]>(SEED_PROJECTS);
+  const [projects, setProjects] = useState<Project[]>(getStoredProjects);
 
   useEffect(() => {
+    // Subscribe to immediate cross-tab / local storage updates
+    const unsubscribe = subscribeToProjectUpdates((updated) => {
+      setProjects(updated);
+    });
+
     async function loadProjects() {
+      if (!isSupabaseConfigured) {
+        setProjects(getStoredProjects());
+        return;
+      }
+
       try {
         const { data, error } = await supabase
           .from('projects')
@@ -20,12 +30,16 @@ export default function ProjectsSection() {
 
         if (!error && data && data.length > 0) {
           setProjects(data);
+          saveStoredProjects(data);
         }
       } catch {
         // Fallback to verified local SEED_PROJECTS
+        setProjects(getStoredProjects());
       }
     }
+
     loadProjects();
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -137,18 +151,19 @@ export default function ProjectsSection() {
                   <span>GitHub Repository</span>
                 </a>
 
-                {proj.live_url ? (
+                {proj.is_live_enabled !== false && proj.live_url ? (
                   <a
                     href={proj.live_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider font-bold text-[#df6b5c] hover:underline"
+                    className="inline-flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider font-bold text-[#df6b5c] hover:text-[#b84a3c] bg-[#df6b5c]/10 hover:bg-[#df6b5c]/20 border border-[#df6b5c]/40 py-1.5 px-3 rounded-xs transition-all shadow-2xs group"
+                    title={`Visit live domain: ${proj.live_url}`}
                   >
-                    <span>Live Demo</span>
-                    <ExternalLink size={13} />
+                    <span>Live Domain</span>
+                    <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 ) : (
-                  <span className="font-handwritten text-xs text-[#7a7065] flex items-center gap-1">
+                  <span className="font-handwritten text-xs text-[#7a7065] flex items-center gap-1.5 py-1.5 px-2.5 border border-dashed border-[#1e1b18]/15 rounded-xs bg-[#fbf9f4]">
                     <CheckCircle2 size={13} className="text-[#5b8266]" />
                     Backend Verified
                   </span>

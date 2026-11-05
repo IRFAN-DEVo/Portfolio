@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Save, X, Loader2 } from 'lucide-react';
+import { ArrowLeft, Save, X, Loader2, Globe, ExternalLink, CheckCircle2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
-import { SEED_PROJECTS } from '@/lib/constants';
+import { getStoredProjects, updateProjectInStorage } from '@/lib/projectStorage';
+import type { Project } from '@/lib/types';
 
 export default function AdminProjectForm() {
   const { id } = useParams<{ id: string }>();
@@ -17,6 +18,7 @@ export default function AdminProjectForm() {
   const [currentTag, setCurrentTag] = useState('');
   const [githubUrl, setGithubUrl] = useState('');
   const [liveUrl, setLiveUrl] = useState('');
+  const [isLiveEnabled, setIsLiveEnabled] = useState(true);
   const [featured, setFeatured] = useState(false);
   const [published, setPublished] = useState(true);
   const [displayOrder, setDisplayOrder] = useState<number>(1);
@@ -29,20 +31,25 @@ export default function AdminProjectForm() {
 
     async function loadProject() {
       setLoading(true);
+
+      // First check local/stored projects
+      const stored = getStoredProjects();
+      const found = stored.find((p) => p.id === id);
+      if (found) {
+        setTitle(found.title);
+        setShortDescription(found.short_description);
+        setLongDescription(found.long_description);
+        setTechStack(found.tech_stack || []);
+        setGithubUrl(found.github_url || '');
+        setLiveUrl(found.live_url || '');
+        setIsLiveEnabled(found.is_live_enabled !== false);
+        setFeatured(found.featured);
+        setPublished(found.published !== false);
+        setDisplayOrder(found.display_order || 1);
+        setImageUrl(found.image_url || '');
+      }
+
       if (!isSupabaseConfigured) {
-        const found = SEED_PROJECTS.find((p) => p.id === id);
-        if (found) {
-          setTitle(found.title);
-          setShortDescription(found.short_description);
-          setLongDescription(found.long_description);
-          setTechStack(found.tech_stack);
-          setGithubUrl(found.github_url || '');
-          setLiveUrl(found.live_url || '');
-          setFeatured(found.featured);
-          setPublished(found.published);
-          setDisplayOrder(found.display_order);
-          setImageUrl(found.image_url || '');
-        }
         setLoading(false);
         return;
       }
@@ -57,14 +64,15 @@ export default function AdminProjectForm() {
           setTechStack(data.tech_stack || []);
           setGithubUrl(data.github_url || '');
           setLiveUrl(data.live_url || '');
+          setIsLiveEnabled(data.is_live_enabled !== false);
           setFeatured(data.featured);
-          setPublished(data.published);
-          setDisplayOrder(data.display_order);
+          setPublished(data.published !== false);
+          setDisplayOrder(data.display_order || 1);
           setImageUrl(data.image_url || '');
         }
       } catch (err: unknown) {
-        const msg = err instanceof Error ? err.message : 'Error fetching project';
-        toast.error(msg);
+        const msg = err instanceof Error ? err.message : 'Error fetching project from Supabase';
+        console.warn(msg);
       } finally {
         setLoading(false);
       }
@@ -93,42 +101,71 @@ export default function AdminProjectForm() {
     }
 
     setSaving(true);
-    const payload = {
+    const cleanedLiveUrl = liveUrl.trim() || null;
+    const projectPayload: Project = {
+      id: id || `proj-${Date.now()}`,
       title: title.trim(),
       short_description: shortDescription.trim(),
       long_description: longDescription.trim(),
       tech_stack: techStack,
       github_url: githubUrl.trim() || null,
-      live_url: liveUrl.trim() || null,
+      live_url: cleanedLiveUrl,
+      is_live_enabled: isLiveEnabled,
       featured,
       published,
       display_order: Number(displayOrder) || 1,
       image_url: imageUrl.trim() || null,
     };
 
-    try {
-      if (!isSupabaseConfigured) {
-        toast.success(isEditing ? 'Project updated in local state.' : 'Project created in local state.');
-        navigate('/admin/projects');
-        return;
-      }
+    // Update in local persistent storage immediately
+    updateProjectInStorage(projectPayload);
 
-      if (isEditing && id) {
-        const { error } = await supabase.from('projects').update(payload).eq('id', id);
-        if (error) throw error;
-        toast.success('Project updated successfully.');
-      } else {
-        const { error } = await supabase.from('projects').insert([payload]);
-        if (error) throw error;
-        toast.success('Project published successfully.');
+    if (isSupabaseConfigured) {
+      try {
+        const remotePayload: Record<string, unknown> = {
+          title: projectPayload.title,
+          short_description: projectPayload.short_description,
+          long_description: projectPayload.long_description,
+          tech_stack: projectPayload.tech_stack,
+          github_url: projectPayload.github_url,
+          live_url: projectPayload.live_url,
+          is_live_enabled: projectPayload.is_live_enabled,
+          featured: projectPayload.featured,
+          published: projectPayload.published,
+          display_order: projectPayload.display_order,
+          image_url: projectPayload.image_url,
+        };
+
+        if (isEditing && id) {
+          const { error } = await supabase.from('projects').update(remotePayload).eq('id', id);
+          if (error) {
+            // Graceful fallback if is_live_enabled column hasn't been added to remote SQL schema
+            if (error.message?.includes('is_live_enabled')) {
+              delete remotePayload.is_live_enabled;
+              await supabase.from('projects').update(remotePayload).eq('id', id);
+            } else {
+              throw error;
+            }
+          }
+        } else {
+          const { error } = await supabase.from('projects').insert([remotePayload]);
+          if (error) {
+            if (error.message?.includes('is_live_enabled')) {
+              delete remotePayload.is_live_enabled;
+              await supabase.from('projects').insert([remotePayload]);
+            } else {
+              throw error;
+            }
+          }
+        }
+      } catch (err: unknown) {
+        console.warn('Supabase remote sync warning:', err);
       }
-      navigate('/admin/projects');
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Save operation failed';
-      toast.error(msg);
-    } finally {
-      setSaving(false);
     }
+
+    setSaving(false);
+    toast.success(isEditing ? 'Project updated successfully.' : 'Project published successfully.');
+    navigate('/admin/projects');
   };
 
   return (
@@ -145,7 +182,7 @@ export default function AdminProjectForm() {
             {isEditing ? `Edit: ${title || 'Project'}` : 'Create New Project'}
           </h1>
           <span className="text-xs font-mono-code text-[#777777]">
-            Configure tech stack, architectural highlights, and live links
+            Configure tech stack, project domain link, and live demonstration options
           </span>
         </div>
       </div>
@@ -232,7 +269,7 @@ export default function AdminProjectForm() {
               <button
                 type="button"
                 onClick={handleAddTag}
-                className="px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code"
+                className="px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code transition-colors"
               >
                 Add Tag
               </button>
@@ -256,6 +293,7 @@ export default function AdminProjectForm() {
             </div>
           </div>
 
+          {/* Repository & Domain Links */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
@@ -272,15 +310,95 @@ export default function AdminProjectForm() {
 
             <div>
               <label className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
-                Live Demo URL (optional)
+                Project Image / Asset URL
               </label>
               <input
-                type="url"
-                value={liveUrl}
-                onChange={(e) => setLiveUrl(e.target.value)}
-                placeholder="https://..."
+                type="text"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="/portfolio/assets/... or https://..."
                 className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors"
               />
+            </div>
+          </div>
+
+          {/* Project Domain / Live URL Section with Enable/Disable Option */}
+          <div className="p-5 rounded-xl bg-[#151515] border border-white/10 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.08] pb-3">
+              <div className="flex items-center gap-2">
+                <Globe size={16} className="text-[#ff5c3d]" />
+                <span className="font-mono-code text-xs uppercase font-bold text-white tracking-wider">
+                  Project Domain / Live URL Configuration
+                </span>
+              </div>
+
+              {/* Status Badge */}
+              <div className="flex items-center gap-2">
+                {isLiveEnabled && liveUrl.trim() ? (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono-code font-bold bg-green-500/10 text-green-400 border border-green-500/20">
+                    <CheckCircle2 size={12} />
+                    Live Domain Active
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono-code font-bold bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                    Option Disabled (Shows Backend Verified)
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
+                  Project Domain URL
+                </label>
+                <div className="flex gap-2">
+                  <input
+                    type="url"
+                    value={liveUrl}
+                    onChange={(e) => setLiveUrl(e.target.value)}
+                    placeholder="https://yourproject.com"
+                    className="flex-1 px-4 py-3 rounded-xl bg-[#0e0e0e] border border-white/10 text-white text-sm focus:outline-none focus:border-[#ff5c3d] transition-colors"
+                  />
+                  {liveUrl.trim() && (
+                    <a
+                      href={liveUrl.trim()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code transition-colors shrink-0"
+                      title="Test open domain in new tab"
+                    >
+                      <span>Test Link</span>
+                      <ExternalLink size={14} />
+                    </a>
+                  )}
+                </div>
+                <p className="text-[11px] font-mono-code text-[#777777] mt-1.5">
+                  The domain URL visitors will be redirected to when clicking the project link.
+                </p>
+              </div>
+
+              {/* Toggle switch for enabling / disabling the live domain link */}
+              <div className="pt-2">
+                <label className="flex items-start sm:items-center gap-3 cursor-pointer p-3 rounded-lg bg-[#0e0e0e] border border-white/[0.06] hover:border-white/20 transition-colors">
+                  <input
+                    type="checkbox"
+                    checked={isLiveEnabled}
+                    onChange={(e) => setIsLiveEnabled(e.target.checked)}
+                    className="w-4 h-4 mt-0.5 sm:mt-0 rounded accent-[#ff5c3d] cursor-pointer"
+                  />
+                  <div className="flex-1 text-xs font-mono-code">
+                    <span className="font-bold text-white block">
+                      Enable Live Domain Option on Portfolio Card
+                    </span>
+                    <span className="text-[#888888] text-[11px] block mt-0.5">
+                      {isLiveEnabled
+                        ? 'Visitors can click "Live Domain" to visit the site directly.'
+                        : 'Link is disabled and hidden from the card. The card will display "Backend Verified" instead.'}
+                    </span>
+                  </div>
+                </label>
+              </div>
             </div>
           </div>
 
