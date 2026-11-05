@@ -299,7 +299,7 @@ export default function AdminExperience() {
                 Key Responsibilities &amp; Architectural Accomplishments
               </label>
 
-              <div className="flex gap-2 mb-3">
+              <div className="flex flex-col sm:flex-row gap-2 mb-3">
                 <input
                   type="text"
                   value={currentBullet}
@@ -316,7 +316,7 @@ export default function AdminExperience() {
                 <button
                   type="button"
                   onClick={handleAddBullet}
-                  className="px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code"
+                  className="px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code shrink-0"
                 >
                   Add Bullet
                 </button>

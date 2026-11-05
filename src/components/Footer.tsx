@@ -18,7 +18,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#f4efe5] border-t-2 border-[#1e1b18]/15 py-12 px-6 sm:px-10 lg:px-14 overflow-hidden">
+    <footer className="relative bg-[#f4efe5] border-t-2 border-[#1e1b18]/15 py-10 sm:py-12 px-4 sm:px-10 lg:px-14 overflow-hidden">
       {/* Decorative botanical sprig in background */}
       <div className="absolute right-6 -bottom-10 opacity-15 pointer-events-none select-none">
         <BotanicalFlower className="w-24 h-48" />

@@ -43,11 +43,11 @@ export default function ProjectsSection() {
   }, []);
 
   return (
-    <section id="projects" className="relative py-24 px-4 sm:px-8 lg:px-12 bg-[#efe8dc]/40">
+    <section id="projects" className="relative py-16 sm:py-24 px-3.5 sm:px-8 lg:px-12 bg-[#efe8dc]/40 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <AnimatedContent distance={40} direction="vertical" duration={0.8} ease="power3.out">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 sm:mb-14 border-b-2 border-[#1e1b18]/15 pb-4 sm:pb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
@@ -55,7 +55,7 @@ export default function ProjectsSection() {
                 </span>
                 <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
               </div>
-              <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+              <h2 className="font-handwritten text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e1b18]">
                 Featured Projects
               </h2>
               <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
@@ -74,33 +74,33 @@ export default function ProjectsSection() {
 
         {/* Project Archival Dossiers Grid with Staggered GSAP */}
         <AnimatedContent
-          distance={60}
+          distance={50}
           direction="vertical"
           stagger={0.14}
           staggerFrom="start"
           duration={0.85}
           ease="power3.out"
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10"
         >
           {projects.map((proj, idx) => (
             <div
               key={proj.id}
-              className={`relative bg-[#fffdf9] p-7 sm:p-8 rounded-sm shadow-[3px_6px_24px_rgba(45,30,15,0.12)] border border-[#e2d8c3] transition-all duration-300 hover:scale-[1.015] hover:shadow-[5px_12px_32px_rgba(45,30,15,0.18)] ${
+              className={`relative bg-[#fffdf9] p-5 sm:p-7 lg:p-8 rounded-sm shadow-[3px_6px_24px_rgba(45,30,15,0.12)] border border-[#e2d8c3] transition-all duration-300 hover:scale-[1.015] hover:shadow-[5px_12px_32px_rgba(45,30,15,0.18)] ${
                 idx % 2 === 0 ? 'rotate-[-0.8deg]' : 'rotate-[0.8deg]'
               }`}
             >
               {/* Washi Tape Strip */}
               <WashiTape
-                className="w-28 h-7 -top-3.5 right-10"
+                className="w-24 sm:w-28 h-6 sm:h-7 -top-3 sm:-top-3.5 right-6 sm:right-10"
                 variant={idx % 3 === 0 ? 'cream' : idx % 3 === 1 ? 'pink' : 'sage'}
                 rotation={idx % 2 === 0 ? 'rotate-2' : '-rotate-2'}
               />
 
               {/* Top Dossier Index Header */}
-              <div className="flex items-center justify-between border-b border-[#1e1b18]/15 pb-3 mb-5">
+              <div className="flex items-center justify-between border-b border-[#1e1b18]/15 pb-3 mb-4 sm:mb-5">
                 <div className="flex items-center gap-2">
                   <FolderGit2 size={16} className="text-[#df6b5c]" />
-                  <span className="font-typewriter text-[11px] uppercase tracking-widest text-[#7a7065] font-bold">
+                  <span className="font-typewriter text-[10px] sm:text-[11px] uppercase tracking-widest text-[#7a7065] font-bold">
                     Dossier // 0{idx + 1}
                   </span>
                 </div>
@@ -113,17 +113,17 @@ export default function ProjectsSection() {
               </div>
 
               {/* Project Title */}
-              <h3 className="font-handwritten text-3xl font-bold text-[#1e1b18] mb-2 leading-tight">
+              <h3 className="font-handwritten text-2xl sm:text-3xl font-bold text-[#1e1b18] mb-2 leading-tight">
                 {proj.title}
               </h3>
 
               {/* Short Description */}
-              <p className="font-serif-vintage text-sm sm:text-base text-[#423d38] leading-relaxed mb-5">
+              <p className="font-serif-vintage text-sm sm:text-base text-[#423d38] leading-relaxed mb-4 sm:mb-5">
                 {proj.short_description}
               </p>
 
               {/* Tech Stack Stamped Tags */}
-              <div className="mb-6">
+              <div className="mb-5 sm:mb-6">
                 <p className="font-typewriter text-[10px] uppercase text-[#7a7065] tracking-wider mb-2 font-bold">
                   Technologies Applied:
                 </p>
@@ -131,7 +131,7 @@ export default function ProjectsSection() {
                   {proj.tech_stack.map(tech => (
                     <span
                       key={tech}
-                      className="font-typewriter text-[11px] px-2.5 py-1 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/20 text-[#1e1b18]"
+                      className="font-typewriter text-[10px] sm:text-[11px] px-2.5 py-1 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/20 text-[#1e1b18]"
                     >
                       {tech}
                     </span>
@@ -140,7 +140,7 @@ export default function ProjectsSection() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 border-t border-[#1e1b18]/15 flex items-center justify-between">
+              <div className="pt-4 border-t border-[#1e1b18]/15 flex flex-wrap items-center justify-between gap-3">
                 <a
                   href={proj.github_url || 'https://github.com/IRFAN-DEVo'}
                   target="_blank"

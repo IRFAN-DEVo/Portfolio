@@ -24,11 +24,11 @@ export default function ExperienceSection() {
   }, []);
 
   return (
-    <section id="experience" className="relative py-24 px-4 sm:px-8 lg:px-12">
+    <section id="experience" className="relative py-16 sm:py-24 px-3.5 sm:px-8 lg:px-12 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <AnimatedContent distance={40} direction="vertical" duration={0.8} ease="power3.out">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 sm:mb-14 border-b-2 border-[#1e1b18]/15 pb-4 sm:pb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
@@ -36,7 +36,7 @@ export default function ExperienceSection() {
                 </span>
                 <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
               </div>
-              <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+              <h2 className="font-handwritten text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e1b18]">
                 Experience &amp; Education
               </h2>
               <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
@@ -54,13 +54,13 @@ export default function ExperienceSection() {
         </AnimatedContent>
 
         {/* Timeline Content */}
-        <div className="space-y-12">
+        <div className="space-y-10 sm:space-y-12">
           {/* ============================================================ */}
           {/* 1. PROFESSIONAL EXPERIENCE */}
           {/* ============================================================ */}
           <div>
             <AnimatedContent distance={30} direction="vertical" duration={0.6} ease="power3.out">
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-5 sm:mb-6">
                 <div className="p-2 rounded-xs bg-[#cbb393] text-[#1e1b18] shadow-xs">
                   <Briefcase size={18} />
                 </div>
@@ -71,35 +71,35 @@ export default function ExperienceSection() {
             </AnimatedContent>
 
             {experiences.map((exp, idx) => (
-              <AnimatedContent key={exp.id || idx} distance={50} direction="vertical" duration={0.85} ease="power3.out">
-                <div className="relative bg-[#fffdf9] p-7 sm:p-9 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] border border-[#e2d8c3] rotate-[-0.5deg] mb-6">
+              <AnimatedContent key={exp.id || idx} distance={40} direction="vertical" duration={0.85} ease="power3.out">
+                <div className="relative bg-[#fffdf9] p-5 sm:p-7 lg:p-9 rounded-sm shadow-[3px_6px_22px_rgba(45,30,15,0.12)] border border-[#e2d8c3] rotate-[-0.5deg] mb-6">
                   <WashiTape
-                    className="w-28 h-6 -top-3 left-8"
+                    className="w-24 sm:w-28 h-5 sm:h-6 -top-2.5 sm:-top-3 left-6 sm:left-8"
                     variant="cream"
                     rotation="rotate-2"
                   />
 
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#1e1b18]/15 pb-4 mb-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#1e1b18]/15 pb-3 sm:pb-4 mb-4 sm:mb-5">
                     <div>
-                      <h4 className="font-handwritten text-3xl font-bold text-[#1e1b18]">
+                      <h4 className="font-handwritten text-2xl sm:text-3xl font-bold text-[#1e1b18]">
                         {exp.role}
                       </h4>
-                      <p className="font-typewriter text-sm font-bold text-[#df6b5c] mt-0.5">
+                      <p className="font-typewriter text-xs sm:text-sm font-bold text-[#df6b5c] mt-0.5">
                         {exp.company} &bull; {exp.location}
                       </p>
                     </div>
 
-                    <span className="font-typewriter text-xs font-bold px-3 py-1 bg-[#f6f1e7] rounded-full border border-[#1e1b18]/20 text-[#1e1b18] self-start sm:self-auto">
+                    <span className="font-typewriter text-[11px] sm:text-xs font-bold px-2.5 sm:px-3 py-0.5 sm:py-1 bg-[#f6f1e7] rounded-full border border-[#1e1b18]/20 text-[#1e1b18] self-start sm:self-auto">
                       {exp.period}
                     </span>
                   </div>
 
                   {/* Responsibilities with hand-drawn checkmarks */}
-                  <ul className="space-y-3 font-serif-vintage text-sm sm:text-base text-[#3d362e] leading-relaxed">
+                  <ul className="space-y-2.5 sm:space-y-3 font-serif-vintage text-sm sm:text-base text-[#3d362e] leading-relaxed">
                     {exp.responsibilities.map((bullet, bIdx) => (
                       <li key={bIdx} className="flex items-start gap-2.5">
                         <CheckCircle
-                          size={16}
+                          size={15}
                           className="text-[#5b8266] shrink-0 mt-1"
                         />
                         <span>{bullet}</span>

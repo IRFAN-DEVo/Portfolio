@@ -34,11 +34,11 @@ export default function AboutSection() {
   ];
 
   return (
-    <section id="about" className="relative py-24 px-4 sm:px-8 lg:px-12">
+    <section id="about" className="relative py-16 sm:py-24 px-3.5 sm:px-8 lg:px-12 overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Section Header with Stamp & Tape */}
         <AnimatedContent distance={40} direction="vertical" duration={0.8} ease="power3.out">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-12 sm:mb-16 border-b-2 border-[#1e1b18]/15 pb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 sm:mb-16 border-b-2 border-[#1e1b18]/15 pb-4 sm:pb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
@@ -46,7 +46,7 @@ export default function AboutSection() {
                 </span>
                 <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
               </div>
-              <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+              <h2 className="font-handwritten text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e1b18]">
                 About the Developer
               </h2>
             </div>
@@ -61,26 +61,26 @@ export default function AboutSection() {
         </AnimatedContent>
 
         {/* Dual-Page Open Journal Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           {/* ============================================================ */}
           {/* LEFT PAGE: JOURNAL NARRATIVE ON LINED PAPER */}
           {/* ============================================================ */}
           <div className="lg:col-span-7">
-            <AnimatedContent distance={60} direction="horizontal" reverse={true} duration={0.85} ease="power3.out">
-              <div className="relative lined-notebook p-8 sm:p-10 rounded-sm shadow-[2px_6px_22px_rgba(40,30,15,0.12)] border border-[#ded3be] rotate-[-0.5deg]">
+            <AnimatedContent distance={40} direction="vertical" duration={0.85} ease="power3.out">
+              <div className="relative lined-notebook p-5 sm:p-8 lg:p-10 rounded-sm shadow-[2px_6px_22px_rgba(40,30,15,0.12)] border border-[#ded3be] rotate-[-0.5deg]">
                 {/* Top Washi Tape */}
                 <WashiTape
-                  className="w-32 h-7 -top-3.5 left-10"
+                  className="w-28 sm:w-32 h-6 sm:h-7 -top-3 sm:-top-3.5 left-6 sm:left-10"
                   variant="cream"
                   rotation="rotate-1"
                 />
 
-                <div className="pl-6 sm:pl-8 border-l border-dashed border-[#df6b5c]/30">
-                  <h3 className="font-typewriter text-base sm:text-lg font-bold uppercase tracking-wider text-[#1e1b18] mb-4">
+                <div className="pl-3.5 sm:pl-8 border-l border-dashed border-[#df6b5c]/30">
+                  <h3 className="font-typewriter text-sm sm:text-base lg:text-lg font-bold uppercase tracking-wider text-[#1e1b18] mb-3 sm:mb-4">
                     Field Journal Entry: The Philosophy
                   </h3>
 
-                  <div className="space-y-4 font-serif-vintage text-base sm:text-lg text-[#2d261e] leading-relaxed">
+                  <div className="space-y-3 sm:space-y-4 font-serif-vintage text-sm sm:text-base lg:text-lg text-[#2d261e] leading-relaxed">
                     <p>
                       I am <strong className="text-[#1e1b18] font-bold">Mohammed Irfan K</strong>, a backend-focused
                       software engineer with an unyielding passion for constructing reliable, clean, and scalable web architectures.
@@ -106,19 +106,19 @@ export default function AboutSection() {
                   </div>
 
                   {/* Handwritten Sign-off */}
-                  <div className="mt-8 pt-4 border-t border-[#1e1b18]/15 flex items-center justify-between">
+                  <div className="mt-8 pt-4 border-t border-[#1e1b18]/15 flex flex-wrap items-center justify-between gap-4">
                     <div>
-                      <p className="font-script text-3xl font-bold text-[#1e1b18]">
+                      <p className="font-script text-2xl sm:text-3xl font-bold text-[#1e1b18]">
                         Mohammed Irfan K.
                       </p>
-                      <p className="font-typewriter text-[11px] text-[#7a7065] uppercase tracking-wider">
-                        Backend & Full-Stack Engineer
+                      <p className="font-typewriter text-[10px] sm:text-[11px] text-[#7a7065] uppercase tracking-wider">
+                        Backend &amp; Full-Stack Engineer
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2 text-[#5b8266]">
-                      <ShieldCheck size={20} />
-                      <span className="font-typewriter text-xs font-bold uppercase">Verified Code</span>
+                    <div className="flex items-center gap-1.5 sm:gap-2 text-[#5b8266]">
+                      <ShieldCheck size={18} />
+                      <span className="font-typewriter text-[11px] sm:text-xs font-bold uppercase">Verified Code</span>
                     </div>
                   </div>
                 </div>

@@ -252,7 +252,7 @@ export default function AdminProjectForm() {
             <label className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
               Technologies / Stack Tags
             </label>
-            <div className="flex gap-2 mb-3">
+            <div className="flex flex-col sm:flex-row gap-2 mb-3">
               <input
                 type="text"
                 value={currentTag}
@@ -269,7 +269,7 @@ export default function AdminProjectForm() {
               <button
                 type="button"
                 onClick={handleAddTag}
-                className="px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code transition-colors"
+                className="px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code transition-colors shrink-0"
               >
                 Add Tag
               </button>

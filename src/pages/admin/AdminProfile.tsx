@@ -124,7 +124,7 @@ export default function AdminProfile() {
               <label className="block text-xs font-mono-code text-[#A0A0A0] mb-1.5 uppercase">
                 CV / Resume URL or Cloud Link
               </label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={profile.resume_url || ''}
@@ -138,7 +138,7 @@ export default function AdminProfile() {
                     href={profile.resume_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-3 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code transition-colors shrink-0"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-3 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white text-xs font-mono-code transition-colors shrink-0"
                     title="Test Open CV"
                   >
                     <span>Test CV</span>
@@ -157,7 +157,7 @@ export default function AdminProfile() {
                 accept=".pdf,.doc,.docx"
                 className="hidden"
               />
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}

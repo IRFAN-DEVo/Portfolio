@@ -111,7 +111,7 @@ export default function Navbar() {
           : 'bg-transparent py-3.5 sm:py-4.5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-14 flex items-center justify-between">
         {/* Brand / Name - Handwritten Logo */}
         <a
           href="#home"
@@ -121,9 +121,9 @@ export default function Navbar() {
           }}
           className="group flex items-center gap-2 text-decoration-none"
         >
-          <div className="font-handwritten text-2xl sm:text-3xl font-bold tracking-tight text-[#1e1b18] group-hover:text-[#df6b5c] transition-colors flex items-center gap-1.5">
+          <div className="font-handwritten text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-[#1e1b18] group-hover:text-[#df6b5c] transition-colors flex items-center gap-1.5">
             <span>Mohammed Irfan</span>
-            <DoodleStar className="w-4 h-4 text-[#df6b5c] group-hover:rotate-45 transition-transform" />
+            <DoodleStar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#df6b5c] group-hover:rotate-45 transition-transform" />
           </div>
         </a>
 
@@ -186,8 +186,8 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#f6f1e7] border-b-2 border-[#221e1a]/20 px-8 py-7 shadow-lg transition-all">
-          <div className="flex flex-col gap-4">
+        <div className="md:hidden bg-[#f6f1e7]/95 backdrop-blur-md border-b-2 border-[#221e1a]/20 px-6 sm:px-8 py-6 shadow-xl transition-all">
+          <div className="flex flex-col gap-3">
             {navItems.map(item => {
               const isActive = activeSection === item.href.substring(1);
               return (
@@ -196,9 +196,10 @@ export default function Navbar() {
                   href={item.href}
                   onClick={e => {
                     e.preventDefault();
+                    setMobileMenuOpen(false);
                     scrollTo(item.href);
                   }}
-                  className={`relative font-handwritten text-2xl py-1 px-3 self-start border-b border-[#221e1a]/10 ${
+                  className={`relative font-handwritten text-2xl py-1.5 px-3 self-start border-b border-[#221e1a]/10 transition-colors ${
                     isActive ? 'text-[#1e1b18] font-bold' : 'text-[#5a5045]'
                   }`}
                 >

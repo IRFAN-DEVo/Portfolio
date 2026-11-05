@@ -44,8 +44,71 @@ export default function AdminLayout() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#EDEDED] flex flex-col md:flex-row">
-      {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-[#0a0a0a] border-r border-white/[0.08] p-6 flex flex-col justify-between shrink-0">
+      {/* Mobile Top Header */}
+      <header className="md:hidden bg-[#0a0a0a] border-b border-white/[0.08] px-4 py-3 shrink-0 sticky top-0 z-40">
+        <div className="flex items-center justify-between gap-3 mb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-1.5 rounded-lg bg-[#141414] border border-white/10 text-[#ff5c3d]">
+              <Shield size={16} />
+            </div>
+            <div>
+              <span className="font-mono-code font-bold text-xs tracking-wider text-white block">
+                IRFAN ADMIN
+              </span>
+              <span className="text-[9px] font-mono-code text-[#777777] uppercase">
+                Console &bull; RLS
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Link
+              to="/"
+              target="_blank"
+              className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-[#888888] hover:text-white transition-colors"
+              title="Open Live Portfolio"
+            >
+              <ExternalLink size={14} />
+            </Link>
+            <button
+              onClick={() => signOut().then(() => navigate('/admin/login'))}
+              className="p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 transition-colors"
+              title="Sign Out"
+            >
+              <LogOut size={14} />
+            </button>
+          </div>
+        </div>
+
+        {/* Horizontal scrollable nav pills */}
+        <nav className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar font-mono-code text-xs">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive =
+              item.path === '/admin'
+                ? location.pathname === '/admin'
+                : location.pathname.startsWith(item.path);
+
+            return (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors shrink-0 text-xs ${
+                  isActive
+                    ? 'bg-[#ff5c3d]/15 text-[#ff5c3d] font-semibold border border-[#ff5c3d]/30'
+                    : 'text-[#888888] hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                <Icon size={13} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+      </header>
+
+      {/* Desktop Sidebar */}
+      <aside className="hidden md:flex w-64 bg-[#0a0a0a] border-r border-white/[0.08] p-6 flex-col justify-between shrink-0 h-screen sticky top-0">
         <div>
           <div className="flex items-center gap-3 mb-8">
             <div className="p-2 rounded-xl bg-[#141414] border border-white/10 text-[#ff5c3d]">
@@ -108,7 +171,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-6 sm:p-10 max-w-6xl overflow-y-auto">
+      <main className="flex-1 p-4 sm:p-6 lg:p-10 max-w-6xl overflow-y-auto">
         <Outlet />
       </main>
     </div>

@@ -56,11 +56,11 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-24 px-4 sm:px-8 lg:px-12 bg-[#efe8dc]/50">
+    <section id="contact" className="relative py-16 sm:py-24 px-3.5 sm:px-8 lg:px-12 bg-[#efe8dc]/50 overflow-hidden">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <AnimatedContent distance={40} direction="vertical" duration={0.8} ease="power3.out">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-10 sm:mb-14 border-b-2 border-[#1e1b18]/15 pb-6">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-typewriter text-xs uppercase tracking-widest text-[#df6b5c]">
@@ -68,10 +68,10 @@ export default function ContactSection() {
                 </span>
                 <DoodleStar className="w-4 h-4 text-[#df6b5c]" />
               </div>
-              <h2 className="font-handwritten text-4xl sm:text-5xl font-bold text-[#1e1b18]">
+              <h2 className="font-handwritten text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1e1b18]">
                 Send a Note
               </h2>
-              <p className="font-serif-vintage text-sm sm:text-base text-[#5a5045] mt-1">
+              <p className="font-serif-vintage text-xs sm:text-base text-[#5a5045] mt-1">
                 Have an architecture to discuss, a backend role, or a project collaboration?
               </p>
             </div>
@@ -87,41 +87,41 @@ export default function ContactSection() {
 
         {/* Vintage Postcard Layout with GSAP Scroll Entry */}
         <AnimatedContent distance={60} direction="vertical" duration={0.85} ease="power3.out">
-          <div className="relative bg-[#fffdf9] p-8 sm:p-12 rounded-sm shadow-[4px_10px_32px_rgba(40,25,10,0.14)] border border-[#e2d8c3]">
+          <div className="relative bg-[#fffdf9] p-4 sm:p-8 lg:p-12 rounded-sm shadow-[4px_10px_32px_rgba(40,25,10,0.14)] border border-[#e2d8c3]">
             {/* Top Washi Tape */}
             <WashiTape
-              className="w-36 h-7 -top-3.5 left-1/2 -translate-x-1/2"
+              className="w-28 sm:w-36 h-6 sm:h-7 -top-3 sm:-top-3.5 left-1/2 -translate-x-1/2"
               variant="cream"
               rotation="-rotate-1"
             />
 
             {/* Airmail Border Accent on Top */}
             <div
-              className="h-2 w-full mb-8 rounded-xs opacity-75"
+              className="h-2 w-full mb-6 sm:mb-8 rounded-xs opacity-75"
               style={{
                 background: 'repeating-linear-gradient(45deg, #df6b5c, #df6b5c 12px, #fffdf9 12px, #fffdf9 20px, #4a7c59 20px, #4a7c59 32px, #fffdf9 32px, #fffdf9 40px)',
               }}
             />
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
               {/* ============================================================ */}
               {/* LEFT: DIRECT CONTACT & SOCIAL DOSSIER */}
               {/* ============================================================ */}
-              <div className="lg:col-span-5 space-y-6">
-                <h3 className="font-handwritten text-3xl font-bold text-[#1e1b18]">
+              <div className="lg:col-span-5 space-y-5 sm:space-y-6">
+                <h3 className="font-handwritten text-2xl sm:text-3xl font-bold text-[#1e1b18]">
                   Get in Touch
                 </h3>
 
-                <p className="font-serif-vintage text-sm text-[#423d38] leading-relaxed">
+                <p className="font-serif-vintage text-xs sm:text-sm text-[#423d38] leading-relaxed">
                   Whether it&apos;s Python/Django engineering, API architecture, or database optimization,
                   my inbox is always open.
                 </p>
 
                 {/* Direct channels */}
-                <div className="space-y-4 pt-2">
+                <div className="space-y-3 sm:space-y-4 pt-1 sm:pt-2">
                   <a
                     href={`mailto:${profile.email}`}
-                    className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 hover:border-[#1e1b18] transition-colors group"
+                    className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 hover:border-[#1e1b18] transition-colors group"
                   >
                     <Mail size={16} className="text-[#df6b5c] shrink-0" />
                     <span className="font-typewriter text-xs text-[#1e1b18] group-hover:underline break-all">
@@ -131,7 +131,7 @@ export default function ContactSection() {
 
                   <a
                     href={`tel:${profile.phone}`}
-                    className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 hover:border-[#1e1b18] transition-colors group"
+                    className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15 hover:border-[#1e1b18] transition-colors group"
                   >
                     <Phone size={16} className="text-[#5b8266] shrink-0" />
                     <span className="font-typewriter text-xs text-[#1e1b18] group-hover:underline">
@@ -139,7 +139,7 @@ export default function ContactSection() {
                     </span>
                   </a>
 
-                  <div className="flex items-center gap-3 p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15">
+                  <div className="flex items-center gap-3 p-2.5 sm:p-3 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/15">
                     <MapPin size={16} className="text-[#d4a373] shrink-0" />
                     <span className="font-typewriter text-xs text-[#1e1b18]">
                       {profile.location}
@@ -148,11 +148,11 @@ export default function ContactSection() {
                 </div>
 
                 {/* Social Channels */}
-                <div className="pt-3">
-                  <p className="font-typewriter text-[10px] uppercase tracking-wider text-[#7a7065] font-bold mb-3">
+                <div className="pt-2 sm:pt-3">
+                  <p className="font-typewriter text-[10px] uppercase tracking-wider text-[#7a7065] font-bold mb-2.5">
                     Verified Profiles:
                   </p>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
                     {SOCIAL_LINKS.map(s => {
                       if (s.id === 'email') return null;
                       return (
@@ -161,10 +161,10 @@ export default function ContactSection() {
                           href={s.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3.5 py-2 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/25 hover:border-[#1e1b18] text-[#1e1b18] font-typewriter text-xs flex items-center gap-2 hover:-translate-y-0.5 transition-all shadow-xs"
+                          className="px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xs bg-[#f6f1e7] border border-[#1e1b18]/25 hover:border-[#1e1b18] text-[#1e1b18] font-typewriter text-xs flex items-center gap-2 hover:-translate-y-0.5 transition-all shadow-xs"
                         >
-                          {s.id === 'github' && <GithubIcon className="w-4 h-4" />}
-                          {s.id === 'linkedin' && <LinkedinIcon className="w-4 h-4" />}
+                          {s.id === 'github' && <GithubIcon className="w-3.5 sm:w-4 h-3.5 sm:h-4" />}
+                          {s.id === 'linkedin' && <LinkedinIcon className="w-3.5 sm:w-4 h-3.5 sm:h-4" />}
                           <span>{s.platform}</span>
                         </a>
                       );
@@ -184,7 +184,7 @@ export default function ContactSection() {
               {/* RIGHT: HANDWRITTEN POSTCARD FORM */}
               {/* ============================================================ */}
               <div className="lg:col-span-6">
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
                   <div>
                     <label className="block font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] font-bold mb-1">
                       Your Name *
@@ -195,7 +195,7 @@ export default function ContactSection() {
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Alex Henderson"
-                      className="w-full px-4 py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-lg text-[#1e1b18] transition-colors"
+                      className="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-base sm:text-lg text-[#1e1b18] transition-colors"
                     />
                   </div>
 
@@ -209,7 +209,7 @@ export default function ContactSection() {
                       value={formData.email}
                       onChange={e => setFormData({ ...formData, email: e.target.value })}
                       placeholder="alex@company.com"
-                      className="w-full px-4 py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-lg text-[#1e1b18] transition-colors"
+                      className="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-base sm:text-lg text-[#1e1b18] transition-colors"
                     />
                   </div>
 
@@ -222,7 +222,7 @@ export default function ContactSection() {
                       value={formData.subject}
                       onChange={e => setFormData({ ...formData, subject: e.target.value })}
                       placeholder="Backend Project / Hiring / Collaboration"
-                      className="w-full px-4 py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-lg text-[#1e1b18] transition-colors"
+                      className="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-base sm:text-lg text-[#1e1b18] transition-colors"
                     />
                   </div>
 
@@ -236,7 +236,7 @@ export default function ContactSection() {
                       value={formData.message}
                       onChange={e => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Write your note here..."
-                      className="w-full px-4 py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-lg text-[#1e1b18] transition-colors resize-none"
+                      className="w-full px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#f6f1e7] border-b-2 border-[#1e1b18]/30 focus:border-[#1e1b18] outline-hidden font-handwritten text-base sm:text-lg text-[#1e1b18] transition-colors resize-none"
                     />
                   </div>
 

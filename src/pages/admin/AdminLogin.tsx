@@ -38,10 +38,10 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#EDEDED] flex flex-col justify-center items-center px-4 relative">
+    <div className="min-h-screen bg-[#050505] text-[#EDEDED] flex flex-col justify-center items-center px-4 py-16 relative">
       <Link
         to="/"
-        className="absolute top-8 left-8 flex items-center gap-2 text-xs font-mono-code text-[#888888] hover:text-white transition-colors"
+        className="absolute top-4 left-4 sm:top-8 sm:left-8 flex items-center gap-2 text-xs font-mono-code text-[#888888] hover:text-white transition-colors"
       >
         <ArrowLeft size={16} />
         <span>Return to Portfolio</span>

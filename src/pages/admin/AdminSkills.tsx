@@ -201,13 +201,13 @@ export default function AdminSkills() {
                       value={skill.tag}
                       onChange={(e) => handleUpdateSkill(cat.id, sIdx, 'tag', e.target.value)}
                       placeholder="Tag / Subtitle"
-                      className="w-32 bg-transparent text-[#888888] font-mono-code text-[11px] px-2 py-1 rounded focus:outline-none focus:bg-white/[0.05]"
+                      className="w-24 sm:w-32 bg-transparent text-[#888888] font-mono-code text-[11px] px-2 py-1 rounded focus:outline-none focus:bg-white/[0.05]"
                     />
 
                     <button
                       type="button"
                       onClick={() => handleRemoveSkill(cat.id, sIdx)}
-                      className="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+                      className="p-1.5 rounded-lg text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors shrink-0"
                       title="Delete Skill"
                     >
                       <Trash2 size={13} />
@@ -222,7 +222,7 @@ export default function AdminSkills() {
               <span className="text-[10px] font-mono-code uppercase text-[#777777] block mb-2">
                 + Add new competency
               </span>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <input
                   type="text"
                   value={newSkillNames[cat.id] || ''}
@@ -239,29 +239,31 @@ export default function AdminSkills() {
                   className="flex-1 px-3 py-2 rounded-xl bg-[#0e0e0e] border border-white/10 text-white font-mono-code text-xs focus:outline-none focus:border-[#ff5c3d]"
                 />
 
-                <input
-                  type="text"
-                  value={newSkillTags[cat.id] || ''}
-                  onChange={(e) =>
-                    setNewSkillTags((prev) => ({ ...prev, [cat.id]: e.target.value }))
-                  }
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      handleAddSkill(cat.id);
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={newSkillTags[cat.id] || ''}
+                    onChange={(e) =>
+                      setNewSkillTags((prev) => ({ ...prev, [cat.id]: e.target.value }))
                     }
-                  }}
-                  placeholder="e.g. Async APIs"
-                  className="w-28 px-3 py-2 rounded-xl bg-[#0e0e0e] border border-white/10 text-[#888888] font-mono-code text-xs focus:outline-none focus:border-[#ff5c3d]"
-                />
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleAddSkill(cat.id);
+                      }
+                    }}
+                    placeholder="e.g. Async APIs"
+                    className="flex-1 sm:w-28 px-3 py-2 rounded-xl bg-[#0e0e0e] border border-white/10 text-[#888888] font-mono-code text-xs focus:outline-none focus:border-[#ff5c3d]"
+                  />
 
-                <button
-                  type="button"
-                  onClick={() => handleAddSkill(cat.id)}
-                  className="px-3.5 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono-code text-xs font-bold transition-colors shrink-0"
-                >
-                  <Plus size={14} />
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => handleAddSkill(cat.id)}
+                    className="px-3.5 py-2 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] text-white font-mono-code text-xs font-bold transition-colors shrink-0"
+                  >
+                    <Plus size={14} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
