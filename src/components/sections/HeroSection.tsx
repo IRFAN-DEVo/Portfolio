@@ -20,13 +20,20 @@ export default function HeroSection() {
     { id: 5, text: 'Ship next big innovation', done: false },
   ]);
 
-  // Spring physics mimicking physical paper/cardboard thrown onto a desk
+  // Physical spring simulation for heavy paper cards thrown onto a wooden table
+  // High stiffness gives brisk entry momentum; low damping allows 2-3 tactile micro-bounces on impact
   const throwPhysics = {
     type: 'spring' as const,
-    stiffness: 240,
-    damping: 22,
-    mass: 1.1,
+    stiffness: 270,
+    damping: 18,
+    mass: 1.2,
   };
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const leftInitialX = isMobile ? -65 : -160;
+  const rightInitialX = isMobile ? 65 : 160;
+  const initialY = isMobile ? -85 : -120;
+  const initialScale = isMobile ? 1.18 : 1.25;
 
   const toggleTask = (id: number) => {
     setTasks(prev =>
@@ -50,7 +57,7 @@ export default function HeroSection() {
       className="relative min-h-[90vh] w-full pt-18 sm:pt-24 pb-12 sm:pb-16 px-2.5 sm:px-6 lg:px-12 flex flex-col justify-start items-center overflow-x-hidden"
     >
       {/* Outer Decorative Sketch Border Container (matching reference photo border) */}
-      <div className="relative w-full max-w-7xl mx-auto border-2 border-[#2b251f]/20 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-10 bg-[#f4efe5]/60 shadow-[0_4px_30px_rgba(50,35,20,0.06)]">
+      <div className="relative w-full max-w-7xl mx-auto border-2 border-[#2b251f]/20 rounded-xl sm:rounded-2xl p-3.5 sm:p-6 lg:p-10 bg-[#f4efe5]/60 shadow-[0_4px_30px_rgba(50,35,20,0.06)] overflow-hidden">
         {/* Subtle Inner Border Frame */}
         <div className="absolute inset-1.5 sm:inset-3 border border-[#2b251f]/10 rounded-lg sm:rounded-xl pointer-events-none" />
 
@@ -71,10 +78,27 @@ export default function HeroSection() {
           {/* 1. LEFT CARD: TORN KRAFT PAPER CARD (Craft systems, not just code) */}
           {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, y: -40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, rotate: -1.8, scale: 1 }}
-            transition={throwPhysics}
-            className="lg:col-span-5 relative bg-[#cbb393] text-[#1e1b18] p-5 sm:p-7 lg:p-9 rounded-sm shadow-[3px_6px_20px_rgba(50,35,15,0.18)]"
+            initial={{
+              opacity: 0,
+              x: leftInitialX,
+              y: initialY,
+              scale: initialScale,
+              rotate: -15,
+              boxShadow: '0 30px 60px rgba(50,35,15,0.32)',
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              y: 0,
+              scale: 1,
+              rotate: -1.8,
+              boxShadow: '3px 6px 20px rgba(50,35,15,0.18)',
+            }}
+            transition={{
+              ...throwPhysics,
+              delay: 0.16,
+            }}
+            className="lg:col-span-5 relative bg-[#cbb393] text-[#1e1b18] p-5 sm:p-7 lg:p-9 rounded-sm"
             style={{
               clipPath: 'polygon(0% 1%, 98% 0%, 100% 97%, 1% 100%)',
             }}
@@ -200,10 +224,27 @@ export default function HeroSection() {
           {/* 3. RIGHT CARD: NOTEBOOK PAPER CHECKLIST (TODAY / SKILLS) */}
           {/* ============================================================ */}
           <motion.div
-            initial={{ opacity: 0, y: -40, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, rotate: 2, scale: 1 }}
-            transition={{ ...throwPhysics, delay: 0.15 }}
-            className="lg:col-span-3 relative lined-notebook p-5 sm:p-6 lg:p-7 rounded-sm shadow-[2px_5px_18px_rgba(40,30,15,0.14)] border border-[#e2d6c4]"
+            initial={{
+              opacity: 0,
+              x: rightInitialX,
+              y: initialY,
+              scale: initialScale,
+              rotate: 15,
+              boxShadow: '0 30px 60px rgba(40,30,15,0.28)',
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              y: 0,
+              scale: 1,
+              rotate: 2,
+              boxShadow: '2px 5px 18px rgba(40,30,15,0.14)',
+            }}
+            transition={{
+              ...throwPhysics,
+              delay: 0.32,
+            }}
+            className="lg:col-span-3 relative lined-notebook p-5 sm:p-6 lg:p-7 rounded-sm border border-[#e2d6c4]"
           >
             {/* Top Washi Tape */}
             <WashiTape

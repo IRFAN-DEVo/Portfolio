@@ -51,16 +51,13 @@ export default function HandDrawnLoader({
         // Ensure 100% is explicitly rendered
         setProgress(100);
 
-        // Hold at 100% with the full bar for 350ms so the completed state is visible
+        // Hold at 100% with the full bar for 300ms so the completed 100% state is clearly visible
         setTimeout(() => {
           // Mount home page content now that loading has fully finished
           onLoadedRef.current?.();
-
-          // Smoothly dissolve the loading screen
-          setTimeout(() => {
-            setIsVisible(false);
-          }, 150);
-        }, 350);
+          // Begin smoothly dissolving the loading screen
+          setIsVisible(false);
+        }, 300);
       }
     };
 
@@ -76,7 +73,7 @@ export default function HandDrawnLoader({
           key="hand-drawn-loader"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#faf8f5] select-none cursor-wait"
           style={{
             // Subtle paper grain background matching scrapbook style
