@@ -103,6 +103,65 @@ export default function Navbar() {
     }
   };
 
+  const handleDownloadCV = (e: React.MouseEvent) => {
+    const rawUrl = profile.resume_url;
+    const url = rawUrl && rawUrl !== '#' ? rawUrl : '/resume.pdf';
+
+    // Detect iOS devices (iPhone, iPad, iPod)
+    const isIOS =
+      typeof navigator !== 'undefined' &&
+      (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+
+    // 1. Standard web link or static path (/resume.pdf or https://...)
+    if (url.startsWith('http') || url.startsWith('/')) {
+      if (isIOS) {
+        // On iOS Safari, open in new tab so Safari's native PDF reader displays it
+        // and enables the iOS native "Share" / "Save to Files" / download button
+        e.preventDefault();
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+      // On desktop / Android, browser handles <a href="..." download="..."> natively
+      return;
+    }
+
+    // 2. Data URI (e.g. uploaded in admin as data:application/pdf;base64,...)
+    if (url.startsWith('data:')) {
+      e.preventDefault();
+      try {
+        const [header, base64] = url.split(',');
+        const mimeMatch = header.match(/:(.*?);/);
+        const mimeType = mimeMatch ? mimeMatch[1] : 'application/pdf';
+        const byteChars = atob(base64);
+        const byteNums = new Array(byteChars.length);
+        for (let i = 0; i < byteChars.length; i++) {
+          byteNums[i] = byteChars.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNums);
+        const blob = new Blob([byteArray], { type: mimeType });
+        const blobUrl = URL.createObjectURL(blob);
+
+        if (isIOS) {
+          // iOS blocks data: URIs, but opens Blob URLs cleanly in a new tab
+          window.open(blobUrl, '_blank');
+        } else {
+          const a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = 'Mohammed_Irfan_Resume.pdf';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+      } catch (err) {
+        console.error('Error handling resume blob, falling back to /resume.pdf', err);
+        window.open('/resume.pdf', '_blank', 'noopener,noreferrer');
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -152,11 +211,12 @@ export default function Navbar() {
 
           {/* Resume Download / Bag indicator */}
           <a
-            href={profile.resume_url || '/resume.pdf'}
-            target={profile.resume_url?.startsWith('http') ? '_blank' : undefined}
-            rel={profile.resume_url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+            href={profile.resume_url && profile.resume_url !== '#' ? profile.resume_url : '/resume.pdf'}
+            target="_blank"
+            rel="noopener noreferrer"
             download={profile.resume_url?.startsWith('http') ? undefined : 'Mohammed_Irfan_Resume.pdf'}
-            className="flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] hover:text-[#df6b5c] px-3.5 py-1.5 border border-[#221e1a]/30 rounded-full hover:border-[#221e1a] transition-all bg-[#fffdf9]/70 shadow-xs"
+            onClick={handleDownloadCV}
+            className="flex items-center gap-1.5 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] hover:text-[#df6b5c] px-3.5 py-1.5 border border-[#221e1a]/30 rounded-full hover:border-[#221e1a] transition-all bg-[#fffdf9]/70 shadow-xs cursor-pointer"
             title="Download CV"
           >
             <Download size={13} />
@@ -225,11 +285,15 @@ export default function Navbar() {
             })}
             <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#221e1a]/15">
               <a
-                href={profile.resume_url || '/resume.pdf'}
-                target={profile.resume_url?.startsWith('http') ? '_blank' : undefined}
-                rel={profile.resume_url?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                href={profile.resume_url && profile.resume_url !== '#' ? profile.resume_url : '/resume.pdf'}
+                target="_blank"
+                rel="noopener noreferrer"
                 download={profile.resume_url?.startsWith('http') ? undefined : 'Mohammed_Irfan_Resume.pdf'}
-                className="flex items-center gap-2 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] px-4 py-2 border border-[#221e1a]/40 rounded-full bg-[#fffdf9]"
+                onClick={(e) => {
+                  setMobileMenuOpen(false);
+                  handleDownloadCV(e);
+                }}
+                className="flex items-center gap-2 font-typewriter text-xs uppercase tracking-wider text-[#1e1b18] px-4 py-2 border border-[#221e1a]/40 rounded-full bg-[#fffdf9] cursor-pointer"
               >
                 <Download size={14} />
                 <span>Download CV</span>

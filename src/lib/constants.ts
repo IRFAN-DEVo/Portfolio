@@ -16,7 +16,7 @@ export const SITE_CONFIG: WebsiteSettings = {
   phone: '8086175728',
   location: 'Calicut, Kerala, India',
   bio: 'Python/Django Backend Developer specializing in concurrency-safe architectures, high-throughput REST APIs, cryptographic licensing backends, and full-stack web applications with React. Rigorous in database transaction modeling, JWT security, and automated API validation.',
-  resume_url: '#',
+  resume_url: '/resume.pdf',
   profile_image_url: '/images/particle_reference.jpg',
 };
 

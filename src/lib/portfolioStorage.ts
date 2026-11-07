@@ -37,6 +37,10 @@ export function getStoredProfile(): WebsiteSettings {
         if (parsed.email === 'irfanneerolpalam12@gmail.com') {
           parsed.email = SITE_CONFIG.email;
         }
+        // Automatically migrate away from empty or hash resume URL
+        if (!parsed.resume_url || parsed.resume_url === '#') {
+          parsed.resume_url = SITE_CONFIG.resume_url;
+        }
         return { ...SITE_CONFIG, ...parsed };
       }
     }
